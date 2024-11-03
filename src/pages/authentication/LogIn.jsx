@@ -1,28 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import "./LogIn.css";
 import GoogleLogo from '../assets/google.svg'; 
 import FacebookLogo from '../assets/facebook.svg';
 import Logo from '../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
+import { AiFillEye, AiFillEyeInvisible, AiFillWarning } from 'react-icons/ai'; 
 
 const LogIn = () => {
+  const [passwordVisible, setPasswordVisible] = useState(false); 
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState(""); 
+
+  const navigate = useNavigate(); 
+
+  const handleSignIn = () => {
+    if (!email || !password) {
+      setErrorMessage("Email and password are required."); 
+      return; 
+    }
+    
+    // Simulate sign-in logic and replace with real authentication call
+    if (email !== "test@example.com" || password !== "password") {
+      setErrorMessage("Invalid email or password."); 
+      return; 
+    }
+
+    setErrorMessage(""); 
+    navigate('/lawfirmsignup'); 
+  };
+
   return (
     <div className="login-container">
-      {/* Left Box */}
       <div className="left-box">
         <h1 className="login-title">Sign In to your Account</h1>
         <p className="welcome-back">Welcome back!</p>
 
-        {/* Input Fields */}
         <div className="input-fields">
           <div className="input-container">
-            <input type="email" placeholder="Email" className="input-field" />
+            <input 
+              type="email" 
+              placeholder="Email" 
+              className="input-field" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} 
+            />
           </div>
           <div className="input-container">
-            <input type="password" placeholder="Password" className="input-field" />
+            <input 
+              type={passwordVisible ? "text" : "password"} 
+              placeholder="Password" 
+              className="input-field" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} 
+            />
+            <button 
+              type="button" 
+              className="password-toggle" 
+              onClick={() => setPasswordVisible(!passwordVisible)} 
+            >
+              {passwordVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
+            </button>
           </div>
         </div>
 
-        {/* Remember Me and Forgot Password */}
         <div className="remember-forgot">
           <div className="remember-me">
             <input type="checkbox" id="remember" />
@@ -31,13 +72,17 @@ const LogIn = () => {
           <a href="/" className="forgot-password">Forgot Password?</a>
         </div>
 
-        {/* Sign In Button */}
-        <button className="sign-in-button">SIGN IN</button>
+        {errorMessage && (
+          <div className="error-message">
+            <AiFillWarning className="error-icon" />
+            {errorMessage}
+          </div>
+        )}
 
-        {/* OR Divider */}
+        <button className="sign-in-button" onClick={handleSignIn}>SIGN IN</button>
+
         <div className="divider">OR</div>
 
-        {/* Social Login Buttons */}
         <button className="google-login">
           <img src={GoogleLogo} alt="Google Logo" className="social-icon" />
           Login with Google
@@ -47,17 +92,14 @@ const LogIn = () => {
           Login with Facebook
         </button>
 
-        {/* Sign Up Link */}
         <p className="sign-up-text">
           Don’t have an account? <a href="/">Sign Up</a>
         </p>
       </div>
 
-      {/* Right Box */}
       <div className="right-box">
         <img src={Logo} alt="Logo" className="logo" /> 
       </div>
-
     </div>
   );
 };

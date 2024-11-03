@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 /* Container */
-.login-container {
+.signup-container {
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -39,7 +39,7 @@
 }
 
 /* Title and Subtitle */
-.login-title {
+.signup-title {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 32px;
@@ -95,8 +95,8 @@
     text-decoration: none;
 }
 
-/* Sign In Button */
-.sign-in-button {
+/* Sign Up Button */
+.sign-up-button {
     background: #0F67FD;
     color: #FFFFFF;
     font-family: 'Poppins', sans-serif;
@@ -151,7 +151,7 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .login-container {
+    .signup-container {
         flex-direction: column-reverse; 
         align-items: center;
     }
@@ -166,7 +166,7 @@
         background: #F2F5FA; 
     }
 
-    .login-title {
+    .signup-title {
         font-size: 24px;
     }
 
@@ -174,7 +174,7 @@
         font-size: 14px;
     }
 
-    .sign-in-button, .google-login, .facebook-login {
+    .sign-up-button, .google-login, .facebook-login {
         padding: 12px;
         font-size: 14px;
     }
@@ -190,7 +190,7 @@
         padding: 0 10px;
     }
 
-    .login-title {
+    .signup-title {
         font-size: 20px;
     }
 
@@ -257,4 +257,20 @@
     cursor: pointer;
     color: #999; 
   }
+
+  .error-message {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    border: 1px solid #f5c6cb; /* Border color matching the background */
+    padding: 10px;
+    margin: 10px 0; /* Space around the message */
+    border-radius: 5px; /* Rounded corners */
+    display: flex; /* Flexbox for aligning icon and text */
+    align-items: center; /* Center the items vertically */
+  }
+  
+  .error-icon {
+    margin-right: 8px; /* Space between icon and text */
+  }
+  
   
