@@ -1,0 +1,68 @@
+.my-cases {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ensure it takes full height */
+}
+
+.content {
+    display: flex;
+    flex: 1; /* Fill the remaining space */
+}
+
+
+
+.main-content {
+    flex: 1; /* Take up remaining space */
+    padding: 20px;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.toggle-button {
+    margin-bottom: 20px;
+}
+
+.toggle-button button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.toggle-button button:hover {
+    background-color: #0056b3;
+}
+
+.task-board {
+    margin-top: 20px;
+    margin-left: 500px; /* Set left margin to 500px */
+}
+
+.task-table {
+    width: 100%; /* Full width of the table */
+    border-collapse: collapse; /* Collapse borders */
+}
+
+.task-table th,
+.task-table td {
+    border: 1px solid #ccc; /* Light border for table cells */
+    padding: 10px; /* Padding for table cells */
+    text-align: left; /* Align text to the left */
+}
+
+.task-table th {
+    background-color: #f2f2f2; /* Light background for headers */
+}
+
+.lawyer-image {
+    border-radius: 50%; /* Make image circular */
+    margin-right: 10px; /* Space between image and text */
+}
+
+.contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

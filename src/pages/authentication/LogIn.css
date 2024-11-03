@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* Container */
+.login-container {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    background: #F2F5FA;
+}
+
+/* Left Box */
+.left-box {
+    position: relative;
+    width: 50%;
+    background: #F2F5FA;
+    padding: 0 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+}
+
+/* Right Box */
+.right-box {
+    position: relative;
+    width: 50%;
+    background: linear-gradient(156.58deg, #0F67FD 0%, #093D97 103.59%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 220px;
+    height: 220px;
+    background: #041131;
+    border-radius: 50%;
+}
+
+/* Title and Subtitle */
+.login-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    color: #120D26;
+}
+
+.welcome-back {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: #120D26;
+}
+
+/* Input Fields */
+.input-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.input-container {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.input-field {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #7A7A7A;
+}
+
+/* Remember Me and Forgot Password */
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Poppins', sans-serif;
+    color: #7A7A7A;
+}
+
+.forgot-password {
+    color: #7A7A7A;
+    text-decoration: none;
+}
+
+/* Sign In Button */
+.sign-in-button {
+    background: #0F67FD;
+    color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 15px;
+    padding: 16px;
+    cursor: pointer;
+}
+
+/* Divider */
+.divider {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #7A7A7A;
+}
+
+/* Social Login Buttons */
+.google-login,
+.facebook-login {
+    background: #FFFFFF;
+    color: #120D26;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.google-login {
+    margin-bottom: 16px;
+}
+
+/* Sign Up Text */
+.sign-up-text {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #7A7A7A;
+}
+
+.sign-up-text a {
+    color: #0F67FD;
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column-reverse; 
+        align-items: center;
+    }
+
+    .left-box, .right-box {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    
+    .right-box {
+        background: #F2F5FA; 
+    }
+
+    .login-title {
+        font-size: 24px;
+    }
+
+    .welcome-back, .divider, .sign-up-text {
+        font-size: 14px;
+    }
+
+    .sign-in-button, .google-login, .facebook-login {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .logo {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-box, .right-box {
+        padding: 0 10px;
+    }
+
+    .login-title {
+        font-size: 20px;
+    }
+
+    .welcome-back, .divider, .sign-up-text {
+        font-size: 12px;
+    }
+
+    .sign-in-button, .google-login, .facebook-login {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .logo {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+.social-icon {
+    width: 40px; 
+    height: 40px; 
+    margin-right: 8px; 
+    vertical-align: middle; 
+}
+
+.google-login,
+.facebook-login {
+    background: #FFFFFF;
+    color: #120D26;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    width: 100%;
+    cursor: pointer;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.google-login {
+    margin-bottom: 16px;
+}
+
+.social-icon {
+    width: 40px; 
+    height: 40px; 
+    margin-right: 8px; 
+}

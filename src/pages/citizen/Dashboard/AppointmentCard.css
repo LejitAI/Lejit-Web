@@ -1,0 +1,104 @@
+.appointment-card {
+    background: #ffffff; /* White background */
+    border-radius: 12px; /* Slightly increased radius for more pronounced corners */
+    margin-left: -10px;
+    /* Enhanced shadow for 3D effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1); /* Layered shadow for depth */
+    padding: 20px; /* Padding inside the card */
+    margin: 10px; /* Space around the card */
+    width: calc(35% - 20px); /* Width for three cards in a row with space */
+    display: inline-block; /* Align cards in a row */
+    overflow: hidden; /* Ensure children fit within */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for hover effect */
+}
+
+/* Add hover effect for interaction */
+.appointment-card:hover {
+    transform: translateY(-5px); /* Slight lift effect */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+}
+
+.appointment-header {
+    display: flex;
+    justify-content: space-between; /* Space between title and view all */
+    align-items: center; /* Center vertically */
+    margin-bottom: 15px; /* Space below the header */
+}
+
+.appointment-title {
+    font-weight: bold; /* Make the title bold */
+    font-family: 'Arial', sans-serif; /* Cool font (replace with preferred font) */
+    font-size: 1.5em; /* Increase the font size */
+}
+
+.view-all {
+    color: #007bff; /* Blue color for the link */
+    cursor: pointer; /* Pointer cursor for link */
+}
+
+.appointment-calendar {
+    display: flex;
+    justify-content: center; /* Center calendar items */
+    margin-bottom: 15px; /* Space below the calendar */
+}
+
+.appointment-list {
+    max-height: 200px; /* Limit height for scrolling */
+    overflow-y: scroll; /* Allow vertical scrolling */
+    padding: 10px; /* Padding inside the list */
+    background-color: #f5f5f5; /* Light grey background for the date slider */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Hide scrollbar for WebKit browsers */
+.appointment-list::-webkit-scrollbar {
+    width: 0; /* Hide scrollbar width */
+    background: transparent; /* Transparent background */
+}
+
+/* Hide scrollbar for Firefox */
+.appointment-list {
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+}
+
+.appointment-person {
+    background-color: #e0e0e0; /* Darker gray background for appointment items */
+    border-radius: 5px; /* Rounded corners for appointments */
+    padding: 10px; /* Padding inside appointment items */
+    margin-bottom: 10px; /* Space between appointment items */
+}
+
+.appointment-info {
+    display: flex; /* Flex layout for person info */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between name and icons */
+}
+
+.person-name {
+    color: #545252;
+    font-weight: bold; /* Make the name bold */
+    font-size: 1.1em; /* Increase font size */
+}
+
+.case-type {
+    font-weight: normal; /* Normal weight for case type */
+    font-size: 0.9em; /* Smaller font size for case type */
+}
+
+.icons {
+    display: flex; /* Flex layout for icons */
+    gap: 10px; /* Space between icons */
+}
+
+.appointment-scheduled {
+    color: #666; /* Gray color for text */
+    margin: 5px 0; /* Space above and below text */
+    font-size: 0.9em; /* Smaller font size */
+}
+
+.appointment-calendar {
+    background-color: #f5f5f5; /* Light gray background for the date slider */
+    padding: 10px; /* Padding around the date slider */
+    border-radius: 5px; /* Rounded corners */
+}

@@ -1,0 +1,21 @@
+.appointments {
+    margin-top: 20px;
+    margin-left: 500px; /* Set left margin to 500px */
+    font-family: Arial, sans-serif; /* Set font */
+}
+
+.appointment-table {
+    width: 100%; /* Full width of the table */
+    border-collapse: collapse; /* Collapse borders */
+}
+
+.appointment-table th,
+.appointment-table td {
+    border: 1px solid #ccc; /* Light border for table cells */
+    padding: 10px; /* Padding for table cells */
+    text-align: left; /* Align text to the left */
+}
+
+.appointment-table th {
+    background-color: #f2f2f2; /* Light background for headers */
+}
