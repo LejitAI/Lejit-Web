@@ -5,8 +5,7 @@ import FacebookLogo from '../assets/facebook.svg';
 import Logo from '../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'; 
-import { AiFillWarning } from 'react-icons/ai'; // Importing a warning icon
-
+import { AiFillWarning } from 'react-icons/ai'; 
 
 const LawFirmSignUp = () => {
   const [passwordVisible, setPasswordVisible] = useState(false); 
@@ -20,37 +19,56 @@ const LawFirmSignUp = () => {
   const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate(); 
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (!lawFirmName || !fullName || !email || !password || !confirmPassword) {
-      setErrorMessage("All fields are required.");
-      return;
+        setErrorMessage("All fields are required.");
+        return;
     }
-
+ 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-      setErrorMessage("Invalid email format.");
-      return;
+        setErrorMessage("Invalid email format.");
+        return;
     }
-
+ 
     if (password.length < 8) {
-      setErrorMessage("Password must be at least 8 characters.");
-      return;
+        setErrorMessage("Password must be at least 8 characters.");
+        return;
     }
-
+ 
     if (password !== confirmPassword) {
-      setErrorMessage("Passwords do not match."); 
-      return; 
+        setErrorMessage("Passwords do not match."); 
+        return; 
     }
-    
+ 
     setErrorMessage("");
-    setIsLoading(true); // Start loading
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate('/otp'); 
-    }, 2000); // Simulated delay
-  };
+    setIsLoading(true); 
+ 
+    try {
+        const response = await fetch('https://lejit-backend-node.onrender.com/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                law_firm: lawFirmName,
+                username: fullName,
+                email: email,
+                password: password
+            }),
+        });
+ 
+        const data = await response.json();
+        if (response.ok) {
+            navigate('/otp'); 
+        } else {
+            setErrorMessage(data.message || 'Failed to create account');
+        }
+    } catch (error) {
+        setErrorMessage('Server error. Please try again later.');
+    } finally {
+        setIsLoading(false);
+    }
+ };
+ 
 
   return (
     
@@ -123,7 +141,7 @@ const LawFirmSignUp = () => {
 
         {errorMessage && (
           <div className="error-message">
-            <AiFillWarning className="error-icon" /> {/* Icon for error */}
+            <AiFillWarning className="error-icon" /> 
             {errorMessage}
           </div>
         )}
@@ -132,7 +150,7 @@ const LawFirmSignUp = () => {
         <button 
           className="sign-up-button" 
           onClick={handleSignUp}
-          disabled={isLoading} // Disable button when loading
+          disabled={isLoading} 
         >
           {isLoading ? "Creating Account..." : "LET'S GET STARTED"}
         </button>

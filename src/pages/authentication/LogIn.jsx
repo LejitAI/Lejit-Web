@@ -14,21 +14,34 @@ const LogIn = () => {
 
   const navigate = useNavigate(); 
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     if (!email || !password) {
-      setErrorMessage("Email and password are required."); 
-      return; 
+       setErrorMessage("Email and password are required.");
+       return;
     }
-    
-    // Simulate sign-in logic and replace with real authentication call
-    if (email !== "test@example.com" || password !== "password") {
-      setErrorMessage("Invalid email or password."); 
-      return; 
+ 
+    try {
+       const response = await fetch("http://13.232.153.48:5000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+       });
+ 
+       const data = await response.json();
+ 
+       if (!response.ok) {
+          setErrorMessage(data.message || "Invalid email or password.");
+       } else {
+          localStorage.setItem("token", data.token);
+ 
+          setErrorMessage("");
+          navigate("/lawfirmsignup"); 
+       }
+    } catch (error) {
+       setErrorMessage("Server error. Please try again later.");
     }
-
-    setErrorMessage(""); 
-    navigate('/lawfirmsignup'); 
-  };
+ };
+ 
 
   return (
     <div className="login-container">
