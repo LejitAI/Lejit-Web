@@ -4,6 +4,8 @@ import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import LogIn from './pages/authentication/LogIn';
 import LawFirmSignUp from './pages/authentication/LawFirmSignUp';
+import EmailOTP from './pages/authentication/EmailOTP';
+import LawFirmLanding from './pages/lawfirm/editLawFirm/LawFirmLanding';
 import CDashboard from './pages/citizen/Dashboard/CDashboard';
 import MyCases from './pages/citizen/MyCases/MyCases';
 import Appointments from './pages/citizen/MyCases/Appointments/Appointments';
@@ -30,6 +32,8 @@ function App() {
           <Routes>
             <Route path="/" element={<LogIn />} />
             <Route path="/lawfirmsignup" element={<LawFirmSignUp />} /> 
+            <Route path="/otp" element={<EmailOTP />} />
+            <Route path="/landing" element={<LawFirmLanding />} />
             <Route path="/law-firm" element={<LDashboard />} />
             <Route path="/law-firm/manage-case" element={<ManageCases/>} />
             <Route path="/law-firm/case/:id" element={<CaseView />} />

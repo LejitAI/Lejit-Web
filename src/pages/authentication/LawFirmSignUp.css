@@ -7,6 +7,7 @@
     width: 100vw;
     height: 100vh;
     background: #F2F5FA;
+    margin-top: 0px;
 }
 
 /* Left Box */
@@ -32,8 +33,8 @@
 }
 
 .logo {
-    width: 220px;
-    height: 220px;
+    width: 320px;
+    height: 320px;
     background: #041131;
     border-radius: 50%;
 }
@@ -44,6 +45,7 @@
     font-weight: 600;
     font-size: 32px;
     color: #120D26;
+    margin-top: 20px;
 }
 
 .welcome-back {
@@ -51,6 +53,7 @@
     font-weight: 300;
     font-size: 16px;
     color: #120D26;
+    margin-top: -20px;
 }
 
 /* Input Fields */
@@ -64,6 +67,7 @@
     background: #FFFFFF;
     border-radius: 12px;
     padding: 16px;
+    height: 56px;
 }
 
 .input-field {
@@ -130,6 +134,7 @@
     padding: 16px;
     width: 100%;
     cursor: pointer;
+    height: 56px;
 }
 
 .google-login {

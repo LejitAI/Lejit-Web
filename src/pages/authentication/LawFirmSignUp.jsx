@@ -48,11 +48,12 @@ const LawFirmSignUp = () => {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      navigate('/'); // Redirect on success
+      navigate('/otp'); 
     }, 2000); // Simulated delay
   };
 
   return (
+    
     <div className="signup-container">
       <div className="left-box">
         <h1 className="signup-title">Let's create your Account</h1>

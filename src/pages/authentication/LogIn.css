@@ -32,8 +32,8 @@
 }
 
 .logo {
-    width: 220px;
-    height: 220px;
+    width: 320px;
+    height: 320px;
     background: #041131;
     border-radius: 50%;
 }
@@ -146,7 +146,12 @@
 
 .sign-up-text a {
     color: #0F67FD;
-    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 0;
 }
 
 /* Responsive Design */
