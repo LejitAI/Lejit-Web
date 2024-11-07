@@ -21,7 +21,7 @@ const LawFirmDetailsPage = () => {
               </div>
               <button className="ebutton">Edit Profile</button>
             </div>
-            <hr className="divider" />
+            <hr className="ldivider" />
 
             {/* Action Section 1 */}
             <div className="action-section">
