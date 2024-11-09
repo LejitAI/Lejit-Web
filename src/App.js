@@ -7,6 +7,8 @@ import LawFirmSignUp from './pages/authentication/LawFirmSignUp';
 import EmailOTP from './pages/authentication/EmailOTP';
 import LawFirmLanding from './pages/lawfirm/editLawFirm/LawFirmLanding';
 import AddUser from './pages/lawfirm/forms/AddUser';
+import ViewTeam from './pages/lawfirm/(dashboard)/ViewTeam';
+import Profile from './pages/lawfirm/(dashboard)/Profile';
 import CDashboard from './pages/citizen/Dashboard/CDashboard';
 import MyCases from './pages/citizen/MyCases/MyCases';
 import Appointments from './pages/citizen/MyCases/Appointments/Appointments';
@@ -37,6 +39,7 @@ function App() {
             <Route path="/landing" element={<LawFirmLanding />} />
             <Route path="/addUser" element={<AddUser />} />
             <Route path="/law-firm" element={<LDashboard />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="/law-firm/manage-case" element={<ManageCases/>} />
             <Route path="/law-firm/case/:id" element={<CaseView />} />
             <Route path="/law-firm/add-user" element={<UserPage />} />

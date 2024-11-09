@@ -26,7 +26,7 @@ const LawFirmDetailsPage = () => {
   };
 
   const handleSkip = () => {
-    navigate('/citizen/cdashboard');
+    navigate('/profile');
   };
 
   return (
