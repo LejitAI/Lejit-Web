@@ -1,7 +1,7 @@
 import { ColorModeContext, useMode } from "../../../theme";
 import { CssBaseline, ThemeProvider, Box } from "@mui/material";
 import Topbar from "../global/Topbar";
-import Sidebar from "../global/Sidebar";
+import Sidebar from "../../lawfirm/global/Sidebar";
 import Header from "../global/Header";
 
 function App() {

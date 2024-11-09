@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import './LawFirmLanding.css';
 import '../forms/AddUser.css';
 import AddUser from '../forms/AddUser';
@@ -6,6 +7,15 @@ import Logo from '../../assets/logo.png';
 
 const LawFirmDetailsPage = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [lawFirmName, setLawFirmName] = useState('');
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    const storedLawFirmName = localStorage.getItem('lawFirmName');
+    if (storedLawFirmName) {
+      setLawFirmName(storedLawFirmName);
+    }
+  }, []);
 
   const handleAddTeamMember = () => {
     setShowPopup(true);
@@ -15,12 +25,16 @@ const LawFirmDetailsPage = () => {
     setShowPopup(false);
   };
 
+  const handleSkip = () => {
+    navigate('/citizen/cdashboard');
+  };
+
   return (
     <div className="lawfirm-container">
       <div className="lawfirm-left">
         <div className="law-firm-details">
           <div className="heading">
-            <h1>Welcome, Law Firm LLC!</h1>
+            <h1>Welcome, {lawFirmName || 'Law Firm'}!</h1>
             <p>Let’s build your professional profile and showcase your legal expertise</p>
           </div>
           <div className="content">
@@ -28,7 +42,7 @@ const LawFirmDetailsPage = () => {
             <div className="firm-profile">
               <div className="profile-picture" />
               <div className="profile-info">
-                <p className="profile-name">Law Firm LLC</p>
+                <p className="profile-name">{lawFirmName || 'Law Firm'}</p>
                 <p className="profile-role">12 years</p>
               </div>
               <button className="ebutton">Edit Profile</button>
@@ -79,7 +93,7 @@ const LawFirmDetailsPage = () => {
             </div>
 
             <div className="skip-section">
-              <button className="skip-button">Skip for Now</button>
+              <button className="skip-button" onClick={handleSkip}>Skip for Now</button>
             </div>
           </div>
         </div>
@@ -88,7 +102,6 @@ const LawFirmDetailsPage = () => {
         <img src={Logo} alt="Logo" className="logo" />
       </div>
 
-      {/* Render AddUser as a popup overlay */}
       {showPopup && <AddUser onClose={handleClosePopup} />}
     </div>
   );

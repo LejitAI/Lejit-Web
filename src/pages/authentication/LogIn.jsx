@@ -38,7 +38,7 @@ const LogIn = () => {
           localStorage.setItem("token", data.token);
  
           setErrorMessage("");
-          navigate("/lawfirmsignup"); 
+          navigate("/landing"); 
        }
     } catch (error) {
        setErrorMessage("Server error. Please try again later.");

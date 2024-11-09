@@ -31,8 +31,8 @@ function App() {
         <CssBaseline />  
         <Router>
           <Routes>
-            <Route path="/" element={<LogIn />} />
-            <Route path="/lawfirmsignup" element={<LawFirmSignUp />} /> 
+            <Route path="/" element={<LawFirmSignUp />} />
+            <Route path="/signin" element={<LogIn/>} /> 
             <Route path="/otp" element={<EmailOTP />} />
             <Route path="/landing" element={<LawFirmLanding />} />
             <Route path="/addUser" element={<AddUser />} />

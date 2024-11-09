@@ -278,4 +278,13 @@
     margin-right: 8px; /* Space between icon and text */
   }
   
+  .sign-in-link {
+    color: #0f67fd;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .sign-in-link:hover {
+    color: #0844a6;
+  }
   

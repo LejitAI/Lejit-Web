@@ -71,7 +71,6 @@ const LawFirmSignUp = () => {
  
 
   return (
-    
     <div className="signup-container">
       <div className="left-box">
         <h1 className="signup-title">Let's create your Account</h1>
@@ -146,7 +145,6 @@ const LawFirmSignUp = () => {
           </div>
         )}
 
-
         <button 
           className="sign-up-button" 
           onClick={handleSignUp}
@@ -167,7 +165,13 @@ const LawFirmSignUp = () => {
         </button>
 
         <p className="sign-up-text">
-          Already have an account? <a href="/">Sign In</a>
+          Already have an account?{" "}
+          <span 
+            className="sign-in-link" 
+            onClick={() => navigate('/signin')}
+          >
+            Sign In
+          </span>
         </p>
       </div>
 
