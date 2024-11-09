@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './LawFirmLanding.css';
+import '../forms/AddUser.css';
+import AddUser from '../forms/AddUser';
 import Logo from '../../assets/logo.png';
 
 const LawFirmDetailsPage = () => {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleAddTeamMember = () => {
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <div className="lawfirm-container">
       <div className="lawfirm-left">
@@ -63,23 +75,21 @@ const LawFirmDetailsPage = () => {
                 <p className="primary-text">Add Team Members</p>
                 <p className="secondary-text">Add team member details</p>
               </div>
-              <button className="button">Add</button>
+              <button className="button" onClick={handleAddTeamMember}>Add</button>
             </div>
 
-            {/* Skip for Now Button */}
-            {/* Skip for Now Button */}
             <div className="skip-section">
-  <button className="skip-button">
-    Skip for Now
-  </button>
-</div>
-
+              <button className="skip-button">Skip for Now</button>
+            </div>
           </div>
         </div>
       </div>
       <div className="lawfirm-right">
         <img src={Logo} alt="Logo" className="logo" />
       </div>
+
+      {/* Render AddUser as a popup overlay */}
+      {showPopup && <AddUser onClose={handleClosePopup} />}
     </div>
   );
 };
