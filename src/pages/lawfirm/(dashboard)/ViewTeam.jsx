@@ -6,8 +6,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import SortIcon from '@mui/icons-material/Sort';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StarIcon from '@mui/icons-material/Star';
-import './ViewTeam.css'; // Import the CSS for styling
-
+import './ViewTeam.css'; 
 const ViewTeam = () => {
     const [teamMembers, setTeamMembers] = useState([]);
     
@@ -98,6 +97,7 @@ const ViewTeam = () => {
                     </Box>
                 ))}
             </Box>
+            
         </Box>
     );
 };

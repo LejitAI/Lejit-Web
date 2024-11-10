@@ -76,39 +76,39 @@ const LawFirmSignUp = () => {
         <h1 className="signup-title">Let's create your Account</h1>
         <p className="welcome-back">Get started with us!</p>
 
-        <div className="input-fields">
-          <div className="input-container">
+        <div className="signup-input-fields">
+          <div className="signup-input-container">
             <input 
               type="text" 
               placeholder="Law Firm Name" 
-              className="input-field" 
+              className="signup-input-field" 
               value={lawFirmName}
               onChange={(e) => setLawFirmName(e.target.value)}
             />
           </div>
-          <div className="input-container">
+          <div className="signup-input-container">
             <input 
               type="text" 
               placeholder="Full Name" 
-              className="input-field" 
+              className="signup-input-field" 
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
             />
           </div>
-          <div className="input-container">
+          <div className="signup-input-container">
             <input 
               type="email" 
               placeholder="Email" 
-              className="input-field" 
+              className="signup-input-field" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="input-container">
+          <div className="signup-input-container">
             <input 
               type={passwordVisible ? "text" : "password"} 
               placeholder="Your password" 
-              className="input-field" 
+              className="signup-input-field" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -120,11 +120,11 @@ const LawFirmSignUp = () => {
               {passwordVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
             </button>
           </div>
-          <div className="input-container">
+          <div className="signup-input-container">
             <input 
               type={confirmPasswordVisible ? "text" : "password"} 
               placeholder="Confirm password" 
-              className="input-field" 
+              className="signup-input-field" 
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />

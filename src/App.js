@@ -2,6 +2,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import Introduction from './pages/authentication/Introduction';
 import LogIn from './pages/authentication/LogIn';
 import LawFirmSignUp from './pages/authentication/LawFirmSignUp';
 import EmailOTP from './pages/authentication/EmailOTP';
@@ -33,7 +34,8 @@ function App() {
         <CssBaseline />  
         <Router>
           <Routes>
-            <Route path="/" element={<LawFirmSignUp />} />
+            <Route path="/" element={<Introduction />} />
+            <Route path="/lawfirmsignup" element={<LawFirmSignUp />} />
             <Route path="/signin" element={<LogIn/>} /> 
             <Route path="/otp" element={<EmailOTP />} />
             <Route path="/landing" element={<LawFirmLanding />} />
