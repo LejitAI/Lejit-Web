@@ -48,11 +48,11 @@ const LogIn = () => {
 
   return (
     <div className="login-container">
-      <div className="left-box">
+      <div className="login-left-box">
         <h1 className="login-title">Sign In to your Account</h1>
         <p className="welcome-back">Welcome back!</p>
 
-        <div className="input-fields">
+        <div className="login-input-fields">
           <div className="input-container">
             <input 
               type="email" 
@@ -97,7 +97,7 @@ const LogIn = () => {
 
         <button className="sign-in-button" onClick={handleSignIn}>SIGN IN</button>
 
-        <div className="divider">OR</div>
+        <div className="logindivider">OR</div>
 
         <button className="google-login">
           <img src={GoogleLogo} alt="Google Logo" className="social-icon" />
@@ -109,7 +109,7 @@ const LogIn = () => {
         </button>
 
         <p className="sign-up-text">
-          Don’t have an account? <a href="/">Sign Up</a>
+          Don’t have an account? <a href="/lawfirmsignup">Sign Up</a>
         </p>
       </div>
 
