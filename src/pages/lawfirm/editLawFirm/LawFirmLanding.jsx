@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import './LawFirmLanding.css';
 import '../forms/AddUser.css';
 import AddUser from '../forms/AddUser';
+import AddCase from '../forms/AddCase'; // Import AddCase component
 import Logo from '../../assets/logo.png';
 
 const LawFirmDetailsPage = () => {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showAddUserPopup, setShowAddUserPopup] = useState(false);
+  const [showAddCasePopup, setShowAddCasePopup] = useState(false); // State for AddCase popup
   const [lawFirmName, setLawFirmName] = useState('');
   const navigate = useNavigate(); 
 
@@ -18,11 +20,16 @@ const LawFirmDetailsPage = () => {
   }, []);
 
   const handleAddTeamMember = () => {
-    setShowPopup(true);
+    setShowAddUserPopup(true);
+  };
+
+  const handleAddCase = () => {
+    setShowAddCasePopup(true);
   };
 
   const handleClosePopup = () => {
-    setShowPopup(false);
+    setShowAddUserPopup(false);
+    setShowAddCasePopup(false);
   };
 
   const handleSkip = () => {
@@ -78,7 +85,7 @@ const LawFirmDetailsPage = () => {
                 <p className="primary-text">Add Cases</p>
                 <p className="secondary-text">Add open and closed cases</p>
               </div>
-              <button className="button">Add</button>
+              <button className="button" onClick={handleAddCase}>Add</button> {/* Updated onClick */}
             </div>
             <hr className="divider" />
 
@@ -102,7 +109,11 @@ const LawFirmDetailsPage = () => {
         <img src={Logo} alt="Logo" className="logo" />
       </div>
 
-      {showPopup && <AddUser onClose={handleClosePopup} />}
+      {/* Popup for Add Team Member */}
+      {showAddUserPopup && <AddUser onClose={handleClosePopup} />}
+
+      {/* Popup for Add Case */}
+      {showAddCasePopup && <AddCase isOpen={showAddCasePopup} onClose={handleClosePopup} />} {/* AddCase popup */}
     </div>
   );
 };
