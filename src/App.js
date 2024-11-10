@@ -2,10 +2,15 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import Introduction from './pages/authentication/Introduction';
 import LogIn from './pages/authentication/LogIn';
 import LawFirmSignUp from './pages/authentication/LawFirmSignUp';
 import EmailOTP from './pages/authentication/EmailOTP';
 import LawFirmLanding from './pages/lawfirm/editLawFirm/LawFirmLanding';
+import AddUser from './pages/lawfirm/forms/AddUser';
+import ViewTeam from './pages/lawfirm/(dashboard)/ViewTeam';
+import Profile from './pages/lawfirm/(dashboard)/Profile';
+import AddCase from './pages/lawfirm/forms/AddCase';
 import CDashboard from './pages/citizen/Dashboard/CDashboard';
 import MyCases from './pages/citizen/MyCases/MyCases';
 import Appointments from './pages/citizen/MyCases/Appointments/Appointments';
@@ -30,11 +35,15 @@ function App() {
         <CssBaseline />  
         <Router>
           <Routes>
-            <Route path="/" element={<LogIn />} />
-            <Route path="/lawfirmsignup" element={<LawFirmSignUp />} /> 
+            <Route path="/" element={<Introduction />} />
+            <Route path="/lawfirmsignup" element={<LawFirmSignUp />} />
+            <Route path="/signin" element={<LogIn/>} /> 
             <Route path="/otp" element={<EmailOTP />} />
             <Route path="/landing" element={<LawFirmLanding />} />
+            <Route path="/addUser" element={<AddUser />} />
+            <Route path="/addCase" element={<AddCase />} />
             <Route path="/law-firm" element={<LDashboard />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="/law-firm/manage-case" element={<ManageCases/>} />
             <Route path="/law-firm/case/:id" element={<CaseView />} />
             <Route path="/law-firm/add-user" element={<UserPage />} />

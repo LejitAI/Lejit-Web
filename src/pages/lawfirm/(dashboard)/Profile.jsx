@@ -1,15 +1,12 @@
+import React from 'react';
 import { ColorModeContext, useMode } from "../../../theme";
 import { CssBaseline, ThemeProvider, Box } from "@mui/material";
 import Topbar from "../../lawfirm/global/Topbar";
 import Sidebar from "../../lawfirm/global/Sidebar";
-import Header from "../global/Header";
+import ViewTeam from "./ViewTeam"; // Make sure to adjust the import path as per your structure
 
 function App() {
     const [theme, colorMode] = useMode();
-
-    // Use conditional rendering or props to determine the page's title and subtitle
-    const pageTitle = "DASHBOARD"; // Change this based on the page context
-    const pageSubtitle = "Welcome to your dashboard"; // Subtitle for the current page
 
     return (
         <ColorModeContext.Provider value={colorMode}>
@@ -25,10 +22,7 @@ function App() {
                     >
                         <Topbar />
                         <Box component="main" flexGrow={1} p={2}>
-                            <Box display="flex" justifyContent="center" mt={4}>
-                                <Header title={pageTitle} subtitle={pageSubtitle} />
-                            </Box>
-                            {/* Main content goes here */}
+                            <ViewTeam /> {/* Main content (ViewTeam component) goes here */}
                         </Box>
                     </Box>
                 </Box>

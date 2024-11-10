@@ -57,7 +57,7 @@
 }
 
 /* Input Fields */
-.input-fields {
+.signup-input-fields {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -70,7 +70,7 @@
     height: 56px;
 }
 
-.input-field {
+.signup-input-field {
     width: 100%;
     border: none;
     outline: none;
@@ -248,7 +248,7 @@
     margin-right: 8px; 
 }
 
-.input-container {
+.signup-input-container {
     position: relative; 
   }
   
@@ -278,4 +278,13 @@
     margin-right: 8px; /* Space between icon and text */
   }
   
+  .sign-in-link {
+    color: #0f67fd;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .sign-in-link:hover {
+    color: #0844a6;
+  }
   
