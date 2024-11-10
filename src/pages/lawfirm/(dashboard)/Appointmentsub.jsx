@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Typography,
@@ -12,10 +12,16 @@ import {
   Divider,
   TextField,
   InputAdornment,
+  Badge,
+  Collapse,
+  IconButton,
 } from '@mui/material';
-import { Search, FilterList, CloudDownload, Close, Check } from '@mui/icons-material';
+import { Search, FilterList, CloudDownload, Close, Check, ExpandMore, ExpandLess } from '@mui/icons-material';
 
 const Appointments = () => {
+  const [expanded, setExpanded] = useState({});
+  const [tabIndex, setTabIndex] = useState(0);
+
   const appointments = Array(6).fill({
     title: "Appointment Request",
     date: "22nd August, 2:00 pm - 4:00 pm",
@@ -24,14 +30,18 @@ const Appointments = () => {
       caseType: "Family Dispute Case",
       description: "The client was charged with multiple counts of fraud and faced significant prison time. The Client...",
     },
-    status: "Pending"
+    status: "Pending",
   });
+
+  const handleExpandClick = (index) => {
+    setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
 
   return (
     <Box
       sx={{
         p: 3,
-        backgroundColor: '#f9f9f9', 
+        backgroundColor: '#f9f9f9',
         minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
@@ -44,7 +54,7 @@ const Appointments = () => {
           backgroundColor: '#FFFFFF',
           borderRadius: 3,
           p: 3,
-          boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.15)', // 3D shadow for the entire container
+          boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.15)',
         }}
       >
         {/* Header */}
@@ -54,18 +64,16 @@ const Appointments = () => {
           alignItems="center"
           sx={{ backgroundColor: '#FFFFFF', borderRadius: 2, p: 2, mb: 2 }}
         >
-<Typography 
-  variant="h6" 
-  sx={{ 
-    fontWeight: 500, 
-    fontSize: '18px', 
-    lineHeight: '22px',
-    height: '22px',
-    overflow: 'hidden' 
-  }}
->
-  My Appointments
-</Typography>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              fontWeight: 500, 
+              fontSize: '18px', 
+              lineHeight: '22px'
+            }}
+          >
+            My Appointments
+          </Typography>
           <Box display="flex" gap={2}>
             <TextField
               placeholder="Search List"
@@ -86,37 +94,33 @@ const Appointments = () => {
         </Box>
 
         {/* Tabs */}
-        <Tabs value={0} aria-label="appointment tabs" sx={{ mb: 2 }}>
-          <Tab
-            label="Pending Appointments"
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              padding: '7px 14px',
-              gap: '10px',
-              width: '189px',
-              height: '39px',
-              backgroundColor: '#0F67FD', // Navy Blue background
-              borderRadius: '10px',
-              fontFamily: 'Poppins',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              color:'#FFFFF',
-              fontSize: '14px',
-              lineHeight: '21px',
-              textTransform: 'none',
-            }}
-          />
-          <Tab label="Court Hearings" sx={{ textTransform: 'none' }} />
-          <Tab label="Client Appointments" sx={{ textTransform: 'none' }} />
+        <Tabs 
+          value={tabIndex} 
+          onChange={(e, newValue) => setTabIndex(newValue)}
+          sx={{ mb: 2 }}
+          indicatorColor="primary"
+          textColor="primary"
+        >
+          <Tab label="Pending Appointments" />
+          <Tab label="Court Hearings" />
+          <Tab label="Client Appointments" />
         </Tabs>
 
         {/* Appointment Cards */}
         <Box display="flex" flexWrap="wrap" gap={2} justifyContent="center">
           {appointments.map((appointment, index) => (
-            <Card key={index} sx={{ width: 357, p: 2, boxShadow: 2, borderRadius: 2 }}>
+            <Card 
+              key={index} 
+              sx={{ 
+                width: 357, 
+                boxShadow: 3, 
+                borderRadius: 2, 
+                transition: 'transform 0.2s', 
+                '&:hover': { transform: 'scale(1.02)' } 
+              }}
+            >
               <CardContent>
+                
                 <Typography variant="subtitle2" color="textSecondary">
                   {appointment.title}
                 </Typography>
@@ -133,10 +137,21 @@ const Appointments = () => {
                     <Typography variant="body2" color="textSecondary">
                       {appointment.client.caseType}
                     </Typography>
+                  </Box>
+                </Box>
+                <Box mt={2}>
+                  <Collapse in={expanded[index]}>
                     <Typography variant="body2" color="textSecondary">
                       {appointment.client.description}
                     </Typography>
-                  </Box>
+                  </Collapse>
+                  <Button
+                    onClick={() => handleExpandClick(index)}
+                    endIcon={expanded[index] ? <ExpandLess /> : <ExpandMore />}
+                    sx={{ textTransform: 'none', color: '#0F67FD' }}
+                  >
+                    {expanded[index] ? 'Show Less' : 'Show More'}
+                  </Button>
                 </Box>
               </CardContent>
               <CardActions>
@@ -148,6 +163,9 @@ const Appointments = () => {
                     textTransform: 'none',
                     borderRadius: 2,
                     mr: 1,
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 14, 0, 0.2)',
+                    },
                   }}
                   fullWidth
                 >
@@ -160,6 +178,9 @@ const Appointments = () => {
                     color: '#0F67FD',
                     textTransform: 'none',
                     borderRadius: 2,
+                    '&:hover': {
+                      backgroundColor: '#e0ebff',
+                    },
                   }}
                   fullWidth
                 >
@@ -173,8 +194,16 @@ const Appointments = () => {
         {/* Pagination */}
         <Box display="flex" justifyContent="center" alignItems="center" mt={3}>
           <Button>Prev</Button>
-          {[...Array(20)].map((_, i) => (
-            <Button key={i} variant={i === 2 ? 'contained' : 'text'} sx={{ mx: 0.5 }}>
+          {[...Array(5)].map((_, i) => (
+            <Button 
+              key={i} 
+              variant={i === 2 ? 'contained' : 'text'} 
+              sx={{ 
+                mx: 0.5, 
+                fontWeight: i === 2 ? 'bold' : 'normal', 
+                color: i === 2 ? '#fff' : 'inherit' 
+              }}
+            >
               {i + 1}
             </Button>
           ))}
