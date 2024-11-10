@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, IconButton, Avatar, Tooltip } from '@mui/material';
+import { Box, Typography, IconButton, Avatar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import DownloadIcon from '@mui/icons-material/Download';
 import SortIcon from '@mui/icons-material/Sort';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StarIcon from '@mui/icons-material/Star';
-import './ViewTeam.css'; 
+import './ViewTeam.css';
+
 const ViewTeam = () => {
     const [teamMembers, setTeamMembers] = useState([]);
-    
+
     useEffect(() => {
         fetchTeamMembers();
     }, []);
@@ -17,7 +18,7 @@ const ViewTeam = () => {
     const fetchTeamMembers = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://13.232.153.48:5000/api/admin/team-members', {
+            const response = await fetch('http://13.232.153.48:5000/api/admin/get-team-members', {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -25,7 +26,7 @@ const ViewTeam = () => {
             });
             if (response.ok) {
                 const result = await response.json();
-                setTeamMembers(result.teamMembers);
+                setTeamMembers(result);
             }
         } catch (error) {
             console.error('Error fetching team members:', error);
@@ -77,7 +78,7 @@ const ViewTeam = () => {
                                 <Typography>Cases Solved - {member.casesSolved || 'N/A'}</Typography>
                             </Box>
                             <Typography className="added-date">
-                                Added On {member.dateAdded || 'N/A'}
+                                Added On {member.createdAt || 'N/A'}
                             </Typography>
                         </Box>
                         <Box className="rating">
@@ -87,12 +88,12 @@ const ViewTeam = () => {
                                         key={i}
                                         className="star"
                                         style={{
-                                            color: i < Math.round(member.rating) ? '#FBCE1B' : '#D0D0D0',
+                                            color: i < Math.round(member.rating || 0) ? '#FBCE1B' : '#D0D0D0',
                                         }}
                                     />
                                 ))}
                             </Box>
-                            <Typography className="rating-score">{member.rating.toFixed(1)}</Typography>
+                            <Typography className="rating-score">{member.rating ? member.rating.toFixed(1) : 'N/A'}</Typography>
                         </Box>
                     </Box>
                 ))}
@@ -103,4 +104,3 @@ const ViewTeam = () => {
 };
 
 export default ViewTeam;
-    
