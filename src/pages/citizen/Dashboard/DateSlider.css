@@ -1,0 +1,70 @@
+.date-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%; /* Full width for smooth sliding */
+    position: relative;
+}
+
+.date-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding-inline: 1rem;
+    scroll-padding-inline: 1rem;
+    /* Hide scroll bars */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.date-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+}
+
+.date-item {
+    scroll-snap-align: center;
+    color: #545252;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    padding: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+}
+
+.date-item.highlight {
+    color: #fff;
+    background-color: #007bff;
+}
+
+.date-item.hovered {
+    transform: scale(1.1);
+}
+
+.date-day {
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+.date-number {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+.date-month {
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+/* Add a light grey background to the entire date slider area */
+.date-slider {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+}
