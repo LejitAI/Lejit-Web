@@ -58,7 +58,7 @@ const AddCase = ({ isOpen, onClose }) => {
     const handleSubmit = async () => {
         if (!validateForm()) return;
 
-        const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGU4NTJjYzYxMjBiM2JkNTIzZWE3MyIsImlhdCI6MTczMTI0OTUyMSwiZXhwIjoxNzMxMjUzMTIxfQ.9L98w0PeE1SW_GZknckTkLEc37kjgFmvPwEw2XDD_gI';
+        const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGU4NTJjYzYxMjBiM2JkNTIzZWE3MyIsImlhdCI6MTczMTI1Mzc5OCwiZXhwIjoxNzMxMjU3Mzk4fQ.E3MwKhRynKRebS1w2Fvz_ijJQ85elvp6tSljHqvV-qE';
         const data = { ...caseDetails };
 
         try {
