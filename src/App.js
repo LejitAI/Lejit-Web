@@ -12,12 +12,16 @@ import ViewTeam from './pages/lawfirm/(dashboard)/ViewTeam';
 import Profile from './pages/lawfirm/(dashboard)/Profile';
 import Appointments from './pages/lawfirm/(dashboard)/Appointments';
 import AddCase from './pages/lawfirm/forms/AddCase';
+import AskAI from './pages/lawfirm/global/AskAI';
+import ConvoAgent from './pages/lawfirm/(dashboard)/ConvoAgent';
+import EditProfile from './pages/lawfirm/forms/EditProfile';
 import CDashboard from './pages/citizen/Dashboard/CDashboard';
 import MyCases from './pages/citizen/MyCases/MyCases';
 import Topbar from './pages/citizen/global/Topbar';
 import Dashboard from './pages/citizen/NDashboard/Dashboard'
 import CitizenLayout from './pages/citizen/CitizenLayout';
 import Cases from './pages/citizen/Cases/MyCases';
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -38,6 +42,9 @@ function App() {
             <Route path="/appointments" element={<Appointments />} />      
             <Route path="/citizen/cdashboard" element={<Dashboard />} />
             <Route path="/cases" element={<Cases />} />
+            <Route path="/AI" element={<AskAI />} />
+            <Route path="/convoagent" element={<ConvoAgent />} />
+            <Route path="/editprofile" element={<EditProfile />} />
             {/* <Route path="/contacts" element={<Contacts />} /> */}
             {/* <Route path="/invoices" element={<Invoices />} />*/}
             {/* <Route path="/form" element={<Form />} />*/}

@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import './LawFirmLanding.css';
 import '../forms/AddUser.css';
 import AddUser from '../forms/AddUser';
-import AddCase from '../forms/AddCase'; // Import AddCase component
+import AddCase from '../forms/AddCase';
+import EditProfile from '../forms/EditProfile'; // Import EditProfile component
 import Logo from '../../assets/logo.png';
 
 const LawFirmDetailsPage = () => {
   const [showAddUserPopup, setShowAddUserPopup] = useState(false);
-  const [showAddCasePopup, setShowAddCasePopup] = useState(false); // State for AddCase popup
+  const [showAddCasePopup, setShowAddCasePopup] = useState(false);
+  const [showEditProfilePopup, setShowEditProfilePopup] = useState(false); // State for EditProfile popup
   const [lawFirmName, setLawFirmName] = useState('');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedLawFirmName = localStorage.getItem('lawFirmName');
@@ -27,9 +29,14 @@ const LawFirmDetailsPage = () => {
     setShowAddCasePopup(true);
   };
 
+  const handleEditProfile = () => {
+    setShowEditProfilePopup(true);
+  };
+
   const handleClosePopup = () => {
     setShowAddUserPopup(false);
     setShowAddCasePopup(false);
+    setShowEditProfilePopup(false); // Close EditProfile popup
   };
 
   const handleSkip = () => {
@@ -52,7 +59,7 @@ const LawFirmDetailsPage = () => {
                 <p className="profile-name">{lawFirmName || 'Law Firm'}</p>
                 <p className="profile-role">12 years</p>
               </div>
-              <button className="ebutton">Edit Profile</button>
+              <button className="ebutton" onClick={handleEditProfile}>Edit Profile</button>
             </div>
             <hr className="ldivider" />
 
@@ -85,7 +92,7 @@ const LawFirmDetailsPage = () => {
                 <p className="primary-text">Add Cases</p>
                 <p className="secondary-text">Add open and closed cases</p>
               </div>
-              <button className="button" onClick={handleAddCase}>Add</button> {/* Updated onClick */}
+              <button className="button" onClick={handleAddCase}>Add</button>
             </div>
             <hr className="divider" />
 
@@ -110,10 +117,31 @@ const LawFirmDetailsPage = () => {
       </div>
 
       {/* Popup for Add Team Member */}
-      {showAddUserPopup && <AddUser onClose={handleClosePopup} />}
+      {showAddUserPopup && (
+        <div className="popup-overlay">
+          <div className="popup-container">
+            <AddUser onClose={handleClosePopup} />
+          </div>
+        </div>
+      )}
 
       {/* Popup for Add Case */}
-      {showAddCasePopup && <AddCase isOpen={showAddCasePopup} onClose={handleClosePopup} />} {/* AddCase popup */}
+      {showAddCasePopup && (
+        <div className="popup-overlay">
+          <div className="popup-container">
+            <AddCase isOpen={showAddCasePopup} onClose={handleClosePopup} />
+          </div>
+        </div>
+      )}
+
+      {/* Popup for Edit Profile */}
+      {showEditProfilePopup && (
+        <div className="popup-overlay">
+          <div className="popup-container">
+            <EditProfile onClose={handleClosePopup} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
