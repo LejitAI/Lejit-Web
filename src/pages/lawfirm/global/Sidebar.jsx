@@ -16,6 +16,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from './lejit-logo-removebg-preview copy.png';
+import PeopleIcon from '@mui/icons-material/People'; 
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline'; 
 
 const Sidebar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -26,8 +28,10 @@ const Sidebar = () => {
 
   // Define the menu items with paths
   const menuItems = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: '/citizen/cdashboard' },
+    { text: 'Dashboard', icon: <DashboardIcon />, path: '/ldashboard' },
     { text: 'My Cases', icon: <FolderIcon />, path: '/cases' },
+    { text: 'Clients', icon: <PersonOutlineIcon />, path: '/clients' },
+    { text: 'Team Members', icon: <PeopleIcon />, path: '/profile' }, 
     { text: 'Documents', icon: <ArticleIcon />, path: '/documents' },
     { text: 'Appointments', icon: <CalendarTodayIcon />, path: '/appointments' },
     { text: 'Hearing Schedule', icon: <ScheduleIcon />, path: '/hearing' },
@@ -35,9 +39,8 @@ const Sidebar = () => {
     { text: 'Knowledge Hub', icon: <BookIcon />, path: '/knowledge' },
     { text: 'Notification', icon: <NotificationsIcon />, path: '/notification' },
     { text: 'Analytics/Reports', icon: <BarChartIcon />, path: '/analytics' },
-    { text: 'Profile', icon: <PersonIcon />, path: '/profile' },
+    { text: 'Profile', icon: <PersonIcon />, path: '/Profile' },
     { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
-    { text: 'Logout', icon: <ExitToAppIcon />, path: '/logout' },
   ];
 
   // Toggle the drawer for mobile view

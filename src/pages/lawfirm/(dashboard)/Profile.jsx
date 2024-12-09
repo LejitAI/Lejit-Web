@@ -61,17 +61,7 @@ function App() {
           Add Team Member
         </Button>
 
-        {/* Fixed Ask AI Box */}
-        <div
-          style={{
-            position: "fixed",
-            bottom: "40px",
-            left: "280px",
-            zIndex: 1000, // Ensure it appears on top
-          }}
-        >
-          <AskAI />
-        </div>
+        
 
         {/* Popup for Add Team Member */}
         {showAddUserPopup && <AddUser onClose={handleClosePopup} />}
