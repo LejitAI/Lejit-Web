@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import "./BlueButton.css";
 
 const BlueButton = ({ onClick }) => {
-  const [position, setPosition] = useState({ bottom: "50px", right: "20px" }); // Default position
+  const [position, setPosition] = useState({ bottom: "50px", right: "20px" }); // Updated for bottom-right positioning
   const buttonRef = useRef(null);
   const dragOffset = useRef({ x: 0, y: 0 });
   const isDragging = useRef(false);
 
-  // Handle Drag Start
+  // Drag Start
   const handleDragStart = (e) => {
-    isDragging.current = true;
+    isDragging.current = false; // Reset dragging state
     dragOffset.current = {
       x: e.clientX - buttonRef.current.getBoundingClientRect().left,
       y: e.clientY - buttonRef.current.getBoundingClientRect().top,
@@ -18,35 +18,27 @@ const BlueButton = ({ onClick }) => {
     document.addEventListener("mouseup", handleDragEnd);
   };
 
-  // Handle Drag
+  // Dragging
   const handleDrag = (e) => {
-    if (!isDragging.current) return;
-
+    isDragging.current = true; // Set dragging state to true
     const newLeft = e.clientX - dragOffset.current.x;
     const newTop = e.clientY - dragOffset.current.y;
-
-    setPosition({ top: `${newTop}px`, left: `${newLeft}px`, bottom: "auto", right: "auto" });
+    setPosition({ top: `${newTop}px`, left: `${newLeft}px`, bottom: "auto", right: "auto" }); // Remove bottom-right constraints after drag
   };
 
-  // Handle Drag End
+  // Drag End
   const handleDragEnd = () => {
-    isDragging.current = false;
     document.removeEventListener("mousemove", handleDrag);
     document.removeEventListener("mouseup", handleDragEnd);
+    setTimeout(() => {
+      isDragging.current = false;
+    }, 50); // Small threshold
   };
-
-  // Cleanup on Component Unmount
-  useEffect(() => {
-    return () => {
-      document.removeEventListener("mousemove", handleDrag);
-      document.removeEventListener("mouseup", handleDragEnd);
-    };
-  }, []);
 
   // Handle Click
   const handleClick = () => {
     if (!isDragging.current) {
-      onClick();
+      onClick(); // Call the function passed as prop
     }
   };
 
@@ -58,15 +50,11 @@ const BlueButton = ({ onClick }) => {
         position: "fixed",
         top: position.top,
         left: position.left,
-        bottom: position.bottom,
-        right: position.right,
-        cursor: isDragging.current ? "grabbing" : "pointer",
+        bottom: position.bottom, // Use bottom-right positioning initially
+        right: position.right, // Use bottom-right positioning initially
       }}
       onClick={handleClick}
       onMouseDown={handleDragStart}
-      role="button"
-      aria-label="Chatbot Trigger"
-      tabIndex={0}
     >
       🤖
     </div>

@@ -15,7 +15,7 @@
 }
 
 /* Responsive layout for smaller screens */
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .intro-container {
         flex-direction: column;
         height: auto;
@@ -34,7 +34,7 @@
     animation: slideInLeft 1s ease;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .intro-left-box {
         width: 100%;
         padding: 1rem;
@@ -47,7 +47,7 @@
 }
 
 .intro-login-details {
-    max-width: 480px;
+    max-width: 30rem;
     width: 100%;
     margin: auto;
 }
@@ -62,7 +62,7 @@
     animation: fadeInUp 1s ease forwards;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .intro-title {
         font-size: 1.8rem;
     }
@@ -79,7 +79,7 @@
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(1.25rem); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -88,17 +88,17 @@
     font-family: 'Poppins', sans-serif;
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 1rem;
     margin-bottom: 2rem;
 }
 
 .category-card {
-    flex: 1 1 calc(50% - 16px);
+    flex: 1 1 calc(50% - 1rem);
     background: #FFFFFF;
     padding: 1.2rem;
     text-align: center;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 0.625rem;
+    box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -107,7 +107,7 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .category-card {
         flex: 1 1 100%;
     }
@@ -115,7 +115,7 @@
 
 .category-card:hover {
     transform: scale(1.05);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.375rem 0.9375rem rgba(0, 0, 0, 0.15);
 }
 
 .category-card span {
@@ -126,10 +126,10 @@
 }
 
 .category-icon {
-    width: 30px;
-    height: 35px;
+    width: 1.875rem;
+    height: 2.1875rem;
     opacity: 0.5;
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
 }
 
 /* User Type Selection */
@@ -145,10 +145,10 @@
     display: flex;
     align-items: center;
     background: #FFFFFF;
-    padding: 15px;
-    border-radius: 10px;
-    width: calc(50% - 8px);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    border-radius: 0.625rem;
+    width: calc(50% - 0.5rem);
+    box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.05);
     position: relative;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
@@ -156,17 +156,17 @@
 
 .user-type-card:hover,
 .user-type-card.selected {
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.1);
     background-color: #EAF4FF;
     transform: scale(1.03);
 }
 
 .user-type-radio {
     position: absolute;
-    left: 10px;
-    margin-right: 15px;
-    width: 20px;
-    height: 20px;
+    left: 0.625rem;
+    margin-right: 0.9375rem;
+    width: 1.25rem;
+    height: 1.25rem;
     accent-color: #0F67FD;
     cursor: pointer;
 }
@@ -179,12 +179,12 @@
 }
 
 .user-type-icon {
-    width: 120px;
-    height: 60px;
-    margin-bottom: 8px;
+    width: 7.5rem;
+    height: 3.75rem;
+    margin-bottom: 0.5rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .user-type-card {
         width: 100%;
     }
@@ -193,7 +193,7 @@
 /* Start Button */
 .intro-start-button {
     width: 100%;
-    padding: 12px 0;
+    padding: 0.75rem 0;
     background-color: #0F67FD;
     color: #FFFFFF;
     font-family: 'Poppins', sans-serif;
@@ -201,7 +201,7 @@
     font-size: 1rem;
     text-align: center;
     border: none;
-    border-radius: 15px;
+    border-radius: 0.9375rem;
     cursor: pointer;
     margin-bottom: 2rem;
     transition: transform 0.2s ease, background-color 0.2s ease;
@@ -209,7 +209,7 @@
 
 .intro-start-button:hover {
     background-color: #0956d6;
-    transform: translateY(-2px);
+    transform: translateY(-0.125rem);
 }
 
 /* Sign-in Text */
@@ -238,15 +238,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 16px;
+    border-radius: 1rem;
     animation: slideInRight 1s ease;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .intro-right-box {
         width: 100%;
         border-radius: 0;
-        height: 300px; /* Adjusted height for mobile */
+        height: 18.75rem;
     }
 }
 
@@ -256,27 +256,27 @@
 }
 
 .intro-logo {
-    width: 180px;
-    height: 180px;
+    width: 11.25rem;
+    height: 11.25rem;
     background-color: #041131;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     animation: rotateAndScale 3s infinite ease-in-out;
-    box-shadow: 0 0 20px rgba(15, 103, 253, 0.5);
+    box-shadow: 0 0 1.25rem rgba(15, 103, 253, 0.5);
     transition: box-shadow 0.3s ease;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .intro-logo {
-        width: 150px;
-        height: 150px;
+        width: 9.375rem;
+        height: 9.375rem;
     }
 }
 
 .intro-logo:hover {
-    box-shadow: 0 0 30px rgba(15, 103, 253, 0.8);
+    box-shadow: 0 0 1.875rem rgba(15, 103, 253, 0.8);
 }
 
 @keyframes rotateAndScale {
@@ -298,15 +298,15 @@
 }
 
 .intro-logo img {
-    width: 140px;
-    height: 95px;
+    width: 8.75rem;
+    height: 5.9375rem;
     animation: fadeIn 1.5s ease forwards;
     transform-origin: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .intro-logo img {
-        width: 120px;
-        height: 80px;
+        width: 7.5rem;
+        height: 5rem;
     }
 }
