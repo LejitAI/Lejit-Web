@@ -1,34 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import AiIcon from "./AI.png";
 import DraftTemplateIcon from "./document-text.png";
 import SimilarDocumentsIcon from "./Group.png";
 import CitationIcon from "./Group (1).png";
 import CaseLawsIcon from "./Frame (7).png";
+import ChatAI from "./ChatAI"; // Import the ChatAI component
 
 const AskAI = () => {
+  const [isChatOpen, setChatOpen] = useState(false); // State to toggle ChatAI visibility
+
+  const handleClick = () => {
+    setChatOpen(true); // Open the chat when the AskAI box is clicked
+  };
+
   return (
-    <div style={styles.container}>
-      {/* AI Icon Section */}
-      <div style={styles.iconContainer}>
-        <div style={styles.iconCircle}>
-          <img src={AiIcon} alt="AI Icon" style={styles.iconImage} />
+    <div>
+      {/* AskAI Blue Box */}
+      <div style={styles.container} onClick={handleClick}>
+        <div style={styles.iconContainer}>
+          <div style={styles.iconCircle}>
+            <img src={AiIcon} alt="AI Icon" style={styles.iconImage} />
+          </div>
+          <h2 style={styles.title}>Ask AI</h2>
         </div>
-        <h2 style={styles.title}>Ask AI</h2>
+
+        <div style={styles.optionsContainer}>
+          {menuOptions.map((option, index) => (
+            <div key={index} style={styles.option}>
+              <img
+                src={option.icon}
+                alt={`${option.label} Icon`}
+                style={styles.optionIcon}
+              />
+              <span style={styles.optionText}>{option.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Menu Options */}
-      <div style={styles.optionsContainer}>
-        {menuOptions.map((option, index) => (
-          <div key={index} style={styles.option}>
-            <img
-              src={option.icon}
-              alt={`${option.label} Icon`}
-              style={styles.optionIcon}
-            />
-            <span style={styles.optionText}>{option.label}</span>
-          </div>
-        ))}
-      </div>
+      {/* ChatAI Popup */}
+      {isChatOpen && <ChatAI closeChat={() => setChatOpen(false)} />}
     </div>
   );
 };
@@ -58,7 +69,6 @@ const styles = {
     margin: "0 auto",
     boxSizing: "border-box",
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Add shadow for depth
-
   },
   iconContainer: {
     display: "flex",
