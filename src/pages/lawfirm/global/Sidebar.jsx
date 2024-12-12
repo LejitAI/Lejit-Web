@@ -39,7 +39,7 @@ const Sidebar = () => {
     { text: 'Knowledge Hub', icon: <BookIcon />, path: '/knowledge' },
     { text: 'Notification', icon: <NotificationsIcon />, path: '/notification' },
     { text: 'Analytics/Reports', icon: <BarChartIcon />, path: '/analytics' },
-    { text: 'Profile', icon: <PersonIcon />, path: '/Profile' },
+    { text: 'Profile', icon: <PersonIcon />, path: '/overallprofile' },
     { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
   ];
 
@@ -149,7 +149,7 @@ const Sidebar = () => {
               position: 'fixed',
               top: '16px',
               left: '16px',
-              zIndex: 1301,
+              zIndex: 1100,
               color: '#404040',
               transition: 'transform 0.2s ease',
               '&:hover': { transform: 'scale(1.1)', color: '#0F67FD' },

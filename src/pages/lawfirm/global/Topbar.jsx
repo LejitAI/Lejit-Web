@@ -20,7 +20,7 @@ const Topbar = () => {
         padding: '8px 24px',
         display: 'flex',
         alignItems: 'center',
-        zIndex: 1300, // Ensure it sits above other components if needed
+        zIndex: 1100, // Ensure it sits above other components if needed
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', width: '100%' }}>

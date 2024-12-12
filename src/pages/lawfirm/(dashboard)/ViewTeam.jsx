@@ -56,7 +56,7 @@ const ViewTeam = () => {
                     </Box>
                     <Box className="action-button">
                         <DownloadIcon />
-                        <Typography>Download list</Typography>
+                        <Typography>Download List</Typography>
                     </Box>
                     <Box className="action-button">
                         <SortIcon />

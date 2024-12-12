@@ -18,6 +18,10 @@ import EditProfile from './pages/lawfirm/forms/EditProfile';
 import LDashboard from './pages/lawfirm/(dashboard)/DashboardOverview';
 import ChatAI from './pages/lawfirm/global/ChatAI';
 import ClientsOverview from './pages/lawfirm/(dashboard)/ClientsOverview'
+import AddClient from './pages/lawfirm/forms/AddClient'
+import ClientDetails from './pages/lawfirm/(dashboard)/EachClient'
+import OverallClientDetails from './pages/lawfirm/(dashboard)/OverallClientDetails';
+import OverallProfile from './pages/lawfirm/(dashboard)/OverallProfile';
 import CDashboard from './pages/citizen/Dashboard/CDashboard';
 import MyCases from './pages/citizen/MyCases/MyCases';
 import Topbar from './pages/citizen/global/Topbar';
@@ -51,6 +55,10 @@ function App() {
             <Route path="/ldashboard" element={<LDashboard />} />
             <Route path="/chat" element={<ChatAI />} />
             <Route path="/clients" element={<ClientsOverview/>} />
+            <Route path="/addclient" element={<AddClient/>} />
+            <Route path="/clientdetails" element={<ClientDetails/>} />
+            <Route path="/overallclient" element={<OverallClientDetails/>} />
+            <Route path="/overallprofile" element={<OverallProfile/>} />
             {/* <Route path="/contacts" element={<Contacts />} /> */}
             {/* <Route path="/invoices" element={<Invoices />} />*/}
             {/* <Route path="/form" element={<Form />} />*/}

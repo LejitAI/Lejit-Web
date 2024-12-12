@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LawFirmLanding.css';
 import '../forms/AddUser.css';
-import AddUser from '../forms/AddUser';
-import AddCase from '../forms/AddCase';
+import  AddCase from '../forms/AddCase';
 import EditProfile from '../forms/EditProfile'; // Import EditProfile component
 import Logo from '../../assets/logo.png';
 
@@ -120,7 +119,7 @@ const LawFirmDetailsPage = () => {
       {showAddUserPopup && (
         <div className="popup-overlay">
           <div className="popup-container">
-            <AddUser onClose={handleClosePopup} />
+            <AddCase onClose={handleClosePopup} />
           </div>
         </div>
       )}

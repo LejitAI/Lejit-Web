@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import { ColorModeContext, useMode } from "../../../theme";
 import { CssBaseline, ThemeProvider, Box, Button } from "@mui/material";
-import Topbar from "../global/Topbar";
-import Sidebar from "../global/Sidebar";
-import ViewClients from "./ViewClients"; // Adjust the import path as per your structure
-import AddClient from "../forms/AddClient"; // Import the AddClient component
-import AskAI from "../global/AskAI";
+import Topbar from "../../lawfirm/global/Topbar";
+import Sidebar from "../../lawfirm/global/Sidebar";
+import ViewTeam from "./ViewTeam";
+import AddUser from "../forms/AddUser";
+import ProfileInside from "./ProfileInside";
 
 function App() {
   const [theme, colorMode] = useMode();
-  const [showAddUserPopup, setShowAddUserPopup] = useState(false); // State to control AddClient popup visibility
+  const [showAddUserPopup, setShowAddUserPopup] = useState(false);
 
-  // Handler to show the AddClient popup
-  const handleAddTeamMember = () => {
-    setShowAddUserPopup(true);
-  };
+ 
 
-  // Handler to close the AddClient popup
   const handleClosePopup = () => {
     setShowAddUserPopup(false);
   };
@@ -36,7 +32,7 @@ function App() {
           >
             <Topbar />
             <Box component="main" flexGrow={1} p={2}>
-              <ViewClients />
+              <ProfileInside />
             </Box>
           </Box>
 
@@ -48,8 +44,8 @@ function App() {
               left={0}
               width="100%"
               height="100%"
-              backgroundColor="rgba(0, 0, 0, 0.5)" // Dim background
-              zIndex={1300} // Higher than Sidebar and Topbar
+              backgroundColor="rgba(0, 0, 0, 0.5)"
+              zIndex={1300} // Ensures it appears above all other components
             />
           )}
 
@@ -65,7 +61,7 @@ function App() {
               background="#FFFFFF"
               borderRadius="12px"
               boxShadow="0px 4px 20px rgba(0, 0, 0, 0.1)"
-              zIndex={1400} // Above overlay
+              zIndex={1400} // Higher than overlay
               overflowY="auto"
               maxHeight="80vh"
               padding="24px"
@@ -83,31 +79,11 @@ function App() {
               >
                 &times;
               </Box>
-              <AddClient onClose={handleClosePopup} />
+              <AddUser onClose={handleClosePopup} />
             </Box>
           )}
 
-          {/* Add Client Button */}
-          <Button
-            variant="contained"
-            onClick={handleAddTeamMember}
-            style={{
-              position: "fixed",
-              bottom: "100px",
-              right: "80px",
-              padding: "16px 40px",
-              backgroundColor: "#0F67FD",
-              color: "#FFFFFF",
-              borderRadius: "15px",
-              fontFamily: "Poppins",
-              fontWeight: "500",
-              fontSize: "16px",
-              textTransform: "uppercase",
-              zIndex: 1000, // Ensure it appears on top
-            }}
-          >
-            Add Client
-          </Button>
+          
         </Box>
       </ThemeProvider>
     </ColorModeContext.Provider>

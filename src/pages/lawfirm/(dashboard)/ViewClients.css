@@ -1,0 +1,131 @@
+/* ViewClients.css */
+
+.view-clients-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  gap: 24px;
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.view-clients-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
+
+.view-clients-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 33px;
+  color: #343434;
+}
+
+.view-clients-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-clients-header-right {
+  display: flex;
+  gap: 25px;
+}
+
+.view-clients-action-button {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 6px;
+  border: 1px solid #7A7A7A;
+  border-radius: 10px;
+  color: #7A7A7A;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.view-clients-action-button:hover {
+  background: rgba(15, 103, 253, 0.08);
+}
+
+.view-clients-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(540px, 1fr));
+  gap: 16px;
+  justify-content: center;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.view-clients-card {
+  display: flex;
+  align-items: center;
+  padding: 0px 20px 0px 0px;
+  gap: 16px;
+  width: 100%;
+  max-width: 540px;
+  height: 110px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.view-clients-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.view-clients-avatar {
+  width: 120px;
+  height: 110px;
+  border-radius: 10px 0px 0px 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.02);
+}
+
+.view-clients-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 384.5px;
+  height: 72px;
+}
+
+.view-clients-name {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #343434;
+}
+
+.view-clients-details {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #7A7A7A;
+}
+
+.view-clients-icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.view-clients-icon-button {
+  color: #0F67FD;
+}
