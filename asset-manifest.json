@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/Lejit-Web/static/css/main.d068ed04.css",
+    "main.js": "/Lejit-Web/static/js/main.bd4f395f.js",
+    "static/media/lejit-logo-removebg-preview copy.png": "/Lejit-Web/static/media/lejit-logo-removebg-preview copy.f8fc456a30149a9db685.png",
+    "static/media/lejit-logo-removebg-preview.png": "/Lejit-Web/static/media/lejit-logo-removebg-preview.f8fc456a30149a9db685.png",
+    "static/media/Avatar.png": "/Lejit-Web/static/media/Avatar.3dad63d9c406ea04fa4f.png",
+    "static/media/image (1).png": "/Lejit-Web/static/media/image (1).309e71197157b0b705b3.png",
+    "static/media/schedule4.png": "/Lejit-Web/static/media/schedule4.33d9a3b0ec652806c333.png",
+    "static/media/logo.png": "/Lejit-Web/static/media/logo.4dedac3ee36d55e34a25.png",
+    "static/media/google.svg": "/Lejit-Web/static/media/google.efa560d32653a615a1db742bbf78c815.svg",
+    "index.html": "/Lejit-Web/index.html",
+    "static/media/facebook.svg": "/Lejit-Web/static/media/facebook.1d60f030f88d365627c35afd0f0f9d38.svg",
+    "main.d068ed04.css.map": "/Lejit-Web/static/css/main.d068ed04.css.map",
+    "main.bd4f395f.js.map": "/Lejit-Web/static/js/main.bd4f395f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d068ed04.css",
+    "static/js/main.bd4f395f.js"
+  ]
+}
