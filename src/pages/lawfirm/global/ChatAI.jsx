@@ -5,9 +5,9 @@ import "./ChatAI.css";
 const ChatAI = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [messages, setMessages] = useState([]); 
-  const [isLoading, setIsLoading] = useState(false); 
-  const chatRef = useRef(null); 
+  const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const chatRef = useRef(null);
 
   const toggleChatAI = () => {
     setIsVisible(!isVisible);
@@ -17,25 +17,33 @@ const ChatAI = () => {
     setInputValue(e.target.value);
   };
 
+
   const handleSubmit = async () => {
-    if (!inputValue.trim()) return; 
+    if (!inputValue.trim()) return; // Prevent submitting empty input
 
     const userMessage = { role: "user", content: inputValue };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInputValue(""); 
+    setInputValue(""); // Clear input field
 
     try {
-      setIsLoading(true); 
-      const response = await fetch("/api/ask-ai", {
+      setIsLoading(true); // Set loading state
+      const response = await fetch("http://52.74.188.1/api/query/general", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: inputValue }),
+        body: JSON.stringify({
+          session_id: "unique_session_identifier_12345",
+          query: inputValue,
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       const data = await response.json();
 
-      const aiMessage = { role: "assistant", content: data.response };
+      const aiMessage = { role: "assistant", content: data.response || "No response from AI" };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
       console.error("Error fetching AI response:", error);
@@ -44,9 +52,57 @@ const ChatAI = () => {
         { role: "assistant", content: "Oops! Something went wrong. Please try again." },
       ]);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false); // Reset loading state
     }
   };
+
+  const handleSubmitFile = async () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".pdf,.doc,.docx"; // Restrict accepted file types (optional)
+  
+    fileInput.onchange = async (event) => {
+      const file = event.target.files[0]; // Get the selected file
+      if (!file) return; // No file selected
+  
+      try {
+        const formData = new FormData();
+        formData.append("file", file); // Append file to form data
+  
+        const response = await fetch(
+          "http://52.74.188.1/api/documents/upload?session_id=unique_session_identifier_12345&document_type=Contract",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        console.log("File uploaded successfully:", data);
+  
+        // Add success message to UI
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "File uploaded successfully!" },
+        ]);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "Oops! File upload failed. Please try again." },
+        ]);
+      }
+    };
+  
+    fileInput.click(); // Programmatically open file selector
+  };
+  
+
+
 
   useEffect(() => {
     if (chatRef.current) {
@@ -93,9 +149,8 @@ const ChatAI = () => {
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`chatAI-message-container ${
-                  msg.role === "user" ? "chatAI-user-container" : "chatAI-ai-container"
-                }`}
+                className={`chatAI-message-container ${msg.role === "user" ? "chatAI-user-container" : "chatAI-ai-container"
+                  }`}
               >
                 {msg.role === "user" && (
                   <div className="chatAI-avatar chatAI-user-avatar">👤</div>
@@ -104,9 +159,8 @@ const ChatAI = () => {
                   <div className="chatAI-avatar chatAI-ai-avatar">🤖</div>
                 )}
                 <div
-                  className={`chatAI-message ${
-                    msg.role === "user" ? "chatAI-user-message" : "chatAI-ai-message"
-                  }`}
+                  className={`chatAI-message ${msg.role === "user" ? "chatAI-user-message" : "chatAI-ai-message"
+                    }`}
                 >
                   {msg.content}
                 </div>
@@ -133,7 +187,7 @@ const ChatAI = () => {
                 onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
               />
 
-              <div className="chatAI-input-actions">
+              <div onClick={handleSubmitFile} className="chatAI-input-actions">
                 <button className="chatAI-input-button" aria-label="Attach File">
                   📎
                 </button>
@@ -156,4 +210,7 @@ const ChatAI = () => {
   );
 };
 
+
 export default ChatAI;
+
+
