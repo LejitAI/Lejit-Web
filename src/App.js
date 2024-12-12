@@ -22,12 +22,8 @@ import AddClient from './pages/lawfirm/forms/AddClient'
 import ClientDetails from './pages/lawfirm/(dashboard)/EachClient'
 import OverallClientDetails from './pages/lawfirm/(dashboard)/OverallClientDetails';
 import OverallProfile from './pages/lawfirm/(dashboard)/OverallProfile';
-import CDashboard from './pages/citizen/Dashboard/CDashboard';
-import MyCases from './pages/citizen/MyCases/MyCases';
-import Topbar from './pages/citizen/global/Topbar';
-import Dashboard from './pages/citizen/NDashboard/Dashboard'
-import CitizenLayout from './pages/citizen/CitizenLayout';
-import Cases from './pages/citizen/Cases/MyCases';
+import CitizenSignUp from './pages/authentication/CitizenSignUp';
+
 
 
 function App() {
@@ -47,8 +43,6 @@ function App() {
             <Route path="/addCase" element={<AddCase />} />
             <Route path="profile" element={<Profile />} />   
             <Route path="/appointments" element={<Appointments />} />      
-            <Route path="/citizen/cdashboard" element={<Dashboard />} />
-            <Route path="/cases" element={<Cases />} />
             <Route path="/AI" element={<AskAI />} />
             <Route path="/convoagent" element={<ConvoAgent />} />
             <Route path="/editprofile" element={<EditProfile />} />
@@ -59,18 +53,11 @@ function App() {
             <Route path="/clientdetails" element={<ClientDetails/>} />
             <Route path="/overallclient" element={<OverallClientDetails/>} />
             <Route path="/overallprofile" element={<OverallProfile/>} />
-            {/* <Route path="/contacts" element={<Contacts />} /> */}
-            {/* <Route path="/invoices" element={<Invoices />} />*/}
-            {/* <Route path="/form" element={<Form />} />*/}
-            {/* <Route path="/bar" element={<Bar />} />*/}
-            {/* <Route path="/pie" element={<Pie />} />*/}
-            {/* <Route path="/line" element={<Line />} />*/}
-            {/* <Route path="/faq" element={<FAQ />} />*/}
-            {/* <Route path="/geography" element={<Geography />} />*/}
-            {/* <Route path="/calendar" element={<Calendar />} />*/}
-            <Route path="/citizen/mycases" element={<MyCases />} />
-            <Route path="/citizen/appointments" element={<Appointments />} />
             
+            {/* <Route path="/contacts" element={<Contacts />} /> */}
+            
+            <Route path="/citizensignup" element={<CitizenSignUp />} />
+           
           </Routes>
     
         </Router>
