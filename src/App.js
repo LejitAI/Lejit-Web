@@ -17,6 +17,7 @@ import ConvoAgent from './pages/lawfirm/(dashboard)/ConvoAgent';
 import EditProfile from './pages/lawfirm/forms/EditProfile';
 import LDashboard from './pages/lawfirm/(dashboard)/DashboardOverview';
 import ChatAI from './pages/lawfirm/global/ChatAI';
+import ClientsOverview from './pages/lawfirm/(dashboard)/ClientsOverview'
 import CDashboard from './pages/citizen/Dashboard/CDashboard';
 import MyCases from './pages/citizen/MyCases/MyCases';
 import Topbar from './pages/citizen/global/Topbar';
@@ -49,6 +50,7 @@ function App() {
             <Route path="/editprofile" element={<EditProfile />} />
             <Route path="/ldashboard" element={<LDashboard />} />
             <Route path="/chat" element={<ChatAI />} />
+            <Route path="/clients" element={<ClientsOverview/>} />
             {/* <Route path="/contacts" element={<Contacts />} /> */}
             {/* <Route path="/invoices" element={<Invoices />} />*/}
             {/* <Route path="/form" element={<Form />} />*/}
