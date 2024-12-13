@@ -29,7 +29,7 @@ const Sidebar = () => {
   // Define the menu items with paths
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/ldashboard' },
-    { text: 'My Cases', icon: <FolderIcon />, path: '/cases' },
+    { text: 'My Cases', icon: <FolderIcon />, path: '/overallcases' },
     { text: 'Clients', icon: <PersonOutlineIcon />, path: '/clients' },
     { text: 'Team Members', icon: <PeopleIcon />, path: '/profile' }, 
     { text: 'Documents', icon: <ArticleIcon />, path: '/documents' },

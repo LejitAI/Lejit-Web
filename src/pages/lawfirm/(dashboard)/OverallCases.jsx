@@ -4,8 +4,10 @@ import { CssBaseline, ThemeProvider, Box, Button } from "@mui/material";
 import Topbar from "../../lawfirm/global/Topbar";
 import Sidebar from "../../lawfirm/global/Sidebar";
 import ViewTeam from "./ViewTeam";
-import AddUser from "../forms/AddUser";
+import OverallCases from "./Cases";
 import AddCase from "../forms/AddCase";
+import BlueButton from "../global/BlueButton";
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -18,6 +20,11 @@ function App() {
   const handleClosePopup = () => {
     setShowAddUserPopup(false);
   };
+
+  const handleBlueButtonClick = () => {
+    alert("BlueButton clicked!");
+  };
+  
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -34,7 +41,7 @@ function App() {
           >
             <Topbar />
             <Box component="main" flexGrow={1} p={2}>
-              <ViewTeam />
+              <OverallCases />
             </Box>
           </Box>
 
@@ -81,31 +88,34 @@ function App() {
               >
                 &times;
               </Box>
-              <AddUser onClose={handleClosePopup} />
+              <AddCase onClose={handleClosePopup} />
             </Box>
           )}
 
-          {/* Add Team Member Button */}
           <Button
-            variant="contained"
-            onClick={handleAddTeamMember}
-            style={{
-              position: "fixed",
-              bottom: "100px",
-              right: "80px",
-              padding: "16px 40px",
-              backgroundColor: "#0F67FD",
-              color: "#FFFFFF",
-              borderRadius: "15px",
-              fontFamily: "Poppins",
-              fontWeight: "500",
-              fontSize: "16px",
-              textTransform: "uppercase",
-              zIndex: 1000,
-            }}
-          >
-            Add Team Member
-          </Button>
+                      variant="contained"
+                      onClick={handleAddTeamMember}
+                      style={{
+                        position: "fixed",
+                        bottom: "100px",
+                        right: "80px",
+                        padding: "16px 40px",
+                        backgroundColor: "#0F67FD",
+                        color: "#FFFFFF",
+                        borderRadius: "15px",
+                        fontFamily: "Poppins",
+                        fontWeight: "500",
+                        fontSize: "16px",
+                        textTransform: "uppercase",
+                        zIndex: 1000,
+                      }}
+                    >
+                      ADD CASE
+                    </Button>
+
+                    <BlueButton onClick={handleBlueButtonClick} />
+
+          
         </Box>
       </ThemeProvider>
     </ColorModeContext.Provider>

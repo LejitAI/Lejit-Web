@@ -22,7 +22,9 @@ import AddClient from './pages/lawfirm/forms/AddClient'
 import ClientDetails from './pages/lawfirm/(dashboard)/EachClient'
 import OverallClientDetails from './pages/lawfirm/(dashboard)/OverallClientDetails';
 import OverallProfile from './pages/lawfirm/(dashboard)/OverallProfile';
+import OverallCases from './pages/lawfirm/(dashboard)/OverallCases';
 import CitizenSignUp from './pages/authentication/CitizenSignUp';
+import Lawyers from './pages/citizen/lawyers/overallLawyersCategory';
 
 
 
@@ -53,10 +55,12 @@ function App() {
             <Route path="/clientdetails" element={<ClientDetails/>} />
             <Route path="/overallclient" element={<OverallClientDetails/>} />
             <Route path="/overallprofile" element={<OverallProfile/>} />
+            <Route path="/overallcases" element={<OverallCases/>} />
             
             {/* <Route path="/contacts" element={<Contacts />} /> */}
             
             <Route path="/citizensignup" element={<CitizenSignUp />} />
+            <Route path="/lawyers" element={<Lawyers />} />
            
           </Routes>
     

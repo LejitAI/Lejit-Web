@@ -21,9 +21,9 @@ const LawFirmSignUp = () => {
 
   const handleSignUp = async () => {
     if (!  !fullName || !email || !password || !confirmPassword) {
-        setErrorMessage("All fields are required.");
-        return;
-    }
+      setErrorMessage("All fields are required.");
+    return;
+   }
  
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {

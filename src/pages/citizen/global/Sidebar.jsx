@@ -30,6 +30,7 @@ const Sidebar = () => {
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/ldashboard' },
     { text: 'My Cases', icon: <FolderIcon />, path: '/cases' },
+    { text: 'Lawyers', icon: <PeopleIcon />, path: '/lawyers' },
     { text: 'Documents', icon: <ArticleIcon />, path: '/documents' },
     { text: 'Appointments', icon: <CalendarTodayIcon />, path: '/appointments' },
     { text: 'Hearing Schedule', icon: <ScheduleIcon />, path: '/hearing' },
