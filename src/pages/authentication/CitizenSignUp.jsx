@@ -57,7 +57,7 @@ const LawFirmSignUp = () => {
  
         const data = await response.json();
         if (response.ok) {
-            navigate('/otp'); 
+            navigate('/lawyers'); 
         } else {
             setErrorMessage(data.message || 'Failed to create account');
         }
