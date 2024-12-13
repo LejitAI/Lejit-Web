@@ -10,7 +10,7 @@ import LawFirmLanding from './pages/lawfirm/editLawFirm/LawFirmLanding';
 import AddUser from './pages/lawfirm/forms/AddUser';
 import ViewTeam from './pages/lawfirm/(dashboard)/ViewTeam';
 import Profile from './pages/lawfirm/(dashboard)/Profile';
-import Appointments from './pages/lawfirm/(dashboard)/Appointments';
+import Appointments from './pages/lawfirm/(dashboard)/Appointments/Appointmentsub';
 import AddCase from './pages/lawfirm/forms/AddCase';
 import AskAI from './pages/lawfirm/global/AskAI';
 import ConvoAgent from './pages/lawfirm/(dashboard)/ConvoAgent';
@@ -23,6 +23,7 @@ import ClientDetails from './pages/lawfirm/(dashboard)/EachClient'
 import OverallClientDetails from './pages/lawfirm/(dashboard)/OverallClientDetails';
 import OverallProfile from './pages/lawfirm/(dashboard)/OverallProfile';
 import OverallCases from './pages/lawfirm/(dashboard)/OverallCases';
+import CitizenCases from './pages/citizen/cases/OverallCases';
 import CitizenSignUp from './pages/authentication/CitizenSignUp';
 import Lawyers from './pages/citizen/lawyers/overallLawyersCategory';
 
@@ -56,6 +57,7 @@ function App() {
             <Route path="/overallclient" element={<OverallClientDetails/>} />
             <Route path="/overallprofile" element={<OverallProfile/>} />
             <Route path="/overallcases" element={<OverallCases/>} />
+            <Route path="/citizencases" element={<CitizenCases />} />
             
             {/* <Route path="/contacts" element={<Contacts />} /> */}
             
