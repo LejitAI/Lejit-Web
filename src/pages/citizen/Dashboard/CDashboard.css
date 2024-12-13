@@ -1,0 +1,75 @@
+.citizen-dashboard {
+    display: flex;
+    flex-direction: column; /* Stack header and cards vertically */
+    height: 100vh; /* Full height */
+    background-color: #d2deea; /* Light gray background for the entire dashboard */
+}
+
+/* Card Container */
+.cards-container {
+    display: flex; /* Align cards in a row */
+    justify-content: space-between; /* Space between cards */
+    margin-top: 20px; /* Margin below the Header */
+    padding: 0 20px; /* Padding to keep cards away from the sides */
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px; /* Fixed width for sidebar */
+    background-color: #ffffff; /* White background for sidebar */
+}
+
+.dashboard-layout {
+    display: flex; /* Use flexbox for layout */
+    flex-grow: 1; /* Allow this section to grow and fill available space */
+    padding: 20px; /* Padding for content area */
+    background-color: #d2deea; /* White background for main content */
+    overflow: hidden; /* Prevent overflow for the layout */
+    height: 100vh; /* Full height for main content */
+}
+
+/* Appointment Container */
+.appointment-container {
+    display: flex; /* Flexbox for appointment cards */
+    justify-content: center; /* Center content if necessary */
+    margin-left: -220px;
+    margin-top: 300px;
+}
+
+/* Ask AI Card Container */
+.ask-ai-container {
+    display: flex;
+    width: 100%; /* Full width to center it */
+    margin-left: 675px;
+    margin-top: 310px;
+}
+
+/* Adjusted Right Bar styles */
+.right-bar {
+    width: 500px; /* Fixed width for right bar */
+    background-color: transparent; /* Make it transparent */
+    position:sticky; /* Make the right bar sticky */
+    top: 0px; /* Align to the top of the viewport */
+    height: 100vh; /* Full height for sticky element */
+    overflow-y: auto; /* Enable scrolling */
+    padding: 20px; /* Padding for content */
+}
+
+/* Line separating the main content and the right bar */
+.dashboard-layout::before {
+    content: '';
+    width: 1px; /* Line width */
+    background-color: rgba(0, 0, 0, 0.1); /* Faint line color */
+    position:fixed;
+    top: 0px; /* Start from the top of the screen */
+    right: 500px; /* Align with the left edge of the right bar */
+    bottom: 0; /* Extend to the bottom */
+}
+
+/* Content area styles */
+.dashboard-content {
+    flex-grow: 1; /* Grow to fill the remaining space */
+    overflow-y: auto; /* Enable scrolling for the main content */
+    height: 100vh; /* Full height for content area */
+    margin-right: 20px; /* Margin to separate from right bar */
+}
