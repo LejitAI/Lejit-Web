@@ -11,6 +11,9 @@ import AddUser from './pages/lawfirm/forms/AddUser';
 import ViewTeam from './pages/lawfirm/(dashboard)/ViewTeam';
 import Profile from './pages/lawfirm/(dashboard)/Profile';
 import Appointments from './pages/lawfirm/(dashboard)/Appointments/Appointmentsub';
+import CitizenAppointments from './pages/citizen/Appointments/Appointmentsub';
+import OverallHearing from './pages/lawfirm/(dashboard)/HearingSchedules/OverallHearing';
+import CitizenHearing from './pages/citizen/HearingSchedules/OverallHearing';
 import AddCase from './pages/lawfirm/forms/AddCase';
 import AskAI from './pages/lawfirm/global/AskAI';
 import ConvoAgent from './pages/lawfirm/(dashboard)/ConvoAgent';
@@ -45,7 +48,10 @@ function App() {
             <Route path="/addUser" element={<AddUser />} />
             <Route path="/addCase" element={<AddCase />} />
             <Route path="profile" element={<Profile />} />   
-            <Route path="/appointments" element={<Appointments />} />      
+            <Route path="/appointments" element={<Appointments />} /> 
+            <Route path="/citizenappointments" element={<CitizenAppointments />} /> 
+            <Route path="/hearing" element={<OverallHearing />} />  
+            <Route path="/citizenhearing" element={<CitizenHearing />} />  
             <Route path="/AI" element={<AskAI />} />
             <Route path="/convoagent" element={<ConvoAgent />} />
             <Route path="/editprofile" element={<EditProfile />} />

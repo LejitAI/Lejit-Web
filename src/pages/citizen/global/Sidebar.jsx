@@ -28,17 +28,17 @@ const Sidebar = () => {
 
   // Define the menu items with paths
   const menuItems = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: '/ldashboard' },
+    { text: 'Dashboard', icon: <DashboardIcon />, path: '/citizendashboard' },
     { text: 'My Cases', icon: <FolderIcon />, path: '/citizencases' },
     { text: 'Lawyers', icon: <PeopleIcon />, path: '/lawyers' },
-    { text: 'Documents', icon: <ArticleIcon />, path: '/documents' },
-    { text: 'Appointments', icon: <CalendarTodayIcon />, path: '/appointments' },
-    { text: 'Hearing Schedule', icon: <ScheduleIcon />, path: '/hearing' },
-    { text: 'Legal Templates', icon: <ArticleIcon />, path: '/templates' },
-    { text: 'Knowledge Hub', icon: <BookIcon />, path: '/knowledge' },
-    { text: 'Notification', icon: <NotificationsIcon />, path: '/notification' },
-    { text: 'Analytics/Reports', icon: <BarChartIcon />, path: '/analytics' },
-    { text: 'Profile', icon: <PersonIcon />, path: '/overallprofile' },
+    { text: 'Documents', icon: <ArticleIcon />, path: '/citizendocuments' },
+    { text: 'Appointments', icon: <CalendarTodayIcon />, path: '/citizenappointments' },
+    { text: 'Hearing Schedule', icon: <ScheduleIcon />, path: '/citizenhearing' },
+    { text: 'Legal Templates', icon: <ArticleIcon />, path: '/citizentemplates' },
+    { text: 'Knowledge Hub', icon: <BookIcon />, path: '/citizenknowledge' },
+    { text: 'Notification', icon: <NotificationsIcon />, path: '/citizennotification' },
+    { text: 'Analytics/Reports', icon: <BarChartIcon />, path: '/citizenanalytics' },
+    { text: 'Profile', icon: <PersonIcon />, path: '/citizenprofile' },
   ];
 
   // Toggle the drawer for mobile view
