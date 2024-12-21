@@ -25,7 +25,7 @@ const ViewTeam = () => {
     const fetchTeamMembers = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://13.232.153.48:5000/api/admin/get-team-members', {
+            const response = await fetch('http://52.74.188.1/api/admin/get-team-members', {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,

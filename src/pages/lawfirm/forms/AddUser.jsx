@@ -88,7 +88,7 @@ const AddUser = ({ onClose }) => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/admin/add-team-member', {
+            const response = await fetch('http://52.74.188.1/api/admin/add-team-member', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
