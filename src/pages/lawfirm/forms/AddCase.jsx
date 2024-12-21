@@ -62,7 +62,7 @@ const AddCase = ({ isOpen, onClose }) => {
         const data = { ...caseDetails };
 
         try {
-            const response = await fetch('http://13.232.153.48:5000/api/admin/add-case', {
+            const response = await fetch('http://52.74.188.1/api/admin/add-case', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
