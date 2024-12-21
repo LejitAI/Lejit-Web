@@ -22,6 +22,7 @@ const AddClient = ({ onClose }) => {
   });
 
   const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState(null);
 
   const handleChange = (e) => {
     const { id, value, files } = e.target;
@@ -33,8 +34,8 @@ const AddClient = ({ onClose }) => {
 
   const validate = () => {
     const newErrors = {};
-    const phoneRegex = /^[+]?[\d\s()-]{7,15}$/; // Basic phone validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email validation
+    const phoneRegex = /^[+]?[\d\s()-]{7,15}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!formData.name.trim()) newErrors.name = "Name is required.";
     if (!formData.dob) newErrors.dob = "Date of birth is required.";
@@ -56,30 +57,77 @@ const AddClient = ({ onClose }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Form submitted successfully:", formData);
+      try {
+        const address = {
+          addressLine1: formData.address1,
+          addressLine2: formData.address2,
+          city: formData.city,
+          state: formData.state,
+          postalCode: formData.postal,
+          country: formData.country,
+        };
+
+        const dataToSubmit = {
+          name: formData.name,
+          dateOfBirth: formData.dob?.toISOString().split("T")[0],
+          gender: formData.gender === "other" ? formData.customGender : formData.gender,
+          email: formData.email,
+          mobile: formData.mobile,
+          address,
+          profilePhoto: formData.profilePhoto ? URL.createObjectURL(formData.profilePhoto) : null,
+        };
+
+        const response = await fetch("http://localhost:5000/api/admin/add-client", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataToSubmit),
+        });
+
+        if (response.ok) {
+          setMessage("Client added successfully!");
+          setFormData({
+            name: "",
+            dob: null,
+            gender: "",
+            customGender: "",
+            mobile: "",
+            email: "",
+            address1: "",
+            address2: "",
+            city: "",
+            state: "",
+            postal: "",
+            country: "",
+            profilePhoto: null,
+          });
+        } else {
+          const errorData = await response.json();
+          setMessage(`Error: ${errorData.message || "Failed to add client."}`);
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        setMessage("An unexpected error occurred.");
+      }
     }
   };
 
   return (
     <div className="add-client-overlay">
       <div className="add-client-container">
-        <button
-          className="close-button"
-          onClick={onClose}
-          aria-label="Close form"
-        >
+        <button className="close-button" onClick={onClose} aria-label="Close form">
           <FaTimes />
         </button>
         <header className="add-client-header">
           <h2 className="add-client-title">Add A Client</h2>
-          <p className="add-client-subtitle">
-            Complete the personal details to add offline clients.
-          </p>
+          <p className="add-client-subtitle">Complete the personal details to add offline clients.</p>
         </header>
         <form className="add-client-form" onSubmit={handleSubmit}>
+          {message && <p className="message">{message}</p>}
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="name">
@@ -113,11 +161,7 @@ const AddClient = ({ onClose }) => {
               <label htmlFor="gender">
                 Gender <span className="required">*</span>
               </label>
-              <select
-                id="gender"
-                value={formData.gender}
-                onChange={handleChange}
-              >
+              <select id="gender" value={formData.gender} onChange={handleChange}>
                 <option value="">Select your gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -133,9 +177,7 @@ const AddClient = ({ onClose }) => {
                 />
               )}
               {errors.gender && <span className="error">{errors.gender}</span>}
-              {errors.customGender && (
-                <span className="error">{errors.customGender}</span>
-              )}
+              {errors.customGender && <span className="error">{errors.customGender}</span>}
             </div>
             <div className="form-group">
               <label htmlFor="mobile">
@@ -226,15 +268,8 @@ const AddClient = ({ onClose }) => {
             />
           </div>
           <div className="form-actions">
-            <button
-              type="button"
-              className="btn secondary"
-              onClick={() => console.log("Save client details", formData)}
-            >
-              Save Client Details
-            </button>
             <button type="submit" className="btn primary">
-              Save Client & Add Case Details
+              Save Client
             </button>
           </div>
         </form>
