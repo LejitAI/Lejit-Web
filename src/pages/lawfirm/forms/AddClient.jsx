@@ -80,7 +80,7 @@ const AddClient = ({ onClose }) => {
           profilePhoto: formData.profilePhoto ? URL.createObjectURL(formData.profilePhoto) : null,
         };
 
-        const response = await fetch("http://52.74.188.1/api/admin/add-client", {
+        const response = await fetch("http://52.74.188.1:5000/api/admin/add-client", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
