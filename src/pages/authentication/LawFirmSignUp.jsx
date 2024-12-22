@@ -45,7 +45,7 @@ const LawFirmSignUp = () => {
     setIsLoading(true); 
  
     try {
-        const response = await fetch('http://52.74.188.1/api/auth/register', {
+        const response = await fetch('backend/api/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
