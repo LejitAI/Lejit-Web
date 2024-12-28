@@ -28,7 +28,7 @@ const ChatAI = () => {
 
     try {
       setIsLoading(true); // Set loading state
-      const response = await fetch("http://52.74.188.1/api/query/general", {
+      const response = await fetch("/api/api/query/general", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -70,7 +70,7 @@ const ChatAI = () => {
         formData.append("file", file); // Append file to form data
   
         const response = await fetch(
-          "http://52.74.188.1/api/documents/upload?session_id=unique_session_identifier_12345&document_type=Contract",
+          "/api/api/documents/upload?session_id=unique_session_identifier_12345&document_type=Contract",
           {
             method: "POST",
             body: formData,

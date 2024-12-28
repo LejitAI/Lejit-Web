@@ -62,7 +62,6 @@ const AddCase = ({ isOpen, onClose }) => {
         const data = { ...caseDetails };
 
         try {
-            const token = localStorage.getItem('token');
             const response = await fetch('http://52.74.188.1:5000/api/admin/add-case', {
                 method: 'POST',
                 headers: {
