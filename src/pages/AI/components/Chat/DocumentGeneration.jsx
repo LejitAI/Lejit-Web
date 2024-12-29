@@ -22,7 +22,6 @@ const DocumentGeneration = () => {
         alert("Failed to load templates. Please try again.");
       }
     };
-
     fetchTemplates();
   }, []);
 

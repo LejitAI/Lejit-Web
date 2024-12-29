@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ChatBubble from "./ChatBubble";
 import TypingIndicator from "./TypingIndicator";
 import "../../styles/Chat.css";
+import axios from "axios";
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState([]);
@@ -9,6 +10,11 @@ const ChatInterface = () => {
   const [isLoading, setIsLoading] = useState(false);
   const chatRef = useRef(null);
   const sessionKey = "lejit_ai_session_id";
+  const [chatMode, setChatMode] = useState("general");
+
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState("");
+
 
   useEffect(() => {
     const existingSession = localStorage.getItem(sessionKey);
@@ -26,26 +32,44 @@ const ChatInterface = () => {
 
   const handleSend = async () => {
     if (!inputValue.trim()) return;
-
+  
     const userMessage = { role: "user", content: inputValue };
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
-
+  
     try {
       setIsLoading(true);
-      const response = await fetch("/api/api/query/general", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          session_id: getSessionId(),
-          query: inputValue,
-        }),
-      });
-
+  
+      let response; // Declare response here
+      
+      console.log(chatMode);
+  
+      if (chatMode === "general") {
+        response = await fetch("/api/api/query/general", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            session_id: getSessionId(),
+            query: inputValue,
+          }),
+        });
+      }
+  
+      if (chatMode === "document") {
+        response = await fetch("/api/api/query/document", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            session_id: getSessionId(),
+            query: inputValue,
+          }),
+        });
+      }
+  
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+  
       const data = await response.json();
       const aiMessage = {
         role: "assistant",
@@ -64,6 +88,47 @@ const ChatInterface = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleUploadDoc = async () => {
+    setIsUploading(true);
+    setUploadMessage(""); // Clear any previous message
+
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+
+    fileInput.onchange = async (event) => {
+      const file = event.target.files[0];
+      if (!file) {
+        setIsUploading(false);
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const sessionId = getSessionId();
+      const documentType = "Contract";
+      const apiUrl = `api/api/documents/upload?session_id=${sessionId}&document_type=${documentType}`;
+
+      try {
+        const response = await axios.post(apiUrl, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        console.log("Upload successful:", response.data);
+        setChatMode("document");
+        console.log("Chat Mode: ", chatMode);
+        setUploadMessage("Document uploaded successfully!");
+      } catch (error) {
+        console.error("Error uploading document:", error);
+        setUploadMessage("Failed to upload the document. Please try again.");
+      } finally {
+        setIsUploading(false);
+      }
+    };
+
+    fileInput.click();
   };
 
   const handleDocumentSummary = async (file) => {
@@ -123,7 +188,7 @@ const ChatInterface = () => {
 
   return (
     <div className="chat-container">
-      <div className="chat-messages" ref={chatRef}>
+      <div className="chat-messages">
         {messages.map((msg, index) => (
           <ChatBubble key={index} message={msg} />
         ))}
@@ -140,10 +205,14 @@ const ChatInterface = () => {
         <button onClick={handleSend} className="send-button">
           Send
         </button>
+        <button onClick={handleUploadDoc} className="send-button">
+          {isUploading ? "Uploading..." : "Upload Document"}
+        </button>
         <button onClick={triggerFileInput} className="upload-button">
           Summarize Document
         </button>
       </div>
+      {uploadMessage && <div className="upload-message">{uploadMessage}</div>}
     </div>
   );
 };
