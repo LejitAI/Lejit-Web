@@ -10,7 +10,7 @@
   
   .citation-button {
     padding: 10px 20px;
-    background-color: #4caf50;
+    background-color: #448ef7;
     color: white;
     border: none;
     border-radius: 8px;
@@ -20,7 +20,7 @@
   }
   
   .citation-button:hover {
-    background-color: #45a049;
+    background-color: #448ef7;
   }
   
   .citations-list {

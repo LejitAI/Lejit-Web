@@ -8,7 +8,7 @@
 /* Sidebar Styles (History Panel) */
 .dashboard-sidebar {
   width: 250px;
-  background-color: #283593; /* Deep Purple */
+  background-color: #448ef7; /* Deep Purple */
   color: white;
   padding: 20px;
 
@@ -18,7 +18,7 @@
 .history-title {
   font-size: 20px;
   margin-bottom: 10px;
-  color: #ffd600; /* Accent Yellow */
+  color: #ffff; /* Accent Yellow */
 }
 
 .history-list {
@@ -36,7 +36,7 @@
 }
 
 .history-item:hover {
-  background-color: #3949ab;
+  background-color: #3786f5;
   border-radius: 8px;
   padding: 5px;
 }
@@ -84,7 +84,7 @@
 }
 
 .dashboard-tab.active {
-  background-color: #4caf50; /* Active Tab */
+  background-color: #448ef7; /* Active Tab */
   color: white;
   font-weight: bold;
   border-radius: 5px;
