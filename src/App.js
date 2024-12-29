@@ -31,7 +31,8 @@ import CitizenSignUp from './pages/authentication/CitizenSignUp';
 import Lawyers from './pages/citizen/lawyers/overallLawyersCategory';
 import ChatInterface from './pages/AI/components/Chat/ChatInterface';
 import Chatdashboard from './pages/AI/pages/DashboardPage';
-
+import Analytics from './pages/lawfirm/(dashboard)/Analytics'
+import OverallAnalytics from './pages/lawfirm/(dashboard)/OverallAnalytics'
 
 
 function App() {
@@ -68,7 +69,7 @@ function App() {
             <Route path="/citizencases" element={<CitizenCases />} />
             <Route path="/chatinterface" element={<ChatInterface />} />
             <Route path="/chatdashboard" element={<Chatdashboard />} />
-            
+            <Route path="/analytics" element={<OverallAnalytics />} />
             {/* <Route path="/contacts" element={<Contacts />} /> */}
             
             <Route path="/citizensignup" element={<CitizenSignUp />} />
