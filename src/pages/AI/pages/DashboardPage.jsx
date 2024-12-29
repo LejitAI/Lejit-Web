@@ -48,7 +48,7 @@ const Dashboard = () => {
               className={`dashboard-tab ${activeTab === "document" ? "active" : ""}`}
               onClick={() => setActiveTab("document")}
             >
-              📄 Document Handling
+              📄 Document Citations
             </button>
             <button
               className={`dashboard-tab ${activeTab === "generation" ? "active" : ""}`}
