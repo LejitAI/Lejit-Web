@@ -1,10 +1,44 @@
-import React, { useState } from "react";
-import "./ProfileInside.css"; // Assuming the CSS you provided is in ProfileInside.css
+import React, { useState, useEffect } from "react";
+import "./ProfileInside.css";
+import axios from "axios";
 
 const ProfileInside = () => {
   const [activeTab, setActiveTab] = useState("personal");
+  const [lawFirmDetails, setLawFirmDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Fetch law firm details from the backend
+    const fetchLawFirmDetails = async () => {
+      try {
+        const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
+        const response = await axios.get("backend/api/admin/get-law-firm-details", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setLawFirmDetails(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching law firm details:", err);
+        setError("Failed to load law firm details. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    fetchLawFirmDetails();
+  }, []);
 
   const renderTabContent = () => {
+    if (loading) {
+      return <div className="loading">Loading...</div>;
+    }
+
+    if (error) {
+      return <div className="error">{error}</div>;
+    }
+
     switch (activeTab) {
       case "personal":
         return (
@@ -12,31 +46,25 @@ const ProfileInside = () => {
             <div className="tab-row">
               <div className="input-field">
                 <label>Name</label>
-                <div className="input">Law Firm LLC</div>
+                <div className="input">{lawFirmDetails.lawFirmDetails.lawFirmName}</div>
               </div>
-              <div className="input-field">
-                <label>Password</label>
-                <div className="input">******</div>
-              </div>
-            </div>
-            <div className="tab-row">
               <div className="input-field">
                 <label>Email ID</label>
-                <div className="input">john123@email.com</div>
-              </div>
-              <div className="input-field">
-                <label>Phone Number</label>
-                <div className="input">+1 (201) 555 555</div>
+                <div className="input">{lawFirmDetails.lawFirmDetails.contactInfo.email}</div>
               </div>
             </div>
             <div className="tab-row">
               <div className="input-field">
-                <label>Years of Experience</label>
-                <div className="input">9</div>
+                <label>Phone Number</label>
+                <div className="input">{lawFirmDetails.lawFirmDetails.contactInfo.mobile}</div>
               </div>
               <div className="input-field">
-                <label>Specialisation</label>
-                <div className="input">Criminal Defence</div>
+                <label>Address</label>
+                <div className="input">
+                  {`${lawFirmDetails.lawFirmDetails.contactInfo.address.line1}, ${
+                    lawFirmDetails.lawFirmDetails.contactInfo.address.city || ""
+                  }`}
+                </div>
               </div>
             </div>
           </div>
@@ -47,27 +75,21 @@ const ProfileInside = () => {
             <div className="tab-row">
               <div className="input-field">
                 <label>Firm Name</label>
-                <div className="input">Law Firm LLC</div>
+                <div className="input">{lawFirmDetails.lawFirmDetails.lawFirmName}</div>
               </div>
-              <div className="input-field">
-                <label>Email ID</label>
-                <div className="input">john123@email.com</div>
-              </div>
-            </div>
-            <div className="tab-row">
-              <div className="input-field">
-                <label>Address</label>
-                <div className="input">12/345, New York</div>
-              </div>
-              <div className="input-field">
-                <label>Phone Number</label>
-                <div className="input">+1 (201) 555 555</div>
-              </div>
-            </div>
-            <div className="tab-row">
               <div className="input-field">
                 <label>Operating Since</label>
-                <div className="input">20 years</div>
+                <div className="input">{lawFirmDetails.lawFirmDetails.operatingSince}</div>
+              </div>
+            </div>
+            <div className="tab-row">
+              <div className="input-field">
+                <label>Years of Experience</label>
+                <div className="input">{lawFirmDetails.lawFirmDetails.yearsOfExperience}</div>
+              </div>
+              <div className="input-field">
+                <label>Specialization</label>
+                <div className="input">{lawFirmDetails.lawFirmDetails.specialization}</div>
               </div>
             </div>
           </div>
@@ -78,37 +100,34 @@ const ProfileInside = () => {
             <div className="tab-row">
               <div className="input-field">
                 <label>Lawyer Type</label>
-                <div className="input">Criminal Defence</div>
+                <div className="input">{lawFirmDetails.professionalDetails.lawyerType}</div>
               </div>
               <div className="input-field">
-                <label>Specialisation</label>
-                <div className="input">Criminal Defence</div>
-              </div>
-            </div>
-            <div className="tab-row">
-              <div className="input-field">
-                <label>Approx No of Cases Solved</label>
-                <div className="input">17</div>
-              </div>
-              <div className="input-field">
-                <label>Time Based Bill Rate</label>
-                <div className="input">$50/hr</div>
+                <label>Case-Based Bill Rate</label>
+                <div className="input">{lawFirmDetails.professionalDetails.caseDetails.caseBasedBillRate}</div>
               </div>
             </div>
             <div className="tab-row">
               <div className="input-field">
-                <label>Case Based Bill Rate</label>
-                <div className="input">$500</div>
+                <label>Time-Based Bill Rate</label>
+                <div className="input">{lawFirmDetails.professionalDetails.caseDetails.timeBasedBillRate}</div>
               </div>
               <div className="input-field">
-                <label>Monthly Bill Rate</label>
-                <div className="input">$1500</div>
+                <label>Approx. Cases Solved</label>
+                <div className="input">{lawFirmDetails.professionalDetails.caseDetails.caseSolvedCount}</div>
               </div>
             </div>
             <div className="tab-row">
               <div className="input-field">
-                <label>Case History :</label>
-                <div className="input">Case Type: Criminal Defence</div>
+                <label>Case History</label>
+                <div className="input">
+                  {lawFirmDetails.professionalDetails.caseDetails.previousCases.map((caseItem, index) => (
+                    <div key={index}>
+                      <p>Type: {caseItem.caseType}</p>
+                      <p>Description: {caseItem.caseDescription}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -118,31 +137,50 @@ const ProfileInside = () => {
           <div className="tab-content">
             <div className="tab-row">
               <div className="input-field">
-                <label>
-                  <input type="radio" name="paymentMethod" defaultChecked /> Card
-                </label>
-                <label>
-                  <input type="radio" name="paymentMethod" /> Bank
-                </label>
-                <label>
-                  <input type="radio" name="paymentMethod" /> UPI
-                </label>
+                <label>Payment Method</label>
+                <div className="input">{lawFirmDetails.bankAccountDetails.paymentMethod}</div>
               </div>
             </div>
-            <div className="tab-row">
-              <div className="input-field">
-                <label>Card Number</label>
-                <div className="input">**** **** **** 1121</div>
+            {lawFirmDetails.bankAccountDetails.paymentMethod === "Card" && (
+              <div className="tab-row">
+                <div className="input-field">
+                  <label>Card Number</label>
+                  <div className="input">**** **** **** {lawFirmDetails.bankAccountDetails.cardDetails.cardNumber.slice(-4)}</div>
+                </div>
+                <div className="input-field">
+                  <label>Expiration Date</label>
+                  <div className="input">{lawFirmDetails.bankAccountDetails.cardDetails.expirationDate}</div>
+                </div>
+                <div className="input-field">
+                  <label>CVV</label>
+                  <div className="input">***</div>
+                </div>
               </div>
-              <div className="input-field">
-                <label>Expiration Date</label>
-                <div className="input">MM/YY</div>
+            )}
+            {lawFirmDetails.bankAccountDetails.paymentMethod === "Bank" && (
+              <div className="tab-row">
+                <div className="input-field">
+                  <label>Account Number</label>
+                  <div className="input">{lawFirmDetails.bankAccountDetails.bankDetails.accountNumber}</div>
+                </div>
+                <div className="input-field">
+                  <label>Bank Name</label>
+                  <div className="input">{lawFirmDetails.bankAccountDetails.bankDetails.bankName}</div>
+                </div>
+                <div className="input-field">
+                  <label>IFSC Code</label>
+                  <div className="input">{lawFirmDetails.bankAccountDetails.bankDetails.ifscCode}</div>
+                </div>
               </div>
-              <div className="input-field">
-                <label>CVV</label>
-                <div className="input">***</div>
+            )}
+            {lawFirmDetails.bankAccountDetails.paymentMethod === "UPI" && (
+              <div className="tab-row">
+                <div className="input-field">
+                  <label>UPI ID</label>
+                  <div className="input">{lawFirmDetails.bankAccountDetails.upiId}</div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         );
       default:
@@ -160,8 +198,11 @@ const ProfileInside = () => {
           </div>
         </div>
         <div className="profile-info">
-          <h2>Law Firm LLC</h2>
-          <p>+1 (503) 254366 | emma123@email.com</p>
+          <h2>{lawFirmDetails?.lawFirmDetails?.lawFirmName || "Loading..."}</h2>
+          <p>
+            {lawFirmDetails?.lawFirmDetails?.contactInfo?.mobile || "Loading..."} |{" "}
+            {lawFirmDetails?.lawFirmDetails?.contactInfo?.email || "Loading..."}
+          </p>
         </div>
       </div>
 
