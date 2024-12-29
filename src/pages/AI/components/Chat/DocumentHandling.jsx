@@ -1,47 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import "./DocumentHandling.css";
 
 const DocumentHandling = () => {
-  const handleFileUpload = async (file) => {
+  const [citations, setCitations] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCitationUpload = async (file) => {
+    if (!file) return;
+
+    setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("session_id", "unique_session_identifier_12345");
 
-      const response = await fetch(
-        "/api/api/documents/upload?document_type=Contract",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      alert(`File uploaded successfully! Document ID: ${data.document_id}`);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      alert("File upload failed. Please try again.");
-    }
-  };
-
-  const triggerFileInput = () => {
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.accept = ".pdf,.doc,.docx";
-    fileInput.onchange = (e) => handleFileUpload(e.target.files[0]);
-    fileInput.click();
-  };
-
-  const handleDocumentSummary = async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("session_id", "unique_session_identifier_12345");
-
-      const response = await fetch("/api/api/query/document", {
+      const response = await fetch("/api/api/citation/feed-documents/", {
         method: "POST",
         body: formData,
       });
@@ -51,30 +24,50 @@ const DocumentHandling = () => {
       }
 
       const data = await response.json();
-      alert(`Document Summary: ${data.summary || "No summary available."}`);
+      setCitations(data.citations || []);
     } catch (error) {
-      console.error("Error summarizing document:", error);
-      alert("Failed to summarize the document. Please try again.");
+      console.error("Error fetching citations:", error);
+      alert("Failed to process document for citations. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const triggerSummaryInput = () => {
+  const triggerCitationInput = () => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = ".pdf,.doc,.docx";
-    fileInput.onchange = (e) => handleDocumentSummary(e.target.files[0]);
+    fileInput.onchange = (e) => handleCitationUpload(e.target.files[0]);
     fileInput.click();
   };
 
   return (
     <div className="document-handling">
       <h3>Document Handling</h3>
-      <button onClick={triggerFileInput} className="document-upload-button">
-        Upload Document
-      </button>
-      <button onClick={triggerSummaryInput} className="document-summary-button">
-        Summarize Document
-      </button>
+      <div className="feature-buttons">
+        <button onClick={triggerCitationInput} className="citation-button">
+          Find Citations
+        </button>
+      </div>
+      {isLoading ? (
+        <p>Loading citations...</p>
+      ) : (
+        citations.length > 0 && (
+          <div className="citations-list">
+            <h4>Relevant Citations</h4>
+            <ul>
+              {citations.map((citation, index) => (
+                <li key={index}>
+                  <p>{citation.text}</p>
+                  <a href={citation.link} target="_blank" rel="noopener noreferrer">
+                    View Source
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      )}
     </div>
   );
 };

@@ -30,7 +30,7 @@ import CitizenCases from './pages/citizen/cases/OverallCases';
 import CitizenSignUp from './pages/authentication/CitizenSignUp';
 import Lawyers from './pages/citizen/lawyers/overallLawyersCategory';
 import ChatInterface from './pages/AI/components/Chat/ChatInterface';
-import chatdashboard from './pages/AI/pages/DashboardPage';
+import Chatdashboard from './pages/AI/pages/DashboardPage';
 
 
 
@@ -67,7 +67,7 @@ function App() {
             <Route path="/overallcases" element={<OverallCases/>} />
             <Route path="/citizencases" element={<CitizenCases />} />
             <Route path="/chatinterface" element={<ChatInterface />} />
-            <Route path="/chatdashboard" element={<chatdashboard />} />
+            <Route path="/chatdashboard" element={<Chatdashboard />} />
             
             {/* <Route path="/contacts" element={<Contacts />} /> */}
             

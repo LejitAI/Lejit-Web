@@ -1,0 +1,53 @@
+.document-handling {
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .feature-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .citation-button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .citation-button:hover {
+    background-color: #45a049;
+  }
+  
+  .citations-list {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .citations-list h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .citations-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .citations-list li {
+    margin-bottom: 15px;
+  }
+  
+  .citations-list li a {
+    color: #283593;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+  
