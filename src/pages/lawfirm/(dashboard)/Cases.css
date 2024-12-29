@@ -145,3 +145,56 @@
 .case-action-button:hover {
     box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 4px and 8px */
 }
+
+.view-team-container {
+    width: calc(100% - 2rem); /* Full width minus spacing for borders */
+    max-width: 1200px; /* Optional max width for larger screens */
+    margin: 1rem auto; /* Center the container with equal spacing */
+    display: flex;
+    flex-direction: column;
+    background: #f9f9f9;
+    border-radius: 0.625rem; /* 10px rounded corners */
+    padding: 1.5rem;
+    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
+    height: calc(100vh - 2rem); /* Fill most of the screen */
+    overflow: hidden; /* Hide overflow outside the box */
+  }
+  
+  .team-list {
+    flex-grow: 1; /* Ensure it fills available space */
+    max-height: 100%; /* Full height inside the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+    display: flex;
+    flex-direction: column; /* Stack cases vertically */
+    gap: 1rem; /* Add space between cases */
+    margin-top: 1rem;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #c0c0c0 transparent; /* For Firefox */
+  }
+  
+  .team-list::-webkit-scrollbar {
+    width: 0.5rem; /* Scrollbar width */
+  }
+  
+  .team-list::-webkit-scrollbar-thumb {
+    background: #c0c0c0; /* Scrollbar color */
+    border-radius: 0.25rem;
+  }
+  
+  .team-list::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .case-team-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    width: 100%; /* Ensure the card spans the container width */
+    background: #ffffff;
+    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.05);
+    border-radius: 0.625rem; /* Rounded corners */
+    justify-content: space-between; /* Space between content and actions */
+  }
+  
