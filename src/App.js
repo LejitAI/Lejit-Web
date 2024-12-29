@@ -29,6 +29,8 @@ import OverallCases from './pages/lawfirm/(dashboard)/OverallCases';
 import CitizenCases from './pages/citizen/cases/OverallCases';
 import CitizenSignUp from './pages/authentication/CitizenSignUp';
 import Lawyers from './pages/citizen/lawyers/overallLawyersCategory';
+import ChatInterface from './pages/AI/components/Chat/ChatInterface';
+import chatdashboard from './pages/AI/pages/DashboardPage';
 
 
 
@@ -64,11 +66,14 @@ function App() {
             <Route path="/overallprofile" element={<OverallProfile/>} />
             <Route path="/overallcases" element={<OverallCases/>} />
             <Route path="/citizencases" element={<CitizenCases />} />
+            <Route path="/chatinterface" element={<ChatInterface />} />
+            <Route path="/chatdashboard" element={<chatdashboard />} />
             
             {/* <Route path="/contacts" element={<Contacts />} /> */}
             
             <Route path="/citizensignup" element={<CitizenSignUp />} />
             <Route path="/lawyers" element={<Lawyers />} />
+            
            
           </Routes>
     

@@ -1,0 +1,38 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .dashboard-tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f4f4f4;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .dashboard-tab {
+    flex-grow: 1;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    background-color: #f4f4f4;
+    color: #333;
+    transition: background-color 0.3s;
+  }
+  
+  .dashboard-tab.active {
+    background-color: #4caf50; /* Active tab */
+    color: #fff;
+  }
+  
+  .dashboard-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
