@@ -140,6 +140,37 @@ const Cases = () => {
     setFilteredCases(result);
   };
 
+  const handleDelete = async (caseId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this case?");
+    if (!confirmDelete) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Token not found. Please log in again.");
+
+      const response = await fetch(`backend/api/admin/delete-case/${caseId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete case. Please try again later.");
+      }
+
+      const result = await response.json();
+      alert(result.message);
+
+      // Remove the deleted case from the state
+      setCasesData((prevCases) => prevCases.filter((caseItem) => caseItem.id !== caseId));
+      setFilteredCases((prevFilteredCases) => prevFilteredCases.filter((caseItem) => caseItem.id !== caseId));
+    } catch (err) {
+      console.error("Error deleting case:", err.message);
+      alert(err.message || "Failed to delete case.");
+    }
+  };
+
   if (loading) {
     return <Typography>Loading cases...</Typography>;
   }
@@ -230,9 +261,13 @@ const Cases = () => {
         {filteredCases.map((caseItem, index) => (
           <Box key={index} className="case-team-card" onClick={() => setSelectedCase(caseItem)}>
             <Box className="case-date">
-              <Typography className="case-day">{caseItem.startingDate.getDate()}</Typography>
+              <Typography className="case-day">
+                {caseItem.startingDate ? caseItem.startingDate.getDate() : "N/A"}
+              </Typography>
               <Typography className="case-weekday">
-                {caseItem.startingDate.toLocaleDateString("en-US", { weekday: "short" })}
+                {caseItem.startingDate
+                  ? caseItem.startingDate.toLocaleDateString("en-US", { weekday: "short" })
+                  : "N/A"}
               </Typography>
             </Box>
             <Box className="team-info">
@@ -245,7 +280,15 @@ const Cases = () => {
               {caseItem.status}
             </Box>
             <Box className="case-actions">
-              <VisibilityIcon />
+              <IconButton>
+                <VisibilityIcon />
+              </IconButton>
+              <IconButton onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering parent click event
+                handleDelete(caseItem.id);
+              }}>
+                <DeleteIcon />
+              </IconButton>
             </Box>
           </Box>
         ))}

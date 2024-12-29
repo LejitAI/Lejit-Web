@@ -6,6 +6,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import SortIcon from '@mui/icons-material/Sort';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StarIcon from '@mui/icons-material/Star';
+import DeleteIcon from '@mui/icons-material/Delete'; // Added DeleteIcon
 import './ViewTeam.css';
 
 const ViewTeam = () => {
@@ -34,6 +35,29 @@ const ViewTeam = () => {
             }
         } catch (error) {
             console.error('Error fetching team members:', error);
+        }
+    };
+
+    const handleDelete = async (memberId) => {
+        const confirmDelete = window.confirm('Are you sure you want to delete this team member?');
+        if (!confirmDelete) return;
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`backend/api/admin/delete-team-member/${memberId}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                setTeamMembers((prev) => prev.filter((member) => member._id !== memberId)); // Update team members
+            } else {
+                throw new Error('Failed to delete team member.');
+            }
+        } catch (error) {
+            console.error('Error deleting team member:', error);
         }
     };
 
@@ -91,41 +115,12 @@ const ViewTeam = () => {
                             <Typography variant="body1"><strong>Mobile:</strong> {selectedMember.personalDetails.mobile}</Typography>
                             <Typography variant="body1"><strong>Gender:</strong> {selectedMember.personalDetails.gender}</Typography>
                         </Box>
-                        <Box>
-                            <Typography variant="body1"><strong>Address:</strong></Typography>
-                            <Typography variant="body2">
-                                {selectedMember.personalDetails.address.line1}, {selectedMember.personalDetails.address.line2}, {selectedMember.personalDetails.address.city}, {selectedMember.personalDetails.address.state}, {selectedMember.personalDetails.address.country} - {selectedMember.personalDetails.address.postalCode}
-                            </Typography>
-                            <Typography variant="body1" style={{ marginTop: '8px' }}>
-                                <strong>Date of Birth:</strong> {new Date(selectedMember.personalDetails.dateOfBirth).toLocaleDateString()}
-                            </Typography>
-                        </Box>
-                    </Box>
-                    <hr style={{ margin: '16px 0', border: '1px solid #EEE' }} />
-
-                    {/* Professional Details */}
-                    <Typography variant="h6" style={{ marginBottom: '16px', fontWeight: '600' }}>
-                        Professional Details
-                    </Typography>
-                    <Box style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
-                        <Box>
-                            <Typography variant="body1"><strong>Lawyer Type:</strong> {selectedMember.professionalDetails.lawyerType}</Typography>
-                            <Typography variant="body1"><strong>Specialization:</strong> {selectedMember.professionalDetails.specialization}</Typography>
-                        </Box>
-                        <Box>
-                            <Typography variant="body1"><strong>Degree:</strong> {selectedMember.professionalDetails.degreeType}</Typography>
-                            <Typography variant="body1"><strong>Institution:</strong> {selectedMember.professionalDetails.degreeInstitution}</Typography>
-                            <Typography variant="body1"><strong>Government ID:</strong> {selectedMember.professionalDetails.governmentID}</Typography>
-                        </Box>
                     </Box>
                 </Box>
             </Box>
         </Box>
     );
 }
-
-    
-    
 
     return (
         <Box className="view-team-container">
@@ -307,6 +302,14 @@ const ViewTeam = () => {
                                     </Typography>
                                 </Box>
                             </Box>
+                        </Box>
+                        <Box style={{ display: 'flex', alignItems: 'center' }}>
+                            <IconButton onClick={(e) => {
+                                e.stopPropagation(); // Prevent triggering card click
+                                handleDelete(member._id);
+                            }}>
+                                <DeleteIcon />
+                            </IconButton>
                         </Box>
                     </Box>
                 ))}
