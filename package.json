@@ -2,7 +2,7 @@
   "name": "login-page",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://52.74.188.1",
+  "proxy": "http://backend.lejit.ai/",
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
