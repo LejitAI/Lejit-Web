@@ -8,6 +8,7 @@ import category3 from '../assets/Group 4.png';
 import category4 from '../assets/Group 33734.png';
 import citizenIcon from '../assets/citizenIcon.png';
 import lawyerIcon from '../assets/lawyerIcon.png';
+import corporateIcon from './Corporate.png'
 
 const Introduction = () => {
   const navigate = useNavigate();
@@ -48,35 +49,38 @@ const Introduction = () => {
           </div>
 
           <div className="user-type-selection">
-            <div className={`user-type-card ${userType === 'Citizen' ? 'selected' : ''}`} onClick={() => setUserType('Citizen')}>
-              <input
-                type="radio"
-                name="userType"
-                value="Citizen"
-                id="citizen"
-                className="user-type-radio"
-                checked={userType === 'Citizen'}
-                onChange={() => setUserType('Citizen')}
-              />
-              <label htmlFor="citizen" className="user-type-label">
-                <img src={citizenIcon} alt="Citizen" className="user-type-icon" />
-              </label>
-            </div>
-            <div className={`user-type-card ${userType === 'Lawyer' ? 'selected' : ''}`} onClick={() => setUserType('Lawyer')}>
-              <input
-                type="radio"
-                name="userType"
-                value="Lawyer"
-                id="lawyer"
-                className="user-type-radio"
-                checked={userType === 'Lawyer'}
-                onChange={() => setUserType('Lawyer')}
-              />
-              <label htmlFor="lawyer" className="user-type-label">
-                <img src={lawyerIcon} alt="Lawyer" className="user-type-icon" />
-              </label>
-            </div>
-          </div>
+  <div 
+    className={`user-type-card citizen-card ${userType === 'Citizen' ? 'selected' : ''}`} 
+    onClick={() => setUserType('Citizen')}
+  >
+    <div className="button-content">
+      <img src={citizenIcon} alt="Citizen" className="user-type-icon" />
+      <h3 className="user-type-title">Citizen</h3>
+    </div>
+  </div>
+
+  <div 
+    className={`user-type-card lawyer-card ${userType === 'Lawyer' ? 'selected' : ''}`} 
+    onClick={() => setUserType('Lawyer')}
+  >
+    <div className="button-content">
+      <img src={lawyerIcon} alt="Lawyer" className="user-type-icon" />
+      <h3 className="user-type-title">Lawyer</h3>
+    </div>
+  </div>
+
+  <div 
+    className={`user-type-card corporate-card ${userType === 'Corporate' ? 'selected' : ''}`} 
+    onClick={() => setUserType('Corporate')}
+  >
+    <div className="button-content">
+      <img src={corporateIcon} alt="Corporate" className="user-type-icon" />
+      <h3 className="user-type-title">Corporate</h3>
+    </div>
+  </div>
+</div>
+
+
 
           <button className="intro-start-button" onClick={handleStartClick}>LET'S GET STARTED</button>
 
