@@ -61,14 +61,7 @@ const AddClient = ({ onClose }) => {
     e.preventDefault();
     if (validate()) {
       try {
-        const address = {
-          addressLine1: formData.address1,
-          addressLine2: formData.address2,
-          city: formData.city,
-          state: formData.state,
-          postalCode: formData.postal,
-          country: formData.country,
-        };
+        const address = `${formData.address1}, ${formData.address2}, ${formData.city}, ${formData.state}, ${formData.postal}, ${formData.country}`;
 
         const dataToSubmit = {
           name: formData.name,
@@ -77,19 +70,24 @@ const AddClient = ({ onClose }) => {
           email: formData.email,
           mobile: formData.mobile,
           address,
-          profilePhoto: formData.profilePhoto ? URL.createObjectURL(formData.profilePhoto) : null,
+          profilePhoto: formData.profilePhoto
+            ? await convertFileToBase64(formData.profilePhoto)
+            : null,
         };
 
-        const response = await fetch("http://52.74.188.1:5000/api/admin/add-client", {
+        const response = await fetch("backend/api/admin/add-client", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify(dataToSubmit),
         });
 
         if (response.ok) {
+          const result = await response.json();
           setMessage("Client added successfully!");
+          console.log("Client details:", result.client);
           setFormData({
             name: "",
             dob: null,
@@ -115,6 +113,14 @@ const AddClient = ({ onClose }) => {
       }
     }
   };
+
+  const convertFileToBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
 
   return (
     <div className="add-client-overlay">
