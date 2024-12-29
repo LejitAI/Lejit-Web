@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, TextField } from "@mui/material";
+import { Box, Typography, TextField, IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import DownloadIcon from "@mui/icons-material/Download";
 import SortIcon from "@mui/icons-material/Sort";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./Cases.css";
 
 const getStatusClass = (status) => {
@@ -39,9 +40,10 @@ const Cases = () => {
   const [filteredCases, setFilteredCases] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedCase, setSelectedCase] = useState(null); // State for selected case
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortOption, setSortOption] = useState(""); // Sorting criteria
-  const [filterOption, setFilterOption] = useState(""); // Filtering criteria
+  const [sortOption, setSortOption] = useState("");
+  const [filterOption, setFilterOption] = useState("");
 
   useEffect(() => {
     const fetchCases = async () => {
@@ -62,18 +64,16 @@ const Cases = () => {
 
         const data = await response.json();
         const transformedCases = data.map((caseItem) => ({
+          id: caseItem._id,
           title: caseItem.title,
           clientName: caseItem.client,
           caseType: caseItem.caseType,
-          status: caseItem.status || "Ongoing", // Default status if missing
+          status: caseItem.status || "Ongoing",
           documents: caseItem.documents || [],
-          date: {
-            day: new Date(caseItem.startingDate).getDate().toString(),
-            weekday: new Date(caseItem.startingDate).toLocaleDateString("en-US", {
-              weekday: "short",
-            }),
-          },
           startingDate: new Date(caseItem.startingDate),
+          caseDescription: caseItem.caseDescription,
+          caseWitness: caseItem.caseWitness,
+          oppositeClient: caseItem.oppositeClient,
         }));
 
         setCasesData(transformedCases);
@@ -88,6 +88,10 @@ const Cases = () => {
 
     fetchCases();
   }, []);
+
+  const handleBack = () => {
+    setSelectedCase(null); // Clear the selected case to return to the case list
+  };
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
@@ -136,37 +140,56 @@ const Cases = () => {
     setFilteredCases(result);
   };
 
-  const handleDownload = () => {
-    const headers = ["Title", "Client Name", "Case Type", "Status", "Date"];
-    const rows = filteredCases.map((caseItem) => [
-      caseItem.title,
-      caseItem.clientName,
-      caseItem.caseType,
-      caseItem.status,
-      caseItem.startingDate.toISOString().split("T")[0], // Format date as YYYY-MM-DD
-    ]);
-
-    const csvContent =
-      [headers.join(","), ...rows.map((row) => row.join(","))].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.href = url;
-    link.download = "cases.csv";
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
-
   if (loading) {
     return <Typography>Loading cases...</Typography>;
   }
 
   if (error) {
     return <Typography>{error}</Typography>;
+  }
+
+  if (selectedCase) {
+    // Detailed view of the selected case
+    return (
+      <Box className="case-details-container">
+        <Box className="header" style={{ marginBottom: "16px" }}>
+          <IconButton onClick={handleBack}>
+            <ArrowBackIcon style={{ color: "#343434" }} />
+          </IconButton>
+          <Typography variant="h5" className="title">
+            Case Details
+          </Typography>
+        </Box>
+        <Box
+          className="case-details"
+          style={{
+            padding: "24px",
+            background: "#FFFFFF",
+            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+            borderRadius: "10px",
+            maxWidth: "800px",
+            margin: "0 auto",
+          }}
+        >
+          <Typography variant="h6"><strong>Title:</strong> {selectedCase.title}</Typography>
+          <Typography variant="body1"><strong>Client Name:</strong> {selectedCase.clientName}</Typography>
+          <Typography variant="body1"><strong>Case Type:</strong> {selectedCase.caseType}</Typography>
+          <Typography variant="body1"><strong>Opposite Client:</strong> {selectedCase.oppositeClient || "N/A"}</Typography>
+          <Typography variant="body1"><strong>Witness:</strong> {selectedCase.caseWitness || "N/A"}</Typography>
+          <Typography variant="body1"><strong>Description:</strong> {selectedCase.caseDescription || "N/A"}</Typography>
+          <Typography variant="body1"><strong>Starting Date:</strong> {selectedCase.startingDate.toLocaleDateString()}</Typography>
+          <Typography variant="body1"><strong>Status:</strong> {selectedCase.status}</Typography>
+          <Typography variant="body1"><strong>Documents:</strong></Typography>
+          {selectedCase.documents.length > 0 ? (
+            selectedCase.documents.map((doc, index) => (
+              <Typography key={index} variant="body2">{doc}</Typography>
+            ))
+          ) : (
+            <Typography variant="body2">No documents uploaded.</Typography>
+          )}
+        </Box>
+      </Box>
+    );
   }
 
   return (
@@ -195,7 +218,7 @@ const Cases = () => {
             <SortIcon />
             <Typography>{sortOption === "date-desc" ? "Sort Desc" : "Sort Asc"}</Typography>
           </Box>
-          <Box className="action-button" onClick={handleDownload}>
+          <Box className="action-button">
             <DownloadIcon />
             <Typography>Download List</Typography>
           </Box>
@@ -205,37 +228,24 @@ const Cases = () => {
       {/* Cases */}
       <Box className="team-list">
         {filteredCases.map((caseItem, index) => (
-          <Box key={index} className="case-team-card">
+          <Box key={index} className="case-team-card" onClick={() => setSelectedCase(caseItem)}>
             <Box className="case-date">
-              <Typography className="case-day">{caseItem.date.day}</Typography>
-              <Typography className="case-weekday">{caseItem.date.weekday}</Typography>
+              <Typography className="case-day">{caseItem.startingDate.getDate()}</Typography>
+              <Typography className="case-weekday">
+                {caseItem.startingDate.toLocaleDateString("en-US", { weekday: "short" })}
+              </Typography>
             </Box>
             <Box className="team-info">
               <Typography className="member-name">{caseItem.title}</Typography>
-              <Box className="member-details">
-                <Typography>Client Name: {caseItem.clientName}</Typography>
-                <div className="case-doc-divider" />
-                <Typography>Case Type: {caseItem.caseType}</Typography>
-              </Box>
-              <Box className="member-details">
-                {caseItem.documents.map((doc, docIndex) => (
-                  <Typography key={docIndex} className="document-name">
-                    {doc}
-                  </Typography>
-                ))}
-              </Box>
+              <Typography>Client Name: {caseItem.clientName}</Typography>
+              <Typography>Case Type: {caseItem.caseType}</Typography>
             </Box>
             <Box className={`case-status ${getStatusClass(caseItem.status)}`}>
               <span className={`status-indicator ${getStatusIndicatorClass(caseItem.status)}`} />
               {caseItem.status}
             </Box>
             <Box className="case-actions">
-              <Box className="case-action-button">
-                <VisibilityIcon />
-              </Box>
-              <Box className="case-action-button">
-                <DeleteIcon />
-              </Box>
+              <VisibilityIcon />
             </Box>
           </Box>
         ))}
