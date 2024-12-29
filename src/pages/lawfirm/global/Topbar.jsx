@@ -19,7 +19,7 @@ const Topbar = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get('backend/api/auth/profile', {
+        const response = await axios.get('/api/user/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
