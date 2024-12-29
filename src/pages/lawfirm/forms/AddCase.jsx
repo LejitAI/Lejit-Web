@@ -93,7 +93,7 @@ const AddCase = ({ isOpen, onClose }) => {
             <div className="addCaseHeader">
                     <h2 className="addCaseTitle">Add Case</h2>
                     <p className="addCaseSubtitle">
-                        Provide key details about your case to help clients understand your expertise and experience!!!!!!!!.
+                        Provide key details about your case to help clients understand your expertise and experience.
                     </p>
                     <button className="closeButton" onClick={onClose}>×</button>
                 </div>
