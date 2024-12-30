@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Box, IconButton, Typography, InputBase, Avatar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -6,9 +6,32 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FlagIcon from '@mui/icons-material/Flag'; // Placeholder for the flag icon
 import profilePic from './Avatar.png'; // Replace with actual path to the profile picture
+import axios from 'axios';
 
 const Topbar = () => {
-  const [searchFocused, setSearchFocused] = React.useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const [user, setUser] = useState(null);
+
+  // Fetch user data using token
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token'); // Assume token is stored in localStorage
+      if (!token) return;
+
+      try {
+        const response = await axios.get('/api/user/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUser(response.data.user);
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   return (
     <AppBar
@@ -20,7 +43,7 @@ const Topbar = () => {
         padding: '8px 24px',
         display: 'flex',
         alignItems: 'center',
-        zIndex: 1300, // Ensure it sits above other components if needed
+        zIndex: 1100, // Ensure it sits above other components if needed
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', width: '100%' }}>
@@ -127,7 +150,7 @@ const Topbar = () => {
                   fontFamily: 'Poppins, sans-serif',
                 }}
               >
-                Hi, Steve!
+                Hi, {user ? user.username : 'Guest'}!
               </Typography>
               <Typography
                 sx={{
@@ -137,7 +160,7 @@ const Topbar = () => {
                   fontFamily: 'Poppins, sans-serif',
                 }}
               >
-                Admin
+                {user ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'Role'}
               </Typography>
             </Box>
             <ExpandMoreIcon sx={{ color: '#7A7A7A', fontSize: '16px' }} />

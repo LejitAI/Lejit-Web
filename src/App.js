@@ -10,23 +10,33 @@ import LawFirmLanding from './pages/lawfirm/editLawFirm/LawFirmLanding';
 import AddUser from './pages/lawfirm/forms/AddUser';
 import ViewTeam from './pages/lawfirm/(dashboard)/ViewTeam';
 import Profile from './pages/lawfirm/(dashboard)/Profile';
+import Appointments from './pages/lawfirm/(dashboard)/Appointments/Appointmentsub';
+import CitizenAppointments from './pages/citizen/Appointments/Appointmentsub';
+import OverallHearing from './pages/lawfirm/(dashboard)/HearingSchedules/OverallHearing';
+import CitizenHearing from './pages/citizen/HearingSchedules/OverallHearing';
 import AddCase from './pages/lawfirm/forms/AddCase';
-import CDashboard from './pages/citizen/Dashboard/CDashboard';
-import MyCases from './pages/citizen/MyCases/MyCases';
-import Appointments from './pages/citizen/MyCases/Appointments/Appointments';
-import WelcomePage from './pages/WelcomePage';
-import Topbar from './pages/citizen/global/Topbar';
-import Dashboard from './pages/citizen/NDashboard/Dashboard'
-import CitizenLayout from './pages/citizen/CitizenLayout';
-import Cases from './pages/citizen/Cases/MyCases';
-import LDashboard from './pages/law-firm/Dashboard';
-import UserPage from './pages/law-firm/UserPage';
-import LawFirmProfile from './pages/law-firm/LawFirmProfile';
-import AddLawyer from './pages/law-firm/AddLawyer';
-import LawyersList1 from './pages/law-firm/LawyerList';
-import ManageCases from './pages/law-firm/CasePage';
-import AppointmentManagement from './pages/law-firm/AppointmentPage';
-import CaseView from './pages/law-firm/CaseView';
+import AskAI from './pages/lawfirm/global/AskAI';
+import ConvoAgent from './pages/lawfirm/(dashboard)/ConvoAgent';
+import EditProfile from './pages/lawfirm/forms/EditProfile';
+import LDashboard from './pages/lawfirm/(dashboard)/DashboardOverview';
+import ChatAI from './pages/lawfirm/global/ChatAI';
+import ClientsOverview from './pages/lawfirm/(dashboard)/ClientsOverview'
+import AddClient from './pages/lawfirm/forms/AddClient'
+import ClientDetails from './pages/lawfirm/(dashboard)/EachClient'
+import OverallClientDetails from './pages/lawfirm/(dashboard)/OverallClientDetails';
+import OverallProfile from './pages/lawfirm/(dashboard)/OverallProfile';
+import OverallCases from './pages/lawfirm/(dashboard)/OverallCases';
+import CitizenCases from './pages/citizen/cases/OverallCases';
+import CitizenSignUp from './pages/authentication/CitizenSignUp';
+import Lawyers from './pages/citizen/lawyers/overallLawyersCategory';
+import ChatInterface from './pages/AI/components/Chat/ChatInterface';
+import Chatdashboard from './pages/AI/pages/DashboardPage';
+import Analytics from './pages/lawfirm/(dashboard)/Analytics'
+import OverallAnalytics from './pages/lawfirm/(dashboard)/OverallAnalytics'
+import Documents from './pages/lawfirm/(dashboard)/Documents'
+import Templates from './pages/lawfirm/(dashboard)/LegalTemplates'
+import Knowledge from './pages/lawfirm/(dashboard)/KnowledgeHub'
+
 function App() {
   const [theme, colorMode] = useMode();
   return (
@@ -42,37 +52,35 @@ function App() {
             <Route path="/landing" element={<LawFirmLanding />} />
             <Route path="/addUser" element={<AddUser />} />
             <Route path="/addCase" element={<AddCase />} />
-            <Route path="/law-firm" element={<LDashboard />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="/law-firm/manage-case" element={<ManageCases/>} />
-            <Route path="/law-firm/case/:id" element={<CaseView />} />
-            <Route path="/law-firm/add-user" element={<UserPage />} />
-            <Route path='/law-firm/profile' element={<LawFirmProfile/>}/>
-            <Route path='/law-firm/appointments' element={<AppointmentManagement/>}/>
-            <Route path='/law-firm/add-lawyer' element={<AddLawyer/>}/>
-            <Route path='/law-firm/view-lawyer' element={<LawyersList1/>}/>
-            {/* Dashboard Route */}
-            <Route path="/welcome" element={<WelcomePage />} />
-            <Route path="/law-firm" element={<LDashboard />} />
-            <Route path="/law-firm/add-user" element={<UserPage />} />
-            <Route path='/law-firm/profile' element={<LawFirmProfile/>}/>
-            {/* <Route path='/law-firm/add-client' element={<AddClientPage/>}/> */}
-            <Route path='/law-firm/add-lawyer' element={<AddLawyer/>}/>
-            <Route path='/law-firm/view-lawyer' element={<LawyersList1/>}/>
-            <Route path="/citizen/cdashboard" element={<Dashboard />} />
-            <Route path="/cases" element={<Cases />} />
+            <Route path="profile" element={<Profile />} />   
+            <Route path="/appointments" element={<Appointments />} /> 
+            <Route path="/citizenappointments" element={<CitizenAppointments />} /> 
+            <Route path="/hearing" element={<OverallHearing />} />  
+            <Route path="/citizenhearing" element={<CitizenHearing />} />  
+            <Route path="/AI" element={<AskAI />} />
+            <Route path="/convoagent" element={<ConvoAgent />} />
+            <Route path="/editprofile" element={<EditProfile />} />
+            <Route path="/ldashboard" element={<LDashboard />} />
+            <Route path="/chat" element={<ChatAI />} />
+            <Route path="/clients" element={<ClientsOverview/>} />
+            <Route path="/addclient" element={<AddClient/>} />
+            <Route path="/clientdetails" element={<ClientDetails/>} />
+            <Route path="/overallclient" element={<OverallClientDetails/>} />
+            <Route path="/overallprofile" element={<OverallProfile/>} />
+            <Route path="/overallcases" element={<OverallCases/>} />
+            <Route path="/citizencases" element={<CitizenCases />} />
+            <Route path="/chatinterface" element={<ChatInterface />} />
+            <Route path="/chatdashboard" element={<Chatdashboard />} />
+            <Route path="/analytics" element={<OverallAnalytics />} />
+            <Route path="/documents" element={<Documents />} />
+            <Route path="/templates" element={<Templates />} />
+            <Route path="/knowledge" element={<Knowledge />} />
             {/* <Route path="/contacts" element={<Contacts />} /> */}
-            {/* <Route path="/invoices" element={<Invoices />} />*/}
-            {/* <Route path="/form" element={<Form />} />*/}
-            {/* <Route path="/bar" element={<Bar />} />*/}
-            {/* <Route path="/pie" element={<Pie />} />*/}
-            {/* <Route path="/line" element={<Line />} />*/}
-            {/* <Route path="/faq" element={<FAQ />} />*/}
-            {/* <Route path="/geography" element={<Geography />} />*/}
-            {/* <Route path="/calendar" element={<Calendar />} />*/}
-            <Route path="/citizen/mycases" element={<MyCases />} />
-            <Route path="/citizen/appointments" element={<Appointments />} />
             
+            <Route path="/citizensignup" element={<CitizenSignUp />} />
+            <Route path="/lawyers" element={<Lawyers />} />
+            
+           
           </Routes>
     
         </Router>

@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import './LawFirmLanding.css';
 import '../forms/AddUser.css';
 import AddUser from '../forms/AddUser';
-import AddCase from '../forms/AddCase'; // Import AddCase component
+import AddCase from '../forms/AddCase';
+import EditProfile from '../forms/EditProfile'; // Import EditProfile component
 import Logo from '../../assets/logo.png';
 
 const LawFirmDetailsPage = () => {
   const [showAddUserPopup, setShowAddUserPopup] = useState(false);
-  const [showAddCasePopup, setShowAddCasePopup] = useState(false); // State for AddCase popup
+  const [showAddCasePopup, setShowAddCasePopup] = useState(false);
+  const [showEditProfilePopup, setShowEditProfilePopup] = useState(false); // State for Edit Profile popup
   const [lawFirmName, setLawFirmName] = useState('');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedLawFirmName = localStorage.getItem('lawFirmName');
@@ -27,9 +29,14 @@ const LawFirmDetailsPage = () => {
     setShowAddCasePopup(true);
   };
 
+  const handleEditProfile = () => {
+    setShowEditProfilePopup(true);
+  };
+
   const handleClosePopup = () => {
     setShowAddUserPopup(false);
     setShowAddCasePopup(false);
+    setShowEditProfilePopup(false);
   };
 
   const handleSkip = () => {
@@ -52,7 +59,7 @@ const LawFirmDetailsPage = () => {
                 <p className="profile-name">{lawFirmName || 'Law Firm'}</p>
                 <p className="profile-role">12 years</p>
               </div>
-              <button className="ebutton">Edit Profile</button>
+              <button className="ebutton" onClick={handleEditProfile}>Edit Profile</button>
             </div>
             <hr className="ldivider" />
 
@@ -85,7 +92,7 @@ const LawFirmDetailsPage = () => {
                 <p className="primary-text">Add Cases</p>
                 <p className="secondary-text">Add open and closed cases</p>
               </div>
-              <button className="button" onClick={handleAddCase}>Add</button> {/* Updated onClick */}
+              <button className="button" onClick={handleAddCase}>Add</button>
             </div>
             <hr className="divider" />
 
@@ -113,7 +120,20 @@ const LawFirmDetailsPage = () => {
       {showAddUserPopup && <AddUser onClose={handleClosePopup} />}
 
       {/* Popup for Add Case */}
-      {showAddCasePopup && <AddCase isOpen={showAddCasePopup} onClose={handleClosePopup} />} {/* AddCase popup */}
+      {showAddCasePopup && <AddCase isOpen={showAddCasePopup} onClose={handleClosePopup} />}
+
+      {/* Popup for Edit Profile */}
+      {showEditProfilePopup && (
+  <div className="edit-profile-overlay">
+    <div className="edit-profile-popup">
+      <button className="close-popup-button" onClick={handleClosePopup} aria-label="Close">
+        &times;
+      </button>
+      <EditProfile />
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

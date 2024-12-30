@@ -1,196 +1,195 @@
-import { useState } from "react";
-import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
-import "react-pro-sidebar/dist/css/styles.css";
-import { tokens } from "../../../theme";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import CaseIcon from "@mui/icons-material/Folder";
-import DocumentIcon from "@mui/icons-material/Description";
-import AppointmentIcon from "@mui/icons-material/CalendarToday";
-import HearingScheduleIcon from "@mui/icons-material/Schedule";
-import TemplateIcon from "@mui/icons-material/InsertDriveFile";
-import KnowledgeHubIcon from "@mui/icons-material/MenuBook";
-import NotificationIcon from "@mui/icons-material/Notifications";
-import AnalyticsIcon from "@mui/icons-material/BarChart";
-import ProfileIcon from "@mui/icons-material/Person";
-import SettingsIcon from "@mui/icons-material/Settings";
-import LogoutIcon from "@mui/icons-material/Logout";
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import logo from "./lejit-logo-removebg-preview.png"; // Adjust path as needed
-
-const Item = ({ title, to, icon, selected, setSelected }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  return (
-    <MenuItem
-      active={selected === title}
-      style={{
-        color: colors.grey[800],
-        fontWeight: selected === title ? "bold" : "normal",
-        backgroundColor: selected === title ? "#E5ECFF" : "transparent",
-        borderRadius: "8px",
-        marginBottom: "10px",
-      }}
-      onClick={() => setSelected(title)}
-      icon={icon}
-    >
-      <Link to={to}>{title}</Link>
-    </MenuItem>
-  );
-};
+import React, { useState } from 'react';
+import { Drawer, List, ListItem, ListItemText, ListItemIcon, Box, Tooltip, IconButton } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useLocation, useNavigate } from 'react-router-dom';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import FolderIcon from '@mui/icons-material/Folder';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import ArticleIcon from '@mui/icons-material/Article';
+import BookIcon from '@mui/icons-material/Book';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import MenuIcon from '@mui/icons-material/Menu';
+import logo from './lejit-logo-removebg-preview copy.png';
+import PeopleIcon from '@mui/icons-material/People'; 
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline'; 
 
 const Sidebar = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState("Dashboard");
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const location = useLocation(); // Get the current location
+  const navigate = useNavigate(); // Navigate to different routes
 
-  return (
+  // Define the menu items with paths
+  const menuItems = [
+    { text: 'Dashboard', icon: <DashboardIcon />, path: '/citizendashboard' },
+    { text: 'My Cases', icon: <FolderIcon />, path: '/citizencases' },
+    { text: 'Lawyers', icon: <PeopleIcon />, path: '/lawyers' },
+    { text: 'Documents', icon: <ArticleIcon />, path: '/citizendocuments' },
+    { text: 'Appointments', icon: <CalendarTodayIcon />, path: '/citizenappointments' },
+    { text: 'Hearing Schedule', icon: <ScheduleIcon />, path: '/citizenhearing' },
+    { text: 'Legal Templates', icon: <ArticleIcon />, path: '/citizentemplates' },
+    { text: 'Knowledge Hub', icon: <BookIcon />, path: '/citizenknowledge' },
+    { text: 'Notification', icon: <NotificationsIcon />, path: '/citizennotification' },
+    { text: 'Analytics/Reports', icon: <BarChartIcon />, path: '/citizenanalytics' },
+    { text: 'Profile', icon: <PersonIcon />, path: '/citizenprofile' },
+  ];
+
+  // Toggle the drawer for mobile view
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  // Check if the current path matches the menu item path
+  const isActive = (path) => location.pathname === path;
+
+  const drawerContent = (
     <Box
       sx={{
-        "& .pro-sidebar-inner": {
-          backgroundColor: "#FFFFFF !important",
-          borderRadius: "8px",
-          overflowY: "hidden", // Hide vertical scrollbar
-        },
-        "& .pro-sidebar-inner::-webkit-scrollbar": {
-          display: "none", // Hide scrollbar for Webkit browsers
-        },
-        "& .pro-icon-wrapper": {
-          backgroundColor: "transparent !important",
-        },
-        "& .pro-inner-item": {
-          padding: "10px 24px !important",
-          fontSize: "14px",
-          color: colors.grey[600],
-        },
-        "& .pro-inner-item:hover": {
-          color: "#0052CC !important",
-          backgroundColor: "#F0F4FF !important",
-          borderRadius: "8px",
-        },
-        "& .pro-menu-item.active": {
-          color: "#0052CC !important",
-          backgroundColor: "#E5ECFF !important",
-        },
+        width: isMobile ? '80vw' : '240px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '2px 0',
+        gap: '20px',
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
-          {/* LOGO AND MENU ICON */}
-          <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-            style={{
-              margin: "10px 0 20px 0",
-              color: colors.grey[600],
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: 'auto',
+          padding: '20px 0',
+        }}
+      >
+        <img
+          src={logo}
+          alt="Lejit Logo"
+          style={{
+            width: isMobile ? '100px' : '130px',
+            height: isMobile ? '40px' : '50px',
+            borderRadius: '300px',
+          }}
+        />
+      </Box>
+      <List sx={{ width: '100%' }}>
+        {menuItems.map((item) => (
+          <Tooltip key={item.text} title={item.text} placement="right" arrow>
+            <ListItem
+              button
+              onClick={() => navigate(item.path)}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: isActive(item.path) ? '0px 16px' : '0px 24px',
+                gap: '16px',
+                width: isActive(item.path) ? '90%' : '100%',
+                height: '47.34px',
+                backgroundColor: isActive(item.path) ? '#0F67FD' : '#FFFFFF',
+                borderRadius: '10px',
+                color: isActive(item.path) ? '#FFFFFF' : '#7A7A7A',
+                marginLeft: isActive(item.path) ? '12px' : '0px',
+                transition: 'all 0.3s ease',
+                transform: isActive(item.path) ? 'scale(1.02)' : 'scale(1)',
+                boxShadow: isActive(item.path)
+                  ? '0px 4px 10px rgba(15, 103, 253, 0.3)'  // Shadow for active item
+                  : '2px 2px 6px rgba(0, 0, 0, 0.05)',      // Subtle shadow for non-active items
+                '&:hover': {
+                  backgroundColor: isActive(item.path) ? '#0F67FD' : 'rgba(15, 103, 253, 0.08)',
+                  boxShadow: '0px 6px 12px rgba(0, 103, 253, 0.15)', // Larger shadow on hover
+                  transform: 'scale(1.03)', // Slight scaling effect on hover
+                },
+                '& .MuiListItemIcon-root': {
+                  color: isActive(item.path) ? '#FFFFFF' : '#7A7A7A',
+                  minWidth: '16px',
+                  marginRight: '16px',
+                  width: '16px',
+                  height: '16px',
+                  transition: 'transform 0.3s ease',
+                },
+              }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText
+                primary={item.text}
+                primaryTypographyProps={{
+                  fontFamily: 'Poppins, sans-serif',
+                  fontWeight: 500,
+                  fontSize: '14px',
+                  lineHeight: '21px',
+                  letterSpacing: '0.3px',
+                }}
+              />
+            </ListItem>
+          </Tooltip>
+        ))}
+      </List>
+    </Box>
+  );
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      {isMobile ? (
+        <>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerToggle}
+            sx={{
+              position: 'fixed',
+              top: '16px',
+              left: '16px',
+              zIndex: 1100,
+              color: '#404040',
+              transition: 'transform 0.2s ease',
+              '&:hover': { transform: 'scale(1.1)', color: '#0F67FD' },
             }}
           >
-            {!isCollapsed && (
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                ml="15px"
-              >
-                <img src={logo} alt="Logo" style={{ height: "40px" }} /> {/* Adjust height as needed */}
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                  <MenuOutlinedIcon />
-                </IconButton>
-              </Box>
-            )}
-          </MenuItem>
-
-          {/* Menu Items */}
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
-              title="Dashboard"
-              to="/citizen/cdashboard"
-              icon={<DashboardIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="My Cases"
-              to="/cases"
-              icon={<CaseIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Documents"
-              to="/documents"
-              icon={<DocumentIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Appointments"
-              to="/appointments"
-              icon={<AppointmentIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Hearing Schedule"
-              to="/hearing-schedule"
-              icon={<HearingScheduleIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Legal Templates"
-              to="/legal-templates"
-              icon={<TemplateIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Knowledge Hub"
-              to="/knowledge-hub"
-              icon={<KnowledgeHubIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Notification"
-              to="/notification"
-              icon={<NotificationIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Analytics / Reports"
-              to="/analytics"
-              icon={<AnalyticsIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Profile"
-              to="/profile"
-              icon={<ProfileIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Settings"
-              to="/settings"
-              icon={<SettingsIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Logout"
-              to="/logout"
-              icon={<LogoutIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          </Box>
-        </Menu>
-      </ProSidebar>
+            <MenuIcon />
+          </IconButton>
+          <Drawer
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better performance on mobile
+            }}
+            sx={{
+              '& .MuiDrawer-paper': {
+                width: '80vw',
+                backgroundColor: '#FFFFFF',
+                boxShadow: '4px 0 8px rgba(0, 0, 0, 0.1)',
+              },
+            }}
+          >
+            {drawerContent}
+          </Drawer>
+        </>
+      ) : (
+        <Drawer
+          variant="permanent"
+          sx={{
+            width: '240px',
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: '240px',
+              boxSizing: 'border-box',
+              backgroundColor: '#FFFFFF',
+              boxShadow: '4px 0 8px rgba(0, 0, 0, 0.1)',
+            },
+          }}
+        >
+          {drawerContent}
+        </Drawer>
+      )}
     </Box>
   );
 };
