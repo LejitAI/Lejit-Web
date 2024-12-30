@@ -44,11 +44,13 @@ const CitizenSignUp = () => {
     setIsLoading(true);
 
     const payload = {
-        role: 'citizen',
-        username: fullName,
-        email: email,
-        password: password,
-    };
+    role: 'citizen',
+    username: fullName,
+    email: email,
+    password: password,
+    confirmPassword: password // Add confirmPassword for backend validation
+};
+
 
     console.log("Payload being sent to the backend:", payload); // Debug payload
 
@@ -61,7 +63,7 @@ const CitizenSignUp = () => {
 
         const data = await response.json();
         if (response.ok) {
-            navigate('/citizen-home');
+            navigate('/lawyers');
         } else {
             setErrorMessage(data.message || 'Failed to create account.');
         }
