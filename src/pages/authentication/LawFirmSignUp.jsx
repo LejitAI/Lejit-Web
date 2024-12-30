@@ -8,67 +8,72 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { AiFillWarning } from 'react-icons/ai'; 
 
 const LawFirmSignUp = () => {
-  const [passwordVisible, setPasswordVisible] = useState(false); 
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false); 
-  const [lawFirmName, setLawFirmName] = useState(""); 
-  const [fullName, setFullName] = useState(""); 
-  const [email, setEmail] = useState(""); 
-  const [password, setPassword] = useState(""); 
-  const [confirmPassword, setConfirmPassword] = useState(""); 
-  const [errorMessage, setErrorMessage] = useState(""); 
-  const [isLoading, setIsLoading] = useState(false); 
-  const navigate = useNavigate(); 
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [lawFirmName, setLawFirmName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignUp = async () => {
     if (!lawFirmName || !fullName || !email || !password || !confirmPassword) {
         setErrorMessage("All fields are required.");
         return;
     }
- 
+
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
         setErrorMessage("Invalid email format.");
         return;
     }
- 
+
     if (password.length < 8) {
-        setErrorMessage("Password must be at least 8 characters.");
+        setErrorMessage("Password must be at least 8 characters long.");
         return;
     }
- 
+
     if (password !== confirmPassword) {
-        setErrorMessage("Passwords do not match."); 
-        return; 
+        setErrorMessage("Passwords do not match.");
+        return;
     }
- 
+
     setErrorMessage("");
-    setIsLoading(true); 
- 
+    setIsLoading(true);
+
+    const payload = {
+        role: 'law_firm',
+        law_firm_name: lawFirmName,
+        username: fullName,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+    };
+
+    console.log("Payload being sent to API:", payload);
+
     try {
         const response = await fetch('backend/api/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                law_firm: lawFirmName,
-                username: fullName,
-                email: email,
-                password: password
-            }),
+            body: JSON.stringify(payload),
         });
- 
+
         const data = await response.json();
         if (response.ok) {
-            navigate('/otp'); 
+            navigate('/otp');
         } else {
-            setErrorMessage(data.message || 'Failed to create account');
+            setErrorMessage(data.message || 'Failed to create account.');
         }
     } catch (error) {
         setErrorMessage('Server error. Please try again later.');
     } finally {
         setIsLoading(false);
     }
- };
- 
+};
 
   return (
     <div className="signup-container">
@@ -77,6 +82,7 @@ const LawFirmSignUp = () => {
         <p className="welcome-back">Get started with us!</p>
 
         <div className="signup-input-fields">
+          {/* Law Firm Name */}
           <div className="signup-input-container">
             <input 
               type="text" 
@@ -86,6 +92,8 @@ const LawFirmSignUp = () => {
               onChange={(e) => setLawFirmName(e.target.value)}
             />
           </div>
+
+          {/* Full Name */}
           <div className="signup-input-container">
             <input 
               type="text" 
@@ -95,6 +103,8 @@ const LawFirmSignUp = () => {
               onChange={(e) => setFullName(e.target.value)}
             />
           </div>
+
+          {/* Email */}
           <div className="signup-input-container">
             <input 
               type="email" 
@@ -104,6 +114,8 @@ const LawFirmSignUp = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+
+          {/* Password */}
           <div className="signup-input-container">
             <input 
               type={passwordVisible ? "text" : "password"} 
@@ -120,6 +132,8 @@ const LawFirmSignUp = () => {
               {passwordVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
             </button>
           </div>
+
+          {/* Confirm Password */}
           <div className="signup-input-container">
             <input 
               type={confirmPasswordVisible ? "text" : "password"} 
@@ -138,13 +152,15 @@ const LawFirmSignUp = () => {
           </div>
         </div>
 
+        {/* Error Message */}
         {errorMessage && (
           <div className="error-message">
-            <AiFillWarning className="error-icon" /> 
+            <AiFillWarning className="error-icon" />
             {errorMessage}
           </div>
         )}
 
+        {/* Submit Button */}
         <button 
           className="sign-up-button" 
           onClick={handleSignUp}
@@ -155,6 +171,7 @@ const LawFirmSignUp = () => {
 
         <div className="divider">OR</div>
 
+        {/* Social Logins */}
         <button className="google-login">
           <img src={GoogleLogo} alt="Google Logo" className="social-icon" />
           Login with Google
@@ -164,6 +181,7 @@ const LawFirmSignUp = () => {
           Login with Facebook
         </button>
 
+        {/* Sign-In Option */}
         <p className="sign-up-text">
           Already have an account?{" "}
           <span 
@@ -175,6 +193,7 @@ const LawFirmSignUp = () => {
         </p>
       </div>
 
+      {/* Right Box */}
       <div className="right-box">
         <img src={Logo} alt="Logo" className="logo" /> 
       </div>

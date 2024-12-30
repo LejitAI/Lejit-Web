@@ -58,7 +58,6 @@ const AddCase = ({ isOpen, onClose }) => {
     const handleSubmit = async () => {
         if (!validateForm()) return;
 
-        const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGU4NTJjYzYxMjBiM2JkNTIzZWE3MyIsImlhdCI6MTczMTI0MjQ1NSwiZXhwIjoxNzMxMjQ2MDU1fQ.C73iyZrtgv9-48Rq5g4nhyPEKCcOQ3LiwxM1IRzFzUc';
         const data = { ...caseDetails };
 
         try {
@@ -71,6 +70,7 @@ const AddCase = ({ isOpen, onClose }) => {
                 },
                 body: JSON.stringify(data),
             });
+
 
             if (response.ok) {
                 const result = await response.json();

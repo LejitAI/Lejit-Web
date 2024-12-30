@@ -60,59 +60,64 @@ const AddClient = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      try {
-        const address = `${formData.address1}, ${formData.address2}, ${formData.city}, ${formData.state}, ${formData.postal}, ${formData.country}`;
+        try {
+            const address = `${formData.address1}, ${formData.address2}, ${formData.city}, ${formData.state}, ${formData.postal}, ${formData.country}`;
 
-        const dataToSubmit = {
-          name: formData.name,
-          dateOfBirth: formData.dob?.toISOString().split("T")[0],
-          gender: formData.gender === "other" ? formData.customGender : formData.gender,
-          email: formData.email,
-          mobile: formData.mobile,
-          address,
-          profilePhoto: formData.profilePhoto
-            ? await convertFileToBase64(formData.profilePhoto)
-            : null,
-        };
+            const data = {
+                name: formData.name,
+                dateOfBirth: formData.dob?.toISOString().split("T")[0],
+                gender: formData.gender === "other" ? formData.customGender : formData.gender,
+                email: formData.email,
+                mobile: formData.mobile,
+                address,
+                profilePhoto: formData.profilePhoto
+                    ? await convertFileToBase64(formData.profilePhoto)
+                    : null,
+            };
 
-        const response = await fetch("backend/api/admin/add-client", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(dataToSubmit),
-        });
+            const token = localStorage.getItem("token");
 
-        if (response.ok) {
-          const result = await response.json();
-          setMessage("Client added successfully!");
-          console.log("Client details:", result.client);
-          setFormData({
-            name: "",
-            dob: null,
-            gender: "",
-            customGender: "",
-            mobile: "",
-            email: "",
-            address1: "",
-            address2: "",
-            city: "",
-            state: "",
-            postal: "",
-            country: "",
-            profilePhoto: null,
-          });
-        } else {
-          const errorData = await response.json();
-          setMessage(`Error: ${errorData.message || "Failed to add client."}`);
+            const response = await fetch("/backend/api/admin/add-client", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                setMessage(`Client "${result.client.name}" added successfully!`);
+                setFormData({
+                    name: "",
+                    dob: null,
+                    gender: "",
+                    customGender: "",
+                    mobile: "",
+                    email: "",
+                    address1: "",
+                    address2: "",
+                    city: "",
+                    state: "",
+                    postal: "",
+                    country: "",
+                    profilePhoto: null,
+                });
+            } else {
+                const errorData = await response.json();
+                setMessage(`Error: ${errorData.message || "Failed to add client."}`);
+                if (errorData.errors) {
+                    setErrors(errorData.errors);
+                }
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            setMessage("An unexpected error occurred. Please try again later.");
         }
-      } catch (error) {
-        console.error("Error submitting form:", error);
-        setMessage("An unexpected error occurred.");
-      }
     }
-  };
+};
+
 
   const convertFileToBase64 = (file) =>
     new Promise((resolve, reject) => {
