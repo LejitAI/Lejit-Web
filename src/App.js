@@ -5,6 +5,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import Introduction from './pages/authentication/Introduction';
 import LogIn from './pages/authentication/LogIn';
 import LawFirmSignUp from './pages/authentication/LawFirmSignUp';
+import CorporateSignUp from './pages/authentication/CorporateSignUp';
 import EmailOTP from './pages/authentication/EmailOTP';
 import LawFirmLanding from './pages/lawfirm/editLawFirm/LawFirmLanding';
 import AddUser from './pages/lawfirm/forms/AddUser';
@@ -47,6 +48,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Introduction />} />
             <Route path="/lawfirmsignup" element={<LawFirmSignUp />} />
+            <Route path="/corporatesignup" element={<CorporateSignUp />} />
             <Route path="/signin" element={<LogIn/>} /> 
             <Route path="/otp" element={<EmailOTP />} />
             <Route path="/landing" element={<LawFirmLanding />} />

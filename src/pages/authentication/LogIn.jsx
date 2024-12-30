@@ -19,32 +19,46 @@ const LogIn = () => {
        setErrorMessage("Email and password are required.");
        return;
     }
- 
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+       setErrorMessage("Invalid email format.");
+       return;
+    }
+
     try {
-       const response = await fetch("backend/api/auth/login ", {
+       const response = await fetch("backend/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
-            "email": email, 
-            "password": password 
-          })
+          body: JSON.stringify({ email, password }),
        });
- 
+
        const data = await response.json();
- 
+
        if (!response.ok) {
-          setErrorMessage(data.message || "Invalid email or password.");
+          if (response.status === 401) {
+             setErrorMessage("Invalid email or password.");
+          } else {
+             setErrorMessage(data.message || "Login failed. Please try again.");
+          }
        } else {
           localStorage.setItem("token", data.token);
- 
           setErrorMessage("");
-          navigate("/landing"); 
+
+          // Redirect based on role
+          if (data.role === "law_firm") {
+             navigate("/landing");
+          } else if (data.role === "citizen") {
+             navigate("/lawyers");
+          } else {
+             navigate("/landing");
+          }
        }
     } catch (error) {
-       setErrorMessage("Server error. Please try again later.");
+       console.error("Login error:", error);
+       setErrorMessage("Unable to connect to the server. Please try again later.");
     }
- };
- 
+  };
 
   return (
     <div className="login-container">
@@ -73,7 +87,8 @@ const LogIn = () => {
             <button 
               type="button" 
               className="password-toggle" 
-              onClick={() => setPasswordVisible(!passwordVisible)} 
+              onClick={() => setPasswordVisible(!passwordVisible)}
+              aria-label={passwordVisible ? "Hide password" : "Show password"}
             >
               {passwordVisible ? <AiFillEyeInvisible /> : <AiFillEye />}
             </button>
@@ -85,7 +100,7 @@ const LogIn = () => {
             <input type="checkbox" id="remember" />
             <label htmlFor="remember">Remember Me</label>
           </div>
-          <a href="/" className="forgot-password">Forgot Password?</a>
+          <a href="/reset-password" className="forgot-password">Forgot Password?</a>
         </div>
 
         {errorMessage && (
