@@ -36,6 +36,7 @@ import OverallAnalytics from './pages/lawfirm/(dashboard)/OverallAnalytics'
 import Documents from './pages/lawfirm/(dashboard)/Documents'
 import Templates from './pages/lawfirm/(dashboard)/LegalTemplates'
 import Knowledge from './pages/lawfirm/(dashboard)/KnowledgeHub'
+import LegalDocumentTemplates from './pages/AI/components/Chat/docgen/legaldoctemplates'
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -74,11 +75,11 @@ function App() {
             <Route path="/analytics" element={<OverallAnalytics />} />
             <Route path="/documents" element={<Documents />} />
             <Route path="/templates" element={<Templates />} />
-            <Route path="/knowledge" element={<Knowledge />} />
             {/* <Route path="/contacts" element={<Contacts />} /> */}
             
             <Route path="/citizensignup" element={<CitizenSignUp />} />
             <Route path="/lawyers" element={<Lawyers />} />
+            <Route path="/legaldoctemplates" element={<LegalDocumentTemplates />} />
             
            
           </Routes>
