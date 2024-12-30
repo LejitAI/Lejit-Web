@@ -8,6 +8,7 @@ import LawFirmSignUp from './pages/authentication/LawFirmSignUp';
 import CorporateSignUp from './pages/authentication/CorporateSignUp';
 import EmailOTP from './pages/authentication/EmailOTP';
 import LawFirmLanding from './pages/lawfirm/editLawFirm/LawFirmLanding';
+import CorporateLanding from './pages/corporate/editLawFirm/LawFirmLanding';
 import AddUser from './pages/lawfirm/forms/AddUser';
 import ViewTeam from './pages/lawfirm/(dashboard)/ViewTeam';
 import Profile from './pages/lawfirm/(dashboard)/Profile';
@@ -26,6 +27,7 @@ import AddClient from './pages/lawfirm/forms/AddClient'
 import ClientDetails from './pages/lawfirm/(dashboard)/EachClient'
 import OverallClientDetails from './pages/lawfirm/(dashboard)/OverallClientDetails';
 import OverallProfile from './pages/lawfirm/(dashboard)/OverallProfile';
+import CorporateOverallProfile from './pages/corporate/(dashboard)/OverallProfile';
 import OverallCases from './pages/lawfirm/(dashboard)/OverallCases';
 import CitizenCases from './pages/citizen/cases/OverallCases';
 import CitizenSignUp from './pages/authentication/CitizenSignUp';
@@ -52,6 +54,7 @@ function App() {
             <Route path="/signin" element={<LogIn/>} /> 
             <Route path="/otp" element={<EmailOTP />} />
             <Route path="/landing" element={<LawFirmLanding />} />
+            <Route path="/corporatelanding" element={<CorporateLanding />} />
             <Route path="/addUser" element={<AddUser />} />
             <Route path="/addCase" element={<AddCase />} />
             <Route path="profile" element={<Profile />} />   
@@ -69,6 +72,7 @@ function App() {
             <Route path="/clientdetails" element={<ClientDetails/>} />
             <Route path="/overallclient" element={<OverallClientDetails/>} />
             <Route path="/overallprofile" element={<OverallProfile/>} />
+            <Route path="/corporateoverallprofile" element={<CorporateOverallProfile/>} />
             <Route path="/overallcases" element={<OverallCases/>} />
             <Route path="/citizencases" element={<CitizenCases />} />
             <Route path="/chatinterface" element={<ChatInterface />} />

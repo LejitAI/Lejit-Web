@@ -64,7 +64,7 @@ const CorporateSignUp = () => {
 
         const data = await response.json();
         if (response.ok) {
-            navigate('/landing'); 
+            navigate('/corporatelanding'); 
         } else {
             setErrorMessage(data.message || 'Failed to create account.');
         }

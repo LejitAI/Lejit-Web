@@ -40,7 +40,7 @@ const LawFirmDetailsPage = () => {
   };
 
   const handleSkip = () => {
-    navigate('/profile');
+    navigate('/corporateoverallprofile');
   };
 
   return (
@@ -48,7 +48,7 @@ const LawFirmDetailsPage = () => {
       <div className="lawfirm-left">
         <div className="law-firm-details">
           <div className="heading">
-            <h1>Welcome, {lawFirmName || 'Law Firm'}!</h1>
+            <h1>Welcome, {lawFirmName || 'Company'}!</h1>
             <p>Let’s build your professional profile and showcase your legal expertise</p>
           </div>
           <div className="content">
