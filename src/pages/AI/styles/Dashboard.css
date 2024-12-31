@@ -1,0 +1,112 @@
+/* Dashboard Layout */
+.dashboard {
+  display: flex;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Sidebar Styles (History Panel) */
+.dashboard-sidebar {
+  width: 250px;
+  background-color: #448ef7; /* Deep Purple */
+  color: white;
+  padding: 20px;
+
+  border-right: 2px solid #ddd;
+}
+
+.history-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #ffff; /* Accent Yellow */
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.history-item:hover {
+  background-color: #3786f5;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.history-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.history-info {
+  color: white;
+}
+
+.history-date {
+  font-size: 12px;
+  color: #bbb;
+}
+
+/* Main Content Area */
+.dashboard-main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Tabs */
+.dashboard-tabs {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f5f5f5;
+  border-bottom: 2px solid #ddd;
+  padding: 10px 0;
+}
+
+.dashboard-tab {
+  flex-grow: 1;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  background-color: transparent;
+  color: #555;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dashboard-tab.active {
+  background-color: #448ef7; /* Active Tab */
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.dashboard-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #fff;
+  overflow-y: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
+  .dashboard-sidebar {
+    width: 100%;
+    height: auto;
+  }
+  .dashboard-tabs {
+    flex-wrap: wrap;
+  }
+}
