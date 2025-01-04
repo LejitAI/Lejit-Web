@@ -5,6 +5,7 @@ import DocumentGeneration from "../components/Chat/DocumentGeneration";
 import "../styles/Dashboard.css";
 import HistoryPanel from "../components/Chat/HistoryPanel"; 
 import Topbar from "../../lawfirm/global/Topbar";
+import LegalDocumentTemplates from "../components/Chat/docgen/legaldoctemplates";
 
 
 const Dashboard = () => {
@@ -23,7 +24,7 @@ const Dashboard = () => {
       case "document":
         return <DocumentHandling />;
       case "generation":
-        return <DocumentGeneration />;
+        return <LegalDocumentTemplates />;
       default:
         return <ChatInterface />;
     }

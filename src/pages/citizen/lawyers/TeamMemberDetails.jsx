@@ -112,17 +112,17 @@ const TeamMemberDetails = () => {
                       </Box>
                     </Box>
                     <Button
-                      variant="contained"
-                      color="primary"
-                      style={{
-                        backgroundColor: "#0F67FD",
-                        color: "#fff",
-                        fontWeight: "bold",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      Book Appointment
-                    </Button>
+  variant="contained"
+  color="primary"
+  onClick={() => {
+    const lawyerId = memberDetails._id;
+    const lawFirmId = memberDetails.createdBy._id;
+    window.location.href = `/book-appointment?lawyerId=${lawyerId}&lawFirmId=${lawFirmId}`;
+  }}
+>
+  Book Appointment
+</Button>
+
                   </Box>
 
                   {/* Key Metrics Section */}

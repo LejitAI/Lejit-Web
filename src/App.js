@@ -39,6 +39,9 @@ import Knowledge from './pages/lawfirm/(dashboard)/KnowledgeHub';
 import lawyerprofile from './pages/citizen/lawyers/lawyerprofile';
 import ProfileInside from './pages/citizen/lawyers/lawyerprofile'; // Import ProfileInside
 import TeamMemberDetails from './pages/citizen/lawyers/TeamMemberDetails';
+import BookAppointment from './pages/citizen/lawyers/BookAppointment';
+import LegalDocumentTemplates from './pages/AI/components/Chat/docgen/overalllegaldoctemplates'
+
 function App() {
   const [theme, colorMode] = useMode();
   return (
@@ -85,7 +88,10 @@ function App() {
             <Route path="/team-member-details/:memberId" element={<TeamMemberDetails />} />
             {/* Dynamic Route for Law Firm Details */}
             <Route path="/law-firm/:id" element={<ProfileInside />} />
-          </Routes>
+            <Route path="/book-appointment" element={<BookAppointment />} />
+            <Route path="/legaldoctemplates" element={<LegalDocumentTemplates />} />
+
+            </Routes>
         </Router>
       </ThemeProvider>
     </ColorModeContext.Provider>
