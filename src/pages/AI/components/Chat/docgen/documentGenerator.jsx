@@ -4,9 +4,9 @@ import { Document, Packer, Paragraph, TextRun } from 'docx';
 const DocumentGenerator = ({ documentType, questions }) => {
   const [userInput, setUserInput] = useState({});
   const [formattedOutput, setFormattedOutput] = useState('');
+  const [suggestions, setSuggestions] = useState(''); // New state for suggestions
   const [loading, setLoading] = useState(false);
 
-  // Initialize state dynamically based on questions
   React.useEffect(() => {
     const initialInput = {};
     questions.forEach((question) => {
@@ -15,7 +15,6 @@ const DocumentGenerator = ({ documentType, questions }) => {
     setUserInput(initialInput);
   }, [questions]);
 
-  // Handle input changes
   const handleInputChange = (e, key) => {
     const { value } = e.target;
     setUserInput((prev) => ({
@@ -24,24 +23,25 @@ const DocumentGenerator = ({ documentType, questions }) => {
     }));
   };
 
-  // API call to generate the document
+  const handleSuggestionsChange = (e) => {
+    setSuggestions(e.target.value);
+  };
+
   const generateDocument = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://backend.lejit.ai/api/api/docgen/generate-document', {
+      const response = await fetch('http://backend.lejit.ai/api/api/docgen/generate', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          document_type: documentType,
-          user_input: userInput,
+          uid: documentType,
+          answers: userInput,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        setFormattedOutput(data.content); // Set the generated formatted output
+        setFormattedOutput(data.document);
       } else {
         console.error('Failed to generate document');
       }
@@ -51,16 +51,15 @@ const DocumentGenerator = ({ documentType, questions }) => {
     setLoading(false);
   };
 
-  // Save the document as a .docx file
   const saveAsDocx = () => {
     const doc = new Document({
       sections: [
         {
           children: formattedOutput
-            .split('\n') // Split the output into lines
+            .split('\n')
             .map((line) =>
               new Paragraph({
-                children: [new TextRun(line)], // Add each line as a paragraph
+                children: [new TextRun(line)],
               })
             ),
         },
@@ -77,22 +76,35 @@ const DocumentGenerator = ({ documentType, questions }) => {
     });
   };
 
+  const sendSuggestions = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://backend.lejit.ai/api/api/docgen/suggest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          uid: documentType,
+          modified_document: formattedOutput,
+          suggestions,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Suggestions submitted successfully');
+      } else {
+        console.error('Failed to submit suggestions');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    setLoading(false);
+  };
+
   return (
     <div style={{ display: 'flex', gap: '20px', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      {/* Input Form */}
       <div style={{ flex: 1 }}>
         <h2>Document Generator</h2>
-
-        {/* Scrollable Questions Section */}
-        <div
-          style={{
-            maxHeight: '400px',
-            overflowY: 'auto',
-            border: '1px solid #ccc',
-            padding: '10px',
-            borderRadius: '5px',
-          }}
-        >
+        <div style={{ maxHeight: '400px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
           {questions.map((question, index) => (
             <div key={index} style={{ marginBottom: '20px' }}>
               <label>
@@ -108,8 +120,6 @@ const DocumentGenerator = ({ documentType, questions }) => {
             </div>
           ))}
         </div>
-
-        {/* Generate Button */}
         <button
           onClick={generateDocument}
           disabled={loading}
@@ -127,18 +137,7 @@ const DocumentGenerator = ({ documentType, questions }) => {
         </button>
       </div>
 
-      {/* Editable Output */}
-      <div
-        style={{
-          flex: 1,
-          border: '1px solid #ccc',
-          padding: '10px',
-          borderRadius: '5px',
-          backgroundColor: '#f9f9f9',
-          overflowY: 'auto',
-          maxHeight: '500px',
-        }}
-      >
+      <div style={{ flex: 1, border: '1px solid #ccc', padding: '10px', borderRadius: '5px', backgroundColor: '#f9f9f9', overflowY: 'auto', maxHeight: '500px' }}>
         <h3>Generated Document</h3>
         <textarea
           value={formattedOutput}
@@ -169,6 +168,35 @@ const DocumentGenerator = ({ documentType, questions }) => {
           }}
         >
           Save as .docx
+        </button>
+        <h4 style={{ marginTop: '20px' }}>Submit Suggestions</h4>
+        <textarea
+          value={suggestions}
+          onChange={handleSuggestionsChange}
+          rows={5}
+          style={{
+            width: '100%',
+            padding: '8px',
+            fontFamily: 'Arial, sans-serif',
+            marginTop: '10px',
+            resize: 'none',
+          }}
+          placeholder="Enter your suggestions here..."
+        />
+        <button
+          onClick={sendSuggestions}
+          disabled={loading}
+          style={{
+            marginTop: '10px',
+            padding: '10px 20px',
+            backgroundColor: '#FFC107',
+            color: '#000',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+          }}
+        >
+          {loading ? 'Submitting...' : 'Submit Suggestions'}
         </button>
       </div>
     </div>

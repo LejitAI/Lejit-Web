@@ -39,6 +39,7 @@ const Sidebar = () => {
     { text: 'Notification', icon: <NotificationsIcon />, path: '/citizennotification' },
     { text: 'Analytics/Reports', icon: <BarChartIcon />, path: '/citizenanalytics' },
     { text: 'Profile', icon: <PersonIcon />, path: '/citizenprofile' },
+    { text: 'Document Generation', icon: <ArticleIcon />, path: '/legaldoctemplates' },
   ];
 
   // Toggle the drawer for mobile view

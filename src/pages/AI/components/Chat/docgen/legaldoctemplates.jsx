@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import DocumentGenerator from './documentGenerator';
 
 const LegalDocumentTemplates = () => {
@@ -13,41 +14,34 @@ const LegalDocumentTemplates = () => {
     "Letters",
   ];
 
-  const templates = [
-    {
-      category: "Agreements",
-      items: [
-        {
-          title: "Power of Attorney ",
-          description: "Generate a Power of Attorney based on the provided information",
-          icon: "📃",
-          apiKey: "Power_of_Attorney",
-        },
-        {
-          title: "Purchase of Goods Agreement",
-          description: "A simple agreement to buy or sell goods",
-          icon: "🗬",
-          apiKey: "sale",
-        },
-        {
-          title: "Create Agreement Outline",
-          description: "Create an outline of the key clauses needed for your contract",
-          icon: "📝",
-          apiKey: "create_agreement_outline",
-        },
-        {
-          title: "One Shot Agreement creator",
-          description: "Create an entire agreement in one go",
-          icon: "🛠️",
-          apiKey: "one_shot_agreement_creator",
-        },
-      ],
-    },
-  ];
-
+  const [templates, setTemplates] = useState([]);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [templateData, setTemplateData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showCreateTemplate, setShowCreateTemplate] = useState(false);
+  const [newTemplate, setNewTemplate] = useState({ title: '', description: '', files: null });
+
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const response = await axios.post('http://backend.lejit.ai/api/api/docgen/get-available-templates');
+        const availableTemplates = response.data.available_templates;
+
+        const templateList = availableTemplates.map((apiKey) => ({
+          title: apiKey.replace(/_/g, ' '),
+          description: "Description not available",
+          icon: "📜",
+          apiKey,
+        }));
+
+        setTemplates([{ category: "Agreements", items: templateList }]);
+      } catch (error) {
+        console.error("Error fetching templates:", error);
+      }
+    };
+
+    fetchTemplates();
+  }, []);
 
   const fetchTemplateDetails = async (apiKey) => {
     setLoading(true);
@@ -77,14 +71,39 @@ const LegalDocumentTemplates = () => {
     fetchTemplateDetails(apiKey);
   };
 
+  const handleCreateTemplate = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('title', newTemplate.title);
+    formData.append('description', newTemplate.description);
+    if (newTemplate.files) {
+      Array.from(newTemplate.files).forEach((file) => {
+        formData.append('files', file);
+      });
+    }
+
+    try {
+      const response = await axios.post('http://backend.lejit.ai/api/api/docgen/uploadFiles', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Template created successfully:', response.data);
+      setShowCreateTemplate(false);
+      setNewTemplate({ title: '', description: '', files: null });
+    } catch (error) {
+      console.error('Error creating template:', error);
+    }
+  };
+
   return (
     <div style={{ padding: "20px", fontFamily: "Poppins, sans-serif", color: "#333" }}>
-      {!selectedTemplate && (
+      {!selectedTemplate && !showCreateTemplate && (
         <>
           <header style={{ marginBottom: "20px" }}>
-            <h1 style={{ fontSize: "24px", fontWeight: "bold" }}>Legal Document And Review Templates</h1>
+            <h1 style={{ fontSize: "24px", fontWeight: "bold" }}>Legal Document and Review Templates</h1>
             <p style={{ color: "#666" }}>
-              Our team of lawyers have pre-defined legal templates to generate your law content within seconds
+              Our team of lawyers have pre-defined legal templates to generate your law content within seconds.
             </p>
             <input
               type="text"
@@ -160,11 +179,111 @@ const LegalDocumentTemplates = () => {
                       <p style={{ color: "#666" }}>{item.description}</p>
                     </div>
                   ))}
+                  <div
+                    style={{
+                      border: "1px solid #eaeaea",
+                      borderRadius: "10px",
+                      padding: "15px",
+                      boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+                      backgroundColor: "#f5f5f5",
+                      cursor: "pointer",
+                      transition: "transform 0.3s, box-shadow 0.3s",
+                      textAlign: "center",
+                    }}
+                    onClick={() => setShowCreateTemplate(true)}
+                  >
+                    <div style={{ fontSize: "30px", marginBottom: "10px" }}>➕</div>
+                    <h3 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>Create New Template</h3>
+                    <p style={{ color: "#666" }}>Upload and configure a new template</p>
+                  </div>
                 </div>
               </div>
             ))}
           </section>
         </>
+      )}
+
+      {showCreateTemplate && (
+        <form onSubmit={handleCreateTemplate} style={{ maxWidth: "600px", margin: "auto" }}>
+          <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "20px" }}>Create a New Template</h2>
+
+          <div style={{ marginBottom: "15px" }}>
+            <label style={{ display: "block", marginBottom: "5px" }}>Title</label>
+            <input
+              type="text"
+              value={newTemplate.title}
+              onChange={(e) => setNewTemplate({ ...newTemplate, title: e.target.value })}
+              required
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+              }}
+            />
+          </div>
+
+          <div style={{ marginBottom: "15px" }}>
+            <label style={{ display: "block", marginBottom: "5px" }}>Description</label>
+            <textarea
+              value={newTemplate.description}
+              onChange={(e) => setNewTemplate({ ...newTemplate, description: e.target.value })}
+              required
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+              }}
+            ></textarea>
+          </div>
+
+          <div style={{ marginBottom: "15px" }}>
+            <label style={{ display: "block", marginBottom: "5px" }}>Files</label>
+            <input
+              type="file"
+              multiple
+              onChange={(e) => setNewTemplate({ ...newTemplate, files: e.target.files })}
+              required
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+              }}
+            />
+          </div>
+
+          <button
+            type="submit"
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#000",
+              color: "#fff",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Submit
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowCreateTemplate(false)}
+            style={{
+              marginLeft: "10px",
+              padding: "10px 20px",
+              backgroundColor: "#ccc",
+              color: "#000",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Cancel
+          </button>
+        </form>
       )}
 
       {selectedTemplate && (
