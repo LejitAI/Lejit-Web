@@ -51,7 +51,7 @@ const LogIn = () => {
           } else if (data.role === "citizen") {
              navigate("/lawyers");
           } else {
-             navigate("/landing");
+             navigate("/corporatelanding");
           }
        }
     } catch (error) {

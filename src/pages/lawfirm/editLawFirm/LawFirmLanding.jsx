@@ -40,7 +40,7 @@ const LawFirmDetailsPage = () => {
   };
 
   const handleSkip = () => {
-    navigate('/profile');
+    navigate('/overallprofile');
   };
 
   return (
