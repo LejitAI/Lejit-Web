@@ -3,42 +3,19 @@ import "./LDashboard.css";
 import schedule from "./Schedule.png";
 import Doc from "./Doc.png";
 import Dollar from "./dollar.png";
-
+import Card from "./components/MetricCard";
+import { File, CheckCheck, DollarSign } from "lucide-react";
 const LDashboard = () => {
   return (
     <div className="dashboard-container">
       <div className="header">
         <h1 className="dashboard-title">Dashboard</h1>
       </div>
-      
-      <div className="summary-container">
-        <div className="card ongoing-card">
-          <div className="icon">
-            <img src={Doc} alt="Ongoing Icon" />
-          </div>
-          <div className="text">
-            <p className="title">Ongoing Cases</p>
-            <p className="subtitle">04</p>
-          </div>
-        </div>
-        <div className="card closed-card">
-          <div className="icon">
-            <img src={Doc} alt="Closed Icon" />
-          </div>
-          <div className="text">
-            <p className="title">Closed Cases</p>
-            <p className="subtitle">34</p>
-          </div>
-        </div>
-        <div className="card pending-card">
-          <div className="icon">
-            <img src={Dollar} alt="Pending Icon" />
-          </div>
-          <div className="text">
-            <p className="title">Pending Payments</p>
-            <p className="subtitle">05</p>
-          </div>
-        </div>
+
+      <div className="flex gap-6">
+        <Card color="#D4EED0" title="Users" number="1500" icon={File} />
+        <Card color="#F4C7AC" title="Users" number="1500" icon={CheckCheck} />
+        <Card color="#C0E1F8" title="Users" number="1500" icon={DollarSign} />
       </div>
 
       <div className="content-container">
