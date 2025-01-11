@@ -14,25 +14,39 @@ const AskAI = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       {/* AskAI Blue Box */}
-      <div style={styles.container} onClick={handleClick}>
-        <div style={styles.iconContainer}>
-          <div style={styles.iconCircle}>
-            <img src={AiIcon} alt="AI Icon" style={styles.iconImage} />
+      <div
+        className="flex flex-row justify-between items-center p-4 gap-6 w-full h-[239px] bg-gradient-to-r from-[#0F67FD] to-[#093D97] rounded-[20px] flex-grow mx-auto box-border shadow-md"
+        onClick={handleClick}
+      >
+        <div className="flex flex-col items-center gap-3 flex-shrink-0">
+          <div className="flex justify-center items-center w-[111px] h-[101px] rounded-full bg-transparent">
+            <img
+              src={AiIcon}
+              alt="AI Icon"
+              className="w-[85px] h-[85px] object-cover rounded-full bg-transparent"
+            />
           </div>
-          <h2 style={styles.title}>Ask AI</h2>
+          <h2 className="font-poppins text-[22px] font-medium leading-[33px] text-white text-center">
+            Ask AI
+          </h2>
         </div>
 
-        <div style={styles.optionsContainer}>
+        <div className="flex flex-col gap-3">
           {menuOptions.map((option, index) => (
-            <div key={index} style={styles.option}>
+            <div
+              key={index}
+              className="flex flex-row items-center p-2 gap-1.5 w-[162px] h-[36px] bg-white bg-opacity-20 rounded-[10px]"
+            >
               <img
                 src={option.icon}
                 alt={`${option.label} Icon`}
-                style={styles.optionIcon}
+                className="w-5 h-5 object-contain"
               />
-              <span style={styles.optionText}>{option.label}</span>
+              <span className="font-poppins text-[10px] font-medium leading-[15px] text-white flex-grow">
+                {option.label}
+              </span>
             </div>
           ))}
         </div>
@@ -51,85 +65,5 @@ const menuOptions = [
   { label: "Find Citation", icon: CitationIcon },
   { label: "Find Case Laws", icon: CaseLawsIcon },
 ];
-
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "18px 20px",
-    gap: "24px",
-    width: "100%",
-    maxWidth: "353px",
-    height: "239px",
-    background: "linear-gradient(90deg, #0F67FD 0%, #093D97 100%)",
-    borderRadius: "20px",
-    flexGrow: 1,
-    margin: "0 auto",
-    boxSizing: "border-box",
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Add shadow for depth
-  },
-  iconContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "12px",
-    flexShrink: 0,
-  },
-  iconCircle: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "111px",
-    height: "101px",
-    borderRadius: "50%",
-    background: "transparent",
-  },
-  iconImage: {
-    width: "85px",
-    height: "85px",
-    objectFit: "cover",
-    borderRadius: "50%",
-    backgroundColor: "transparent", // Transparent background for the AI Icon
-  },
-  title: {
-    fontFamily: "'Poppins', sans-serif",
-    fontSize: "22px",
-    fontWeight: "500",
-    lineHeight: "33px",
-    color: "#FFFFFF",
-    textAlign: "center",
-  },
-  optionsContainer: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  },
-  option: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    padding: "8px",
-    gap: "6px",
-    width: "162px",
-    height: "36px",
-    background: "rgba(255, 255, 255, 0.2)", // Semi-transparent background
-    borderRadius: "10px",
-  },
-  optionIcon: {
-    width: "20px",
-    height: "20px",
-    objectFit: "contain",
-  },
-  optionText: {
-    fontFamily: "'Poppins', sans-serif",
-    fontSize: "10px",
-    fontWeight: "500",
-    lineHeight: "15px",
-    color: "#FFFFFF",
-    flexGrow: 1,
-  },
-};
 
 export default AskAI;

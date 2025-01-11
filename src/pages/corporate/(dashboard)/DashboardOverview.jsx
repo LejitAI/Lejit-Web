@@ -31,7 +31,6 @@ function DashboardOverview() {
           </Box>
         </Box>
 
-        
         {/* Fixed Ask AI Box */}
         <div
           style={{
@@ -41,7 +40,7 @@ function DashboardOverview() {
             zIndex: 1000, // Ensure it appears on top
           }}
         >
-          <AskAI />
+          {/* <AskAI /> */}
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
