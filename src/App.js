@@ -47,7 +47,6 @@ import FloatingButton from './FAB';
 function App() {
   const [theme, colorMode] = useMode();
 
-  // Define authentication routes
   const authRoutes = [
     '/',
     '/signin',
@@ -56,6 +55,7 @@ function App() {
     '/otp',
     '/citizensignup',
     '/chatdashboard',
+    '/landing',
   ];
 
   return (
@@ -106,7 +106,6 @@ function App() {
             <Route path="/qnascreen" element={<QnaScreen />} />
           </Routes>
 
-          {/* Conditionally render the FloatingButton */}
           {!authRoutes.includes(window.location.pathname) && <FloatingButton />}
         </Router>
       </ThemeProvider>
