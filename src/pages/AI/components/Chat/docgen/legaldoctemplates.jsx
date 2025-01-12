@@ -154,30 +154,36 @@ const LegalDocumentTemplates = () => {
                 >
                   {templateCategory.items.map((item, idx) => (
                     <div
-                      key={idx}
-                      style={{
-                        border: "1px solid #eaeaea",
-                        borderRadius: "10px",
-                        padding: "15px",
-                        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-                        backgroundColor: "#fff",
-                        cursor: "pointer",
-                        transition: "transform 0.3s, box-shadow 0.3s",
-                      }}
-                      onClick={() => handleCardClick(item.apiKey)}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = "scale(1.05)";
-                        e.currentTarget.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.2)";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = "scale(1)";
-                        e.currentTarget.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.1)";
-                      }}
-                    >
-                      <div style={{ fontSize: "30px", marginBottom: "10px" }}>{item.icon}</div>
-                      <h3 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>{item.title}</h3>
-                      <p style={{ color: "#666" }}>{item.description}</p>
-                    </div>
+                    key={idx}
+                    style={{
+                      border: "1px solid transparent",
+                      borderRadius: "10px",
+                      padding: "15px",
+                      backgroundColor: "#fff",
+                      cursor: "pointer",
+                      transition: "transform 0.3s, box-shadow 0.3s, border-color 0.3s",
+                      boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+                      position: "relative",
+                    }}
+                    onClick={() => handleCardClick(item.apiKey)}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "scale(1.05)";
+                      e.currentTarget.style.boxShadow = "0 4px 10px rgba(15, 103, 253, 0.4)";
+                      e.currentTarget.style.borderColor = "#0f67fd"; // Lejit blue
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "scale(1)";
+                      e.currentTarget.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.1)";
+                      e.currentTarget.style.borderColor = "transparent";
+                    }}
+                  >
+                    <div style={{ fontSize: "30px", marginBottom: "10px" }}>{item.icon}</div>
+                    <h3 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ color: "#666" }}>{item.description}</p>
+                  </div>
+                  
                   ))}
                   <div
                     style={{
