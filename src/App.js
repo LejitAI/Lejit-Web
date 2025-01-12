@@ -37,13 +37,27 @@ import Documents from './pages/lawfirm/(dashboard)/Documents';
 import Templates from './pages/lawfirm/(dashboard)/LegalTemplates';
 import Knowledge from './pages/lawfirm/(dashboard)/KnowledgeHub';
 import lawyerprofile from './pages/citizen/lawyers/lawyerprofile';
-import ProfileInside from './pages/citizen/lawyers/lawyerprofile'; // Import ProfileInside
+import ProfileInside from './pages/citizen/lawyers/lawyerprofile';
 import TeamMemberDetails from './pages/citizen/lawyers/TeamMemberDetails';
 import BookAppointment from './pages/citizen/lawyers/BookAppointment';
-import LegalDocumentTemplates from './pages/AI/components/Chat/docgen/overalllegaldoctemplates'
+import LegalDocumentTemplates from './pages/AI/components/Chat/docgen/overalllegaldoctemplates';
+import QnaScreen from './pages/AI/components/QNA/OverallQnaScreen';
+import FloatingButton from './FAB';
 
 function App() {
   const [theme, colorMode] = useMode();
+
+  // Define authentication routes
+  const authRoutes = [
+    '/',
+    '/signin',
+    '/lawfirmsignup',
+    '/corporatesignup',
+    '/otp',
+    '/citizensignup',
+    '/chatdashboard',
+  ];
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -86,12 +100,14 @@ function App() {
             <Route path="/lawyers" element={<Lawyers />} />
             <Route path="/viewteamlawfirm/:lawFirmId" element={<ViewTeam />} />
             <Route path="/team-member-details/:memberId" element={<TeamMemberDetails />} />
-            {/* Dynamic Route for Law Firm Details */}
             <Route path="/law-firm/:id" element={<ProfileInside />} />
             <Route path="/book-appointment" element={<BookAppointment />} />
             <Route path="/legaldoctemplates" element={<LegalDocumentTemplates />} />
+            <Route path="/qnascreen" element={<QnaScreen />} />
+          </Routes>
 
-            </Routes>
+          {/* Conditionally render the FloatingButton */}
+          {!authRoutes.includes(window.location.pathname) && <FloatingButton />}
         </Router>
       </ThemeProvider>
     </ColorModeContext.Provider>

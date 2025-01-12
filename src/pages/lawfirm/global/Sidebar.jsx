@@ -29,7 +29,6 @@ const Sidebar = () => {
   // Define the menu items with paths
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/ldashboard' },
-    { text: 'AI Features', icon: <DashboardIcon />, path: '/chatdashboard' },
     { text: 'My Cases', icon: <FolderIcon />, path: '/overallcases' },
     { text: 'Clients', icon: <PersonOutlineIcon />, path: '/clients' },
     { text: 'Team Members', icon: <PeopleIcon />, path: '/profile' }, 
@@ -37,6 +36,7 @@ const Sidebar = () => {
     { text: 'Appointments', icon: <CalendarTodayIcon />, path: '/appointments' },
     { text: 'Hearing Schedule', icon: <ScheduleIcon />, path: '/hearing' },
     { text: 'Legal Templates', icon: <ArticleIcon />, path: '/legaldoctemplates' },
+    { text: 'Q&A Processor', icon: <ArticleIcon />, path: '/qnascreen' },
     { text: 'Knowledge Hub', icon: <BookIcon />, path: '/knowledge' },
     { text: 'Analytics/Reports', icon: <BarChartIcon />, path: '/analytics' },
     { text: 'Profile', icon: <PersonIcon />, path: '/overallprofile' },
