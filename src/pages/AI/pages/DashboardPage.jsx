@@ -3,7 +3,7 @@ import ChatInterface from "../components/Chat/ChatInterface";
 import DocumentHandling from "../components/Chat/DocumentHandling";
 import LegalDocumentTemplates from "../components/Chat/docgen/legaldoctemplates";
 import HistoryPanel from "../components/Chat/HistoryPanel"; 
-import Topbar from "../../lawfirm/global/Topbar";
+import Topbar from "../Topbar";
 import "../styles/Dashboard.css";
 import { ReactComponent as GeneralIcon } from "./general.svg";
 import { ReactComponent as CitationIcon } from "./citation.svg";
