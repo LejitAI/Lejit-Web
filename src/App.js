@@ -41,6 +41,7 @@ import ProfileInside from './pages/citizen/lawyers/lawyerprofile'; // Import Pro
 import TeamMemberDetails from './pages/citizen/lawyers/TeamMemberDetails';
 import BookAppointment from './pages/citizen/lawyers/BookAppointment';
 import LegalDocumentTemplates from './pages/AI/components/Chat/docgen/overalllegaldoctemplates'
+import QnaScreen from './pages/AI/components/QNA/QnaScreen.jsx';
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -90,6 +91,7 @@ function App() {
             <Route path="/law-firm/:id" element={<ProfileInside />} />
             <Route path="/book-appointment" element={<BookAppointment />} />
             <Route path="/legaldoctemplates" element={<LegalDocumentTemplates />} />
+            <Route path="/qnascreen" element={<QnaScreen />} />
 
             </Routes>
         </Router>
