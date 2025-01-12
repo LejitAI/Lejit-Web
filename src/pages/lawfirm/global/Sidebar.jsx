@@ -36,7 +36,7 @@ const Sidebar = () => {
     { text: 'Documents', icon: <ArticleIcon />, path: '/documents' },
     { text: 'Appointments', icon: <CalendarTodayIcon />, path: '/appointments' },
     { text: 'Hearing Schedule', icon: <ScheduleIcon />, path: '/hearing' },
-    { text: 'Legal Templates', icon: <ArticleIcon />, path: '/templates' },
+    { text: 'Legal Templates', icon: <ArticleIcon />, path: '/legaldoctemplates' },
     { text: 'Knowledge Hub', icon: <BookIcon />, path: '/knowledge' },
     { text: 'Analytics/Reports', icon: <BarChartIcon />, path: '/analytics' },
     { text: 'Profile', icon: <PersonIcon />, path: '/overallprofile' },

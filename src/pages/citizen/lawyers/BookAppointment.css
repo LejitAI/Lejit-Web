@@ -1,0 +1,203 @@
+.book-appointment {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Adds shadow for 3D effect */
+    padding: 24px;
+    margin: 20px auto;
+    width: 90%; /* Makes it wider to fit most of the screen */
+    max-width: 1200px; /* Prevents it from being too wide */
+    max-height: 90vh; /* Caps the height to 90% of the viewport */
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+  }
+  
+  /* Add smooth scrolling to enhance the experience */
+  .book-appointment::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  
+  
+  
+  .book-appointment::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background for the scrollbar track */
+  }
+  
+  
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  
+  .title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #343434;
+  }
+  
+  /* Dates Container */
+  .dates-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  
+  .date-card {
+    flex: 1;
+    max-width: 80px;
+    padding: 10px;
+    border: 2px solid rgba(186, 186, 186, 0.15);
+    border-radius: 10px;
+    background: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* Adds light shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .date-card:hover {
+    transform: translateY(-3px); /* Lifts the card for 3D effect */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .date-card.selected {
+    border: 2.5px solid #0f67fd;
+    background: #eef4ff;
+    color: #0f67fd;
+  }
+  
+  /* Time Slots */
+  .time-container {
+    margin-bottom: 24px;
+  }
+  
+  .time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .time-slot {
+    flex: 1;
+    max-width: 100px;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid rgba(186, 186, 186, 0.15);
+    border-radius: 10px;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* Adds light shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .time-slot:hover {
+    transform: translateY(-3px); /* Lifts the button for 3D effect */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .time-slot.selected {
+    border: 2.5px solid #0f67fd;
+    background: #eef4ff;
+    color: #0f67fd;
+  }
+  
+  /* Personal Details */
+  .details-container {
+    margin-bottom: 24px;
+  }
+  
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #222b45;
+    margin-bottom: 16px;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-group label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #9e9e9e;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #7a7a7a;
+    border: 2px solid rgba(186, 186, 186, 0.15);
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #0f67fd;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Gender Buttons */
+  .gender-buttons {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .gender-button {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid rgba(186, 186, 186, 0.15);
+    border-radius: 10px;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .gender-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .gender-button.selected {
+    border: 2.5px solid #0f67fd;
+    background: #eef4ff;
+    color: #0f67fd;
+  }
+  
+  /* Submit Button */
+  .submit-button {
+    padding: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    background: #0f67fd;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .submit-button:hover {
+    background: #0c55cc;
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.25);
+  }
+  

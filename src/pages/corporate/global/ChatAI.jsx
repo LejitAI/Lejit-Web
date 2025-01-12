@@ -17,7 +17,6 @@ const ChatAI = () => {
     setInputValue(e.target.value);
   };
 
-
   const handleSubmit = async () => {
     if (!inputValue.trim()) return; // Prevent submitting empty input
 
@@ -43,13 +42,19 @@ const ChatAI = () => {
 
       const data = await response.json();
 
-      const aiMessage = { role: "assistant", content: data.response || "No response from AI" };
+      const aiMessage = {
+        role: "assistant",
+        content: data.response || "No response from AI",
+      };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
       console.error("Error fetching AI response:", error);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Oops! Something went wrong. Please try again." },
+        {
+          role: "assistant",
+          content: "Oops! Something went wrong. Please try again.",
+        },
       ]);
     } finally {
       setIsLoading(false); // Reset loading state
@@ -60,15 +65,15 @@ const ChatAI = () => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = ".pdf,.doc,.docx"; // Restrict accepted file types (optional)
-  
+
     fileInput.onchange = async (event) => {
       const file = event.target.files[0]; // Get the selected file
       if (!file) return; // No file selected
-  
+
       try {
         const formData = new FormData();
         formData.append("file", file); // Append file to form data
-  
+
         const response = await fetch(
           "/api/api/documents/upload?session_id=unique_session_identifier_12345&document_type=Contract",
           {
@@ -76,14 +81,14 @@ const ChatAI = () => {
             body: formData,
           }
         );
-  
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-  
+
         const data = await response.json();
         console.log("File uploaded successfully:", data);
-  
+
         // Add success message to UI
         setMessages((prev) => [
           ...prev,
@@ -93,16 +98,16 @@ const ChatAI = () => {
         console.error("Error uploading file:", error);
         setMessages((prev) => [
           ...prev,
-          { role: "assistant", content: "Oops! File upload failed. Please try again." },
+          {
+            role: "assistant",
+            content: "Oops! File upload failed. Please try again.",
+          },
         ]);
       }
     };
-  
+
     fileInput.click(); // Programmatically open file selector
   };
-  
-
-
 
   useEffect(() => {
     if (chatRef.current) {
@@ -134,7 +139,8 @@ const ChatAI = () => {
                 <span className="chatAI-action-icon">📄</span> Draft Templates
               </button>
               <button className="chatAI-action">
-                <span className="chatAI-action-icon">⚖️</span> Find Similar Cases
+                <span className="chatAI-action-icon">⚖️</span> Find Similar
+                Cases
               </button>
               <button className="chatAI-action">
                 <span className="chatAI-action-icon">📋</span> Find Citations
@@ -149,8 +155,11 @@ const ChatAI = () => {
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`chatAI-message-container ${msg.role === "user" ? "chatAI-user-container" : "chatAI-ai-container"
-                  }`}
+                className={`chatAI-message-container ${
+                  msg.role === "user"
+                    ? "chatAI-user-container"
+                    : "chatAI-ai-container"
+                }`}
               >
                 {msg.role === "user" && (
                   <div className="chatAI-avatar chatAI-user-avatar">👤</div>
@@ -159,8 +168,11 @@ const ChatAI = () => {
                   <div className="chatAI-avatar chatAI-ai-avatar">🤖</div>
                 )}
                 <div
-                  className={`chatAI-message ${msg.role === "user" ? "chatAI-user-message" : "chatAI-ai-message"
-                    }`}
+                  className={`chatAI-message ${
+                    msg.role === "user"
+                      ? "chatAI-user-message"
+                      : "chatAI-ai-message"
+                  }`}
                 >
                   {msg.content}
                 </div>
@@ -188,13 +200,22 @@ const ChatAI = () => {
               />
 
               <div onClick={handleSubmitFile} className="chatAI-input-actions">
-                <button className="chatAI-input-button" aria-label="Attach File">
+                <button
+                  className="chatAI-input-button"
+                  aria-label="Attach File"
+                >
                   📎
                 </button>
-                <button className="chatAI-input-button" aria-label="Open Camera">
+                <button
+                  className="chatAI-input-button"
+                  aria-label="Open Camera"
+                >
                   📷
                 </button>
-                <button className="chatAI-input-microphone" aria-label="Record Voice">
+                <button
+                  className="chatAI-input-microphone"
+                  aria-label="Record Voice"
+                >
                   🎤
                 </button>
               </div>
@@ -210,7 +231,4 @@ const ChatAI = () => {
   );
 };
 
-
 export default ChatAI;
-
-
