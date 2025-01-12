@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import ChatInterface from "../components/Chat/ChatInterface";
 import DocumentHandling from "../components/Chat/DocumentHandling";
-import DocumentGeneration from "../components/Chat/DocumentGeneration";
-import "../styles/Dashboard.css";
-import HistoryPanel from "../components/Chat/HistoryPanel"; 
-import Topbar from "../../lawfirm/global/Topbar";
 import LegalDocumentTemplates from "../components/Chat/docgen/legaldoctemplates";
-
+import HistoryPanel from "../components/Chat/HistoryPanel"; 
+import Topbar from "../Topbar";
+import "../styles/Dashboard.css";
+import { ReactComponent as GeneralIcon } from "./general.svg";
+import { ReactComponent as CitationIcon } from "./citation.svg";
+import { ReactComponent as GenerationIcon } from "./generation.svg";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("general");
   const [selectedHistory, setSelectedHistory] = useState(null);
 
   const handleSelectHistory = (historyItem) => {
-    setActiveTab("general"); // Switch to the chat interface
-    setSelectedHistory(historyItem); // Load the selected history item
+    setActiveTab("general");
+    setSelectedHistory(historyItem);
   };
 
   const renderContent = () => {
@@ -34,32 +35,35 @@ const Dashboard = () => {
     <>
       <Topbar />
       <div className="dashboard">
-        <div className="dashboard-sidebar">
+        <aside className="dashboard-sidebar">
           <HistoryPanel onSelectHistory={handleSelectHistory} />
-        </div>
-        <div className="dashboard-main">
-          <div className="dashboard-tabs">
+        </aside>
+        <main className="dashboard-main">
+          <nav className="dashboard-tabs">
             <button
               className={`dashboard-tab ${activeTab === "general" ? "active" : ""}`}
               onClick={() => setActiveTab("general")}
             >
-              🗨️ General Queries
+              <GeneralIcon className="tab-icon" />
+              <span>General Queries</span>
             </button>
             <button
               className={`dashboard-tab ${activeTab === "document" ? "active" : ""}`}
               onClick={() => setActiveTab("document")}
             >
-              📄 Document Citations
+              <CitationIcon className="tab-icon" />
+              <span>Document Citations</span>
             </button>
             <button
               className={`dashboard-tab ${activeTab === "generation" ? "active" : ""}`}
               onClick={() => setActiveTab("generation")}
             >
-              📝 Document Generation
+              <GenerationIcon className="tab-icon" />
+              <span>Document Generation</span>
             </button>
-          </div>
-          <div className="dashboard-content">{renderContent()}</div>
-        </div>
+          </nav>
+          <section className="dashboard-content">{renderContent()}</section>
+        </main>
       </div>
     </>
   );
