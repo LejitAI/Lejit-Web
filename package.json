@@ -28,6 +28,7 @@
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "braintree-web-drop-in": "^1.43.0",
+    "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
     "docx": "^9.1.0",
     "dotenv": "^16.4.7",
@@ -49,7 +50,7 @@
     "react-modal": "^3.16.1",
     "react-pro-sidebar": "^0.7.1",
     "react-router-dom": "^6.27.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-select": "^5.8.3",
     "react-slick": "^0.30.3",
     "recharts": "^2.15.0",
@@ -59,11 +60,12 @@
     "yup": "^1.4.0"
   },
   "scripts": {
-    "start": "GENERATE_SOURCEMAP=false react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  "start": "cross-env GENERATE_SOURCEMAP=false react-scripts start",
+  "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+},
+
   "eslintConfig": {
     "extends": [
       "react-app",

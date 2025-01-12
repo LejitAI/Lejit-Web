@@ -40,7 +40,6 @@ const Sidebar = () => {
     { text: 'Knowledge Hub', icon: <BookIcon />, path: '/knowledge' },
     { text: 'Analytics/Reports', icon: <BarChartIcon />, path: '/analytics' },
     { text: 'Profile', icon: <PersonIcon />, path: '/overallprofile' },
-    { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
   ];
 
   // Toggle the drawer for mobile view

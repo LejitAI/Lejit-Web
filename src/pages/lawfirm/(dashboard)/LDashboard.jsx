@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./LDashboard.css";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Slider from "react-slick";
 
@@ -27,6 +28,7 @@ const randomAvatar =
   "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/92/92f6386ba5544c151dbce85dd4b42dafa510eeea.jpg";
 
 const LDashboard = () => {
+  const navigate = useNavigate();
   // Use useState to manage dynamic data
   const [updates, setUpdates] = useState([
     {
@@ -191,14 +193,14 @@ const LDashboard = () => {
       <div className="col-span-3 space-y-6">
         {/* Metric Cards */}
         <div className="w-full  flex gap-6">
-          <Card color="#D4EED0" title="Users" number="1500" icon={File} />
-          <Card color="#F4C7AC" title="Users" number="1500" icon={User} />
-          <Card color="#C0E1F8" title="Users" number="1500" icon={DollarSign} />
+          <Card color="#D4EED0" title="Ongoing Cases" number="04" icon={File} />
+          <Card color="#F4C7AC" title="Closed Cases" number="34" icon={User} />
+          <Card color="#C0E1F8" title="Pending Payments" number="05" icon={DollarSign} />
         </div>
         <div className="grid grid-cols-2 gap-6">
           <GenericCard
             heading="Client Appointments"
-            viewAllLink={() => console.log("View all appointments")}
+            viewAllLink={() => navigate("/appointments")}
           >
             {appointments.length > 0 ? (
               <ClientAppointments appointments={appointments} />
@@ -211,8 +213,7 @@ const LDashboard = () => {
           </GenericCard>
           <GenericCard
             heading="Pending Appointments"
-            viewAllLink={() => console.log("View all appointments")}
-          >
+            viewAllLink={() => navigate("/appointments")}          >
             {appointments.length > 0 ? (
               <PendingAppointments appointments={pendingAppointments} />
             ) : (
@@ -238,7 +239,7 @@ const LDashboard = () => {
 
           <GenericCard
             heading="Recent Cases"
-            viewAllLink={() => console.log("View all filings")}
+            viewAllLink={() => navigate("/overallcases")}
           >
             {updates.length > 0 ? (
               <GenericCaseList cases={pending} />
@@ -252,7 +253,7 @@ const LDashboard = () => {
           <div className="col-span-2">
             <GenericCard
               heading="Court Hearings"
-              viewAllLink={() => console.log("View all hearings")}
+              viewAllLink={() => navigate("/hearing")}
             >
               {hearings.length > 0 ? (
                 <CourtHearingsTable hearings={hearings} />
@@ -284,7 +285,7 @@ const LDashboard = () => {
 
         <GenericCard
           heading="Team Members"
-          viewAllLink={() => console.log("View all members")}
+          viewAllLink={() => navigate("/profile")}
         >
           {members.length > 0 ? (
             <TeamMembersList members={members} onAddMember={addNewMember} />
