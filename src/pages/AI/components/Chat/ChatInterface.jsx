@@ -8,10 +8,13 @@ const ChatInterface = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const mediaRecorderRef = useRef(null);
+  const audioChunks = useRef([]);
   const chatRef = useRef(null);
   const sessionKey = "lejit_ai_session_id";
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadMessage, setUploadMessage] = useState("");
 
   useEffect(() => {
     const existingSession = localStorage.getItem(sessionKey);
@@ -60,19 +63,104 @@ const ChatInterface = () => {
       console.error("Error fetching AI response:", error);
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content: "Oops! Something went wrong. Please try again.",
-        },
+        { role: "assistant", content: "Oops! Something went wrong. Please try again." },
       ]);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      audioChunks.current = [];
+
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunks.current.push(event.data);
+        }
+      };
+
+      mediaRecorderRef.current.onstop = async () => {
+        const audioBlob = new Blob(audioChunks.current, { type: "audio/webm" });
+        await sendAudioToBackend(audioBlob);
+      };
+
+      mediaRecorderRef.current.start();
+      setIsRecording(true);
+    } catch (error) {
+      console.error("Error accessing microphone:", error);
+      alert("Failed to access microphone. Please check your permissions.");
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  };
+
+  const sendAudioToBackend = async (audioBlob) => {
+    try {
+      const formData = new FormData();
+      formData.append("audio", audioBlob, "audio.webm");
+
+      const response = await fetch("http://backend.lejit.ai/backend/api/speech-to-text", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Error processing audio");
+      }
+
+      const result = await response.json();
+      const transcription = result.transcription || "No transcription available";
+      const audioMessage = { role: "user", content: transcription };
+
+      setMessages((prev) => [...prev, audioMessage]);
+      try {
+        setIsLoading(true);
+  
+        const response = await fetch("/api/api/query/general", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            session_id: getSessionId(),
+            query: inputValue,
+          }),
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        const aiMessage = {
+          role: "assistant",
+          content: data.response || "No response from AI",
+        };
+        setMessages((prev) => [...prev, aiMessage]);
+      } catch (error) {
+        console.error("Error fetching AI response:", error);
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "Oops! Something went wrong. Please try again." },
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("Error transcribing audio:", error);
+      alert("Failed to transcribe audio. Please try again.");
+    }
+  };
+
   const handleUploadDoc = async () => {
     setIsUploading(true);
-    setUploadMessage(""); // Clear any previous message
+    setUploadMessage("");
 
     const fileInput = document.createElement("input");
     fileInput.type = "file";
@@ -132,6 +220,16 @@ const ChatInterface = () => {
           placeholder="Type your message..."
         />
         <div className="chat-buttons">
+          <button
+            onClick={isRecording ? stopRecording : startRecording}
+            className="record-button"
+          >
+            {isRecording ? <button className="send-button">
+            ⏹️
+          </button> : <button className="send-button">
+          🎙️
+          </button>}
+          </button>
           <button onClick={handleSend} className="send-button">
             ➤
           </button>

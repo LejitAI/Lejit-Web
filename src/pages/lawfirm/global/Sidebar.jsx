@@ -40,10 +40,8 @@ const Sidebar = () => {
     { text: 'Knowledge Hub', icon: <BookIcon />, path: '/knowledge' },
     { text: 'Analytics/Reports', icon: <BarChartIcon />, path: '/analytics' },
     { text: 'Profile', icon: <PersonIcon />, path: '/overallprofile' },
-    { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
   ];
 
-  // Toggle the drawer for mobile view
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -90,6 +88,7 @@ const Sidebar = () => {
               onClick={() => navigate(item.path)}
               sx={{
                 display: 'flex',
+                cursor: 'pointer', 
                 alignItems: 'center',
                 padding: isActive(item.path) ? '0px 16px' : '0px 24px',
                 gap: '16px',
