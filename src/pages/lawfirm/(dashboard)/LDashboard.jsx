@@ -187,115 +187,134 @@ const LDashboard = () => {
   };
 
   return (
-    <div className="max-h-screen overflow-auto grid grid-cols-4 gap-6 p-6">
-      <div className="col-span-3 space-y-6">
-        {/* Metric Cards */}
-        <div className="w-full  flex gap-6">
-          <Card color="#D4EED0" title="Users" number="1500" icon={File} />
-          <Card color="#F4C7AC" title="Users" number="1500" icon={User} />
-          <Card color="#C0E1F8" title="Users" number="1500" icon={DollarSign} />
+    <div className="h-[calc(100vh-110px)]  grid grid-cols-[70%_30%] gap-4">
+      <div className="h-[calc(100vh-110px-50px)] bg grid grid-rows-[10%_35%_27.5%_27.5%] gap-4">
+        <div className=" grid grid-cols-3 gap-4">
+          <Card color="#D4EED0" title="Ongoing Cases" number="04" icon={File} />
+          <Card color="#F4C7AC" title="Closed Cases" number="34" icon={File} />
+          <Card
+            color="#C0E1F8"
+            title="Pending Payments"
+            number="05"
+            icon={DollarSign}
+          />
         </div>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-4">
           <GenericCard
-            heading="Client Appointments"
+            heading="Client Appointment"
             viewAllLink={() => console.log("View all appointments")}
           >
-            {appointments.length > 0 ? (
-              <ClientAppointments appointments={appointments} />
-            ) : (
-              <EmptyState
-                icon={<Phone className="w-10 h-10 text-gray-500" />}
-                message="No appointments scheduled"
-              />
-            )}
+            <div className="h-full ">
+              {appointments.length > 0 ? (
+                <ClientAppointments appointments={appointments} />
+              ) : (
+                <EmptyState
+                  icon={<Phone />}
+                  message="No appointments scheduled"
+                />
+              )}
+            </div>
           </GenericCard>
           <GenericCard
             heading="Pending Appointments"
             viewAllLink={() => console.log("View all appointments")}
           >
-            {appointments.length > 0 ? (
-              <PendingAppointments appointments={pendingAppointments} />
-            ) : (
-              <EmptyState
-                icon={<Phone className="w-10 h-10 text-gray-500" />}
-                message="No appointments scheduled"
-              />
-            )}
+            <div className="h-full ">
+              {appointments.length > 0 ? (
+                <PendingAppointments appointments={pendingAppointments} />
+              ) : (
+                <EmptyState
+                  icon={<Phone />}
+                  message="No appointments scheduled"
+                />
+              )}
+            </div>
           </GenericCard>
+        </div>
+        <div className=" grid grid-cols-2 gap-4">
           <GenericCard
-            heading="Pending Court Filings"
+            heading="Pending Court Filing"
             viewAllLink={() => console.log("View all filings")}
           >
-            {updates.length > 0 ? (
-              <GenericCaseList cases={pending} pending={true} />
-            ) : (
-              <EmptyState
-                icon={<ClipboardList className="w-10 h-10 text-gray-500" />}
-                message="No recent updates"
-              />
-            )}
+            <div className="h-full overflow-auto">
+              {updates.length > 0 ? (
+                <GenericCaseList cases={pending} pending={true} />
+              ) : (
+                <EmptyState
+                  icon={<ClipboardList />}
+                  message="No pending filings"
+                />
+              )}
+            </div>
           </GenericCard>
 
           <GenericCard
             heading="Recent Cases"
-            viewAllLink={() => console.log("View all filings")}
+            viewAllLink={() => console.log("View all cases")}
           >
-            {updates.length > 0 ? (
-              <GenericCaseList cases={pending} />
+            <div className="h-full overflow-auto">
+              {updates.length > 0 ? (
+                <GenericCaseList cases={pending} />
+              ) : (
+                <EmptyState
+                  icon={<ClipboardList />}
+                  message="No recent cases"
+                />
+              )}
+            </div>
+          </GenericCard>
+        </div>
+        <GenericCard
+          heading="Court Hearings"
+          viewAllLink={() => console.log("View all hearings")}
+        >
+          <div className="h-full overflow-auto">
+            {hearings.length > 0 ? (
+              <CourtHearingsTable hearings={hearings} />
             ) : (
               <EmptyState
-                icon={<ClipboardList className="w-10 h-10 text-gray-500" />}
+                icon={<XCircle />}
+                message="No court hearings scheduled"
+              />
+            )}
+          </div>
+        </GenericCard>
+      </div>
+      <div className="flex flex-col gap-4 ">
+        {" "}
+        <GenericCard
+          heading="Recent Updates"
+          viewAllLink={() => console.log("View all updates")}
+        >
+          <div className="overflow-auto">
+            {updates.length > 0 ? (
+              <RecentUpdatesList updates={updates} />
+            ) : (
+              <EmptyState
+                icon={<ClipboardList />}
                 message="No recent updates"
               />
             )}
-          </GenericCard>
-          <div className="col-span-2">
-            <GenericCard
-              heading="Court Hearings"
-              viewAllLink={() => console.log("View all hearings")}
-            >
-              {hearings.length > 0 ? (
-                <CourtHearingsTable hearings={hearings} />
-              ) : (
-                <EmptyState
-                  icon={<XCircle className="w-10 h-10 text-gray-500" />}
-                  message="No court hearings scheduled"
-                />
-              )}
-            </GenericCard>
           </div>
-        </div>
-      </div>
-
-      <div className="space-y-6 ">
-        <GenericCard
-          heading="Recent Updates"
-          viewAllLink={() => console.log("View all recent updates")}
-        >
-          {updates.length > 0 ? (
-            <RecentUpdatesList updates={updates} />
-          ) : (
-            <EmptyState
-              icon={<ClipboardList className="w-10 h-10 text-gray-500" />}
-              message="No recent updates"
-            />
-          )}
         </GenericCard>
-
         <GenericCard
           heading="Team Members"
           viewAllLink={() => console.log("View all members")}
         >
-          {members.length > 0 ? (
-            <TeamMembersList members={members} onAddMember={addNewMember} />
-          ) : (
-            <EmptyState
-              icon={<XCircle className="w-10 h-10 text-gray-500" />}
-              message="No team members available"
-            />
-          )}
+          <div className="">
+            {members.length > 0 ? (
+              <TeamMembersList members={members} onAddMember={addNewMember} />
+            ) : (
+              <EmptyState
+                icon={<XCircle />}
+                message="No team members available"
+              />
+            )}
+          </div>
         </GenericCard>
-        <AskAI />
+        <div className="flex-1">
+          <AskAI />
+        </div>
       </div>
     </div>
   );
