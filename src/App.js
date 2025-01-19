@@ -43,6 +43,7 @@ import BookAppointment from './pages/citizen/lawyers/BookAppointment';
 import LegalDocumentTemplates from './pages/AI/components/Chat/docgen/overalllegaldoctemplates';
 import QnaScreen from './pages/AI/components/QNA/OverallQnaScreen';
 import FloatingButton from './FAB';
+import CaseDetails from './pages/lawfirm/(dashboard)/CaseDetails';
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -104,6 +105,7 @@ function App() {
             <Route path="/book-appointment" element={<BookAppointment />} />
             <Route path="/legaldoctemplates" element={<LegalDocumentTemplates />} />
             <Route path="/qnascreen" element={<QnaScreen />} />
+            <Route path="/casedetails/:id" element={<CaseDetails />} />
           </Routes>
 
           {!authRoutes.includes(window.location.pathname) && <FloatingButton />}
