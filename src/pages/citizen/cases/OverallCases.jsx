@@ -7,7 +7,6 @@ import OverallCases from "./Cases";
 import AddCase from "../../lawfirm/forms/AddCase";
 import BlueButton from "../../lawfirm/global/BlueButton";
 
-
 function App() {
   const [theme, colorMode] = useMode();
   const [showAddUserPopup, setShowAddUserPopup] = useState(false);
@@ -23,7 +22,6 @@ function App() {
   const handleBlueButtonClick = () => {
     alert("BlueButton clicked!");
   };
-  
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -92,29 +90,27 @@ function App() {
           )}
 
           <Button
-                      variant="contained"
-                      onClick={handleAddTeamMember}
-                      style={{
-                        position: "fixed",
-                        bottom: "100px",
-                        right: "80px",
-                        padding: "16px 40px",
-                        backgroundColor: "#0F67FD",
-                        color: "#FFFFFF",
-                        borderRadius: "15px",
-                        fontFamily: "Poppins",
-                        fontWeight: "500",
-                        fontSize: "16px",
-                        textTransform: "uppercase",
-                        zIndex: 1000,
-                      }}
-                    >
-                      ADD CASE
-                    </Button>
+            variant="contained"
+            onClick={handleAddTeamMember}
+            style={{
+              position: "fixed",
+              bottom: "100px",
+              right: "80px",
+              padding: "16px 40px",
+              backgroundColor: "#0F67FD",
+              color: "#FFFFFF",
+              borderRadius: "15px",
+              fontFamily: "Poppins",
+              fontWeight: "500",
+              fontSize: "16px",
+              textTransform: "uppercase",
+              zIndex: 1000,
+            }}
+          >
+            ADD CASE
+          </Button>
 
-                    <BlueButton onClick={handleBlueButtonClick} />
-
-          
+          <BlueButton onClick={handleBlueButtonClick} />
         </Box>
       </ThemeProvider>
     </ColorModeContext.Provider>
