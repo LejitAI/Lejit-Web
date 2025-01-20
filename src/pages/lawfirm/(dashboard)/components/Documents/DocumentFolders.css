@@ -1,0 +1,266 @@
+.folder-icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    mix-blend-mode: luminosity;
+  }
+  
+  .folder-top {
+    position: absolute;
+    left: 1.67%;
+    right: 1.66%;
+    top: 6.68%;
+    bottom: 64.99%;
+    background: #e58b0a;
+  }
+  
+  .folder-stripe {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 21.68%;
+    bottom: 68.32%;
+    background: #ffffff;
+  }
+  
+  .folder-body {
+    position: absolute;
+    left: 1.67%;
+    right: 1.66%;
+    top: 30%;
+    bottom: 6.67%;
+    background: #ffb90b;
+  }
+  
+  .document-folders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 16px;
+    width: 1104px;
+    background: white;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .header h2 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #343434;
+  }
+  
+  .toggle-button {
+    width: 16px;
+    height: 9px;
+    background: #7a7a7a;
+    transform: rotate(180deg);
+  }
+  
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(29, 53, 87, 0.1);
+  }
+  
+  .folders {
+    display: flex;
+    gap: 24px;
+  }
+  
+  .folder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 70px;
+    height: 100px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .folder-item:hover {
+    opacity: 0.8;
+  }
+  
+  .folder-item span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #343434;
+    text-align: center;
+  }
+  
+  .document-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 8px 0;
+  }
+  
+  .document-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .status-dot {
+    width: 12px;
+    height: 12px;
+    background: black;
+    border-radius: 50%;
+  }
+  
+  .status-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  
+  .status-paid {
+    color: #32b13b;
+    background: rgba(50, 177, 59, 0.1);
+  }
+  
+  .status-pending {
+    color: #eab000;
+    background: rgba(234, 176, 0, 0.1);
+  }
+  
+  .status-unpaid {
+    color: #f44336;
+    background: rgba(244, 67, 54, 0.1);
+  }
+  
+  .document-actions {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .icon {
+    color: #7a7a7a;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .icon:hover {
+    color: #0f67fd;
+  }
+  
+  .add-document-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  
+  .add-document-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid #0f67fd;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #0f67fd;
+    background: transparent;
+    transition: background 0.2s, color 0.2s;
+  }
+  
+  .add-document-button:hover {
+    background: #0f67fd;
+    color: white;
+  }
+  
+  .add-icon {
+    width: 24px;
+    height: 24px;
+    background: #0f67fd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+  
+  .plus-icon {
+    color: white;
+    width: 14px;
+    height: 14px;
+  }
+  
+
+  .add-document-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .file-input {
+    padding: 5px;
+  }
+  
+  
+
+  .add-document-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .add-document-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .add-document-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .upload-button-container {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .upload-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 40px; /* Increased padding for a larger button */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px; /* Increased font size */
+  }
+  
+  .upload-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  

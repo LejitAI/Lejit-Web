@@ -1,0 +1,239 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.addCaseModal {
+    background: #FFFFFF;
+    border-radius: 10px;
+    width: 1152px;
+    padding: 24px;
+    overflow-y: hidden;
+    max-height: 90vh;
+}
+
+.addCaseContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow: hidden;
+}
+
+.addCaseHeader {
+    display: flex;
+    flex-direction: column; /* Stacks title and subtitle vertically */
+    gap: 8px; /* Adds space between title and subtitle */
+    position: relative;
+}
+
+.addCaseTitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 33px;
+    color: #343434;
+    margin: 0;
+}
+
+.addCaseSubtitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #7A7A7A;
+    margin: 0;
+}
+
+.closeButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    font-size: 40px;
+    color: #222B45;
+    cursor: pointer;
+}
+
+
+.addCaseContent {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.caseForm {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.formGroup label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #7A7A7A;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+    width: 100%;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #343434;
+    border: 2px solid rgba(186, 186, 186, 0.15);
+    border-radius: 12px;
+    background: #FFFFFF;
+}
+
+.formGroup textarea {
+    height: 80px;
+    resize: none;
+}
+
+.addCaseFooter {
+    margin-top: -12px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+.cancelButton,
+.saveButton {
+    padding: 16px 40px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: uppercase;
+    border-radius: 15px;
+    cursor: pointer;
+    border: none;
+}
+
+.cancelButton {
+    background-color: #D9D9D9;
+    color: #7A7A7A;
+}
+
+.saveButton {
+    background-color: #0F67FD;
+    color: #FFFFFF;
+}
+
+
+.prepareDocuments {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: #DFECFF;
+    border: 1px solid rgba(199, 199, 199, 0.3);
+    border-radius: 10px;
+    margin-top: 24px; 
+    width: 100%;
+    height: 86px;
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 53px;
+    height: 53px;
+    background: #FFFFFF;
+    border-radius: 50%;
+}
+
+.icon {
+    font-size: 22px;
+    color: #0F67FD;
+}
+
+.documentContent {
+    flex-grow: 1;
+}
+
+.documentTitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #343434;
+    margin: 0;
+}
+
+.documentSubtitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #7A7A7A;
+    margin: 4px 0 0 0;
+}
+
+.arrowWrapper {
+    font-size: 24px;
+    color: #0F67FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Custom styles for react-select dropdown */
+.react-select__control {
+    border: 2px solid rgba(186, 186, 186, 0.15);
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #343434;
+    background: #FFFFFF;
+}
+
+.react-select__placeholder {
+    font-family: 'Poppins', sans-serif;
+    color: #7A7A7A;
+}
+
+.react-select__control--is-focused {
+    border-color: #0F67FD;
+    box-shadow: none;
+}
+
+.react-select__menu {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+.react-select__option {
+    color: #343434;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+.react-select__option--is-selected {
+    background-color: #DFECFF;
+    font-family: 'Poppins', sans-serif;
+    color: #0F67FD;
+}
+
+.required {
+    color: red;
+    margin-left: 2px; 
+    font-weight: bold;
+}
+

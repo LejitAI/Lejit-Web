@@ -1,0 +1,153 @@
+:root {
+  --primary-color: #0f67fd;
+  --text-color: #343434;
+  --secondary-text-color: #7a7a7a;
+  --background-color: #ffffff;
+  --border-color: rgba(186, 186, 186, 0.15);
+  --font-family: 'Poppins', sans-serif;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+
+  /* Base font size for rem calculations */
+  --base-font-size: 16px;
+}
+
+.add-client-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  padding: 15rem 0; /* Space at the top and bottom */
+}
+
+.add-client-container {
+  width: 90%; /* Responsive width */
+  max-width: 45rem; /* 720px equivalent */
+  height: 75vh; /* Modal height leaves space at top and bottom */
+  background: var(--background-color);
+  border-radius: 0.625rem; /* 10px equivalent */
+  padding: 1.5rem; /* 24px equivalent */
+  box-shadow: 0 0.25rem 1.25rem var(--shadow-color); /* 4px and 20px equivalent */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Enable scrolling inside the modal */
+  position: relative;
+}
+
+.add-client-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Webkit browsers */
+}
+
+.add-client-container {
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.add-client-header {
+  margin-bottom: 1.5rem; /* 24px equivalent */
+}
+
+.add-client-title {
+  font-family: var(--font-family);
+  font-size: 1.375rem; /* 22px equivalent */
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.add-client-subtitle {
+  font-family: var(--font-family);
+  font-size: 0.875rem; /* 14px equivalent */
+  color: var(--text-color);
+}
+
+.add-client-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* 16px equivalent */
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem; /* 16px equivalent */
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* 8px equivalent */
+}
+
+.form-group label {
+  font-family: var(--font-family);
+  font-size: 0.875rem; /* 14px equivalent */
+  color: var(--secondary-text-color);
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem; /* 12px equivalent */
+  font-family: var(--font-family);
+  font-size: 0.875rem; /* 14px equivalent */
+  border: 0.125rem solid var(--border-color); /* 2px equivalent */
+  border-radius: 0.75rem; /* 12px equivalent */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem; /* 24px equivalent */
+}
+
+.btn {
+  padding: 0.75rem 1.5rem; /* 12px and 24px equivalent */
+  font-family: var(--font-family);
+  font-size: 1rem; /* 16px equivalent */
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: 0.75rem; /* 12px equivalent */
+  cursor: pointer;
+}
+
+.btn.primary {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  border: none;
+}
+
+.btn.secondary {
+  background-color: var(--background-color);
+  color: var(--primary-color);
+  border: 0.125rem solid var(--primary-color); /* 2px equivalent */
+}
+
+.required {
+  color: red;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem; /* 16px equivalent */
+  right: 1rem; /* 16px equivalent */
+  background: none;
+  border: none;
+  font-size: 1.5rem; /* 24px equivalent */
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: var(--primary-color);
+}

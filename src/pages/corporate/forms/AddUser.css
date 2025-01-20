@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+.add-user-modal, .add-user-modal * {
+    font-family: 'Poppins', sans-serif;
+}
+
+.add-user-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    transition: background 0.3s ease;
+}
+
+.add-user-content {
+    background: #fff;
+    width: 720px;
+    border-radius: 15px;
+    padding: 24px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.add-user-content::-webkit-scrollbar {
+    display: none;
+}
+.add-user-content {
+    scrollbar-width: none;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.close-button:hover {
+    transform: scale(1.1);
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+.progress-line {
+    flex: 1;
+    height: 3px;
+    background: #d9d9d9;
+    border-radius: 3px;
+}
+.progress-line.completed {
+    background: #0f67fd;
+}
+
+.step-indicators {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.step-indicator {
+    text-align: center;
+    transition: color 0.3s ease;
+}
+.step-indicator.active span {
+    color: #0f67fd;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: #343434;
+    margin-bottom: 16px;
+}
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.form-group label {
+    font-size: 14px;
+    color: #7a7a7a;
+}
+
+input, select {
+    padding: 12px;
+    border: 2px solid rgba(186, 186, 186, 0.15);
+    border-radius: 12px;
+    transition: border-color 0.3s ease;
+}
+input:focus, select:focus {
+    border-color: #0f67fd;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+.secondary-button, .primary-button {
+    padding: 10px 30px;
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: uppercase;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.secondary-button {
+    background: #fff;
+    color: #0f67fd;
+    border: 1px solid #0f67fd;
+}
+.secondary-button:hover {
+    background: #0f67fd;
+    color: #fff;
+}
+.primary-button {
+    background: #0f67fd;
+    color: #fff;
+    border: none;
+}
+.primary-button:hover {
+    background: #0d5fdb;
+}
+
+.payment-method-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.toggle-button {
+    padding: 10px 20px;
+    border: 2px solid #d9d9d9;
+    border-radius: 8px;
+    background: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.toggle-button.active {
+    background-color: #0f67fd;
+    color: #fff;
+    border-color: #0f67fd;
+}
+
+.toggle-button:hover {
+    background-color: #e0e0e0;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: flex-start;
+}

@@ -1,0 +1,198 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  background-color: #f8f9fa;
+  font-family: 'Poppins', sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  color: #343434;
+}
+
+.summary-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ongoing-card {
+  background: #d4eed0;
+}
+
+.closed-card {
+  background: #f4c7ac;
+}
+
+.pending-card {
+  background: #c0e1f8;
+}
+
+.icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text {
+  margin-left: 16px;
+}
+
+.text .title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #343434;
+}
+
+.text .subtitle {
+  font-size: 22px;
+  font-weight: 500;
+  color: #343434;
+}
+
+.content-container {
+  display: flex;
+  gap: 20px;
+}
+
+.appointments-section,
+.team-section,
+.ai-assist {
+  flex: 1;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.client-appointments {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.calendar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.date {
+  width: 48px;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.date.active {
+  background: #0f67fd;
+  color: #ffffff;
+}
+
+.appointment-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.appointment-info {
+  flex: 1;
+  margin-left: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.accept-btn {
+  background: #0f67fd;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.reject-btn {
+  background: #ff5e57;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.team-section {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.member {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ai-assist {
+  background: #0f67fd;
+  color: white;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.ai-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ai-options button {
+  background: white;
+  color: #0f67fd;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}

@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.lawfirm-container {
+  background-color: #F2F5FA;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.lawfirm-left {
+  width: 50%;
+  background-color: #F2F5FA;
+  padding: 1.25rem; /* 20px */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5rem; /* 80px */
+}
+
+.heading h1 {
+  margin-top: 6.25rem; /* 100px */
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
+  line-height: 2.8125rem; /* 45px */
+  text-align: left;
+}
+
+.heading p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 500;
+  line-height: 1.6875rem; /* 27px */
+  text-align: left;
+  color: #7A7A7A;
+  margin-bottom: 1.25rem; /* 20px */
+}
+
+.content {
+  background-color: #F2F5FA;
+  border-radius: 0.625rem; /* 10px */
+  padding: 1.25rem 0.875rem; /* 20px 14px */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* 20px */
+  position: relative;
+}
+
+.firm-profile {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* 24px */
+  width: 100%;
+}
+
+.profile-picture {
+  width: 5.875rem; /* 94px */
+  height: 5.875rem; /* 94px */
+  border-radius: 50%;
+  background: url('../../assets//image\ \(1\).png') center/cover no-repeat;
+}
+
+.profile-info .profile-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.0625rem; /* 17px */
+  font-weight: 600;
+  line-height: 1.5rem; /* 24px */
+  text-align: left;
+}
+
+.profile-info .profile-role {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 400;
+  line-height: 1.3125rem; /* 21px */
+  text-align: left;
+}
+
+.ldivider {
+  border: none;
+  height: 1px;
+  background: #E3E5E5;
+  width: 100%;
+  margin: 0.25rem 0; /* 4px */
+}
+
+.action-section {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  width: 100%;
+  gap: 1.5rem; /* 24px */
+}
+
+.icon-box {
+  width: 1.875rem; /* 30px */
+  height: 1.875rem; /* 30px */
+  background: #EAB000;
+  border: 0.09375rem solid #EAB000; /* 1.5px */
+  border-radius: 0.125rem; /* 2px */
+  font-size: 1.125rem; /* 18px */
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.primary-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem; /* 16px */
+  font-weight: 500;
+  line-height: 1.25rem; /* 20px */
+  text-align: left;
+  color: #090A0A;
+  margin-bottom: 0.5rem; /* 8px */
+}
+
+.secondary-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 400;
+  line-height: 1rem; /* 16px */
+  text-align: left;
+  color: #84888B;
+}
+
+.button {
+  font-family: 'Poppins', sans-serif;
+  padding: 0.625rem 1.25rem; /* 10px 20px */
+  font-size: 1rem; /* 16px */
+  line-height: 1rem; /* 16px */
+  font-weight: 500;
+  color: #0F67FD;
+  border: 1px solid #0F67FD;
+  border-radius: 3rem; /* 48px */
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5.625rem; /* 90px */
+  height: 2.25rem; /* 36px */
+}
+
+.button:hover {
+  background: #0F67FD;
+  color: #FFFFFF;
+}
+
+/* Skip for Now Button */
+.skip-button {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem; /* 16px */
+  line-height: 1.5625rem; /* 25px */
+  font-weight: 500;
+  color: #FFFFFF;
+  border: 1px solid #0F67FD;
+  background: #0F67FD;
+  border-radius: 0.9375rem; /* 15px */
+  padding: 0.5625rem 3.4375rem; /* 9px 55px */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: 1.25rem; /* 20px */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.skip-button:hover {
+  background: #FFFFFF;
+  color: #0F67FD;
+}
+
+.skip-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.25rem; /* 20px */
+}
+
+.ebutton {
+  font-family: 'Poppins', sans-serif;
+  padding: 0.625rem 1.25rem; /* 10px 20px */
+  font-size: 1rem; /* 16px */
+  line-height: 1rem; /* 16px */
+  font-weight: 500;
+  color: #FFFFFF;
+  border: 1px solid #0F67FD;
+  border-radius: 3rem; /* 48px */
+  background: #0F67FD;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5.625rem; /* 90px */
+  height: 2.25rem; /* 36px */
+}
+
+.ebutton:hover {
+  background: #FFFFFF;
+  color: #0F67FD;
+}
+
+.lawfirm-right {
+  width: 50%;
+  background: linear-gradient(156.58deg, #0F67FD 0%, #093D97 103.59%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 13.75rem; /* 220px */
+  height: 13.75rem; /* 220px */
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .lawfirm-container {
+    flex-direction: column;
+  }
+
+  .lawfirm-left, .lawfirm-right {
+    width: 100%;
+    padding: 1.25rem; /* 20px */
+  }
+
+  .lawfirm-right {
+    background: none;
+  }
+
+  .logo {
+    margin-bottom: 1.25rem; /* 20px */
+    width: 9.375rem; /* 150px */
+    height: 9.375rem; /* 150px */
+  }
+
+  .content {
+    gap: 1rem; /* 16px */
+  }
+}
+
+@media (max-width: 480px) {
+  .heading h1 {
+    font-size: 1.5rem; /* 24px */
+  }
+
+  .logo {
+    width: 6.25rem; /* 100px */
+    height: 6.25rem; /* 100px */
+  }
+}
