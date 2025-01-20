@@ -32,7 +32,7 @@ const Sidebar = () => {
     { text: 'My Cases', icon: <FolderIcon />, path: '/overallcases' },
     { text: 'Clients', icon: <PersonOutlineIcon />, path: '/clients' },
     { text: 'Team Members', icon: <PeopleIcon />, path: '/profile' }, 
-    { text: 'Documents', icon: <ArticleIcon />, path: '/documents' },
+    { text: 'Documents', icon: <ArticleIcon />, path: '/casedocuments' },
     { text: 'Appointments', icon: <CalendarTodayIcon />, path: '/appointments' },
     { text: 'Hearing Schedule', icon: <ScheduleIcon />, path: '/hearing' },
     { text: 'Legal Templates', icon: <ArticleIcon />, path: '/legaldoctemplates' },

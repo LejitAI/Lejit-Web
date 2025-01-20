@@ -45,7 +45,7 @@ import QnaScreen from './pages/AI/components/QNA/OverallQnaScreen';
 import FloatingButton from './FAB';
 import CaseDetails from './pages/lawfirm/(dashboard)/CaseDetails';
 import ClientDashboard from "./pages/citizen/citizendashboard/DashboardLayout";
-
+import CaseDocuments from './pages/lawfirm/(dashboard)/CaseDocuments/CaseDocuments';
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -109,6 +109,7 @@ function App() {
             <Route path="/qnascreen" element={<QnaScreen />} />
             <Route path="/casedetails/:id" element={<CaseDetails />} />
             <Route path="/cdashboard" element={<ClientDashboard />} />
+            <Route path="/casedocuments" element={<CaseDocuments />} />
 
           </Routes>
 
