@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 const Card = ({ color, title, number, icon: Icon }) => {
   return (
     <div
-      className={`flex-1 flex  items-center pl-4 pr-11  gap-[18px] rounded-[10px]`}
+      className={`flex-1 flex h-[97px] items-center pl-4 pr-11  gap-[18px] rounded-[10px]`}
       style={{ backgroundColor: color }}
     >
       <div className="flex justify-center items-center rounded-full bg-white w-14 h-14">

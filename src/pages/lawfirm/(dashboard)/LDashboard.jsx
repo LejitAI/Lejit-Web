@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./LDashboard.css";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -19,6 +19,7 @@ import {
   CircleX,
   CircleCheck,
   User,
+  BarChart3,
 } from "lucide-react";
 import { Calendar, ChevronRight, Plus, Phone, XCircle } from "lucide-react";
 import { FaFolder, FaCalendar, FaTrophy } from "react-icons/fa";
@@ -29,6 +30,9 @@ const randomAvatar =
 
 const LDashboard = () => {
   const navigate = useNavigate();
+  const [cases, setCases] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   // Use useState to manage dynamic data
   const [updates, setUpdates] = useState([
     {
@@ -62,18 +66,7 @@ const LDashboard = () => {
       detailsLink: "/cases/456",
     },
   ]);
-  const [members, setMembers] = useState([
-    {
-      name: "John Doe",
-      role: "Senior Attorney",
-      avatar: randomAvatar,
-    },
-    {
-      name: "Jane Smith",
-      role: "Junior Attorney",
-      avatar: randomAvatar,
-    },
-  ]);
+  const [members, setMembers] = useState([]);
 
   const [hearings, setHearings] = useState([
     {
@@ -188,13 +181,98 @@ const LDashboard = () => {
     setMembers([...members, newMember]);
   };
 
+  useEffect(() => {
+    fetchCases();
+    const fetchTeamMembers = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        console.log('Fetching team members...'); // Debug log
+        const response = await fetch('http://backend.lejit.ai/backend/api/admin/get-team-members', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('API Response:', data); // Debug log
+        
+        // Initialize with some test data if API returns empty
+        if (!data || data.length === 0) {
+          setMembers([
+            { personalDetails: { name: 'John Doe' } },
+            { personalDetails: { name: 'Jane Smith' } }
+          ]);
+        } else {
+          setMembers(data);
+        }
+      } catch (error) {
+        console.error('Error fetching team members:', error);
+        // Set some test data on error for debugging
+        setMembers([
+          { personalDetails: { name: 'Test User 1' } },
+          { personalDetails: { name: 'Test User 2' } }
+        ]);
+      }
+    };
+
+    fetchTeamMembers();
+  }, []);
+
+  const fetchCases = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      const response = await fetch('http://backend.lejit.ai/backend/api/admin/get-cases', { headers });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('Cases response:', data);
+      setCases(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Error fetching cases:', error);
+      setError(error.message);
+      setCases([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Calculate metrics with safety checks
+  const activeCases = Array.isArray(cases) ? cases.filter(c => c && !c.endDate).length : 0;
+  const closedCases = Array.isArray(cases) ? cases.filter(c => c && c.endDate).length : 0;
+
+  if (error) {
+    console.error('Error in dashboard:', error);
+  }
+
   return (
     <div className="max-h-screen overflow-auto grid grid-cols-4 gap-6 p-6">
+      {/* Analytics Navigation Button */}
+      <div className="col-span-4 flex justify-end mb-4">
+        <button
+          onClick={() => navigate('/analytics')}
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          <BarChart3 size={20} />
+          <span>View Analytics</span>
+        </button>
+      </div>
+
       <div className="col-span-3 space-y-6">
         {/* Metric Cards */}
-        <div className="w-full  flex gap-6">
-          <Card color="#D4EED0" title="Ongoing Cases" number="04" icon={File} />
-          <Card color="#F4C7AC" title="Closed Cases" number="34" icon={User} />
+        <div className="w-full flex gap-6">
+          <Card color="#D4EED0" title="Active Cases" number={activeCases.toString().padStart(2, '0')} icon={File} />
+          <Card color="#F4C7AC" title="Closed Cases" number={closedCases.toString().padStart(2, '0')} icon={CheckCheck} />
           <Card color="#C0E1F8" title="Pending Payments" number="05" icon={DollarSign} />
         </div>
         <div className="grid grid-cols-2 gap-6">
@@ -333,31 +411,34 @@ const RecentUpdatesList = ({ updates, pending: False }) => (
 );
 
 // Team Members List Component
-const TeamMembersList = ({ members, onAddMember }) => (
-  <div className="space-y-3">
-    {members.map((member, index) => (
-      <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg">
-        <img
-          src={member.avatar}
-          alt={member.name}
-          className="w-10 h-10 rounded-full mr-4"
-        />
-        <div className="flex-1">
-          <h3 className="text-sm font-medium">{member.name}</h3>
-          <p className="text-sm text-gray-500">{member.role}</p>
-        </div>
-        <ChevronRight className="text-gray-400" />
-      </div>
-    ))}
-    <button
-      onClick={onAddMember}
-      className="w-full flex items-center justify-center p-3 border-2 border-blue-500 rounded-lg text-blue-600 hover:border-blue-500"
-    >
-      <Plus className="w-6 h-6 mr-2  rounded-full  bg-blue-600 text-white" />
-      Add New Member
-    </button>
-  </div>
-);
+const TeamMembersList = ({ members, onAddMember }) => {
+  console.log('Members received in TeamMembersList:', members); // Debug log
+  return (
+    <div className="space-y-3">
+      {Array.isArray(members) && members.map((member, index) => {
+        console.log('Individual member data:', member); // Debug log
+        return (
+          <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100">
+            <div className="flex-1">
+              <span className="text-sm text-gray-600">
+                {member?.personalDetails?.name || 'Team Member'}
+              </span>
+            </div>
+            <ChevronRight className="text-gray-400 w-5 h-5" />
+          </div>
+        );
+      })}
+      
+      <button
+        onClick={onAddMember}
+        className="w-full flex items-center justify-center gap-2 p-3 text-blue-500 hover:bg-blue-50"
+      >
+        <Plus className="w-5 h-5" />
+        Add New Member
+      </button>
+    </div>
+  );
+};
 
 // Court Hearings Table Component
 const CourtHearingsTable = ({ hearings }) => (
