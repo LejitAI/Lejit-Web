@@ -1,125 +1,167 @@
-import React from "react";
-import { FiDownload, FiEye, FiShare2 } from "react-icons/fi";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { FiDownload } from "react-icons/fi";
 import { AiOutlinePlus } from "react-icons/ai";
+import "./DocumentFolders.css";
 
 const FolderIcon = () => (
-  <div className="relative w-[40px] h-[40px] mix-blend-luminosity">
-    {/* Top part of folder */}
-    <div 
-      className="absolute" 
-      style={{
-        left: '1.67%',
-        right: '1.66%',
-        top: '6.68%',
-        bottom: '64.99%',
-        background: '#E58B0A'
-      }}
-    />
-    {/* Middle stripe */}
-    <div 
-      className="absolute" 
-      style={{
-        left: '10%',
-        right: '10%',
-        top: '21.68%',
-        bottom: '68.32%',
-        background: '#FFFFFF'
-      }}
-    />
-    {/* Main folder body */}
-    <div 
-      className="absolute" 
-      style={{
-        left: '1.67%',
-        right: '1.66%',
-        top: '30%',
-        bottom: '6.67%',
-        background: '#FFB90B'
-      }}
-    />
+  <div className="folder-icon">
+    <div className="folder-top" />
+    <div className="folder-stripe" />
+    <div className="folder-body" />
   </div>
 );
 
 const DocumentFolders = () => {
+  const [documents, setDocuments] = useState([]);
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
+
+  const fetchDocuments = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("Authentication token is missing.");
+      return;
+    }
+
+    try {
+      const response = await axios.get("/backend/api/chat/documents", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        setDocuments(response.data.documents);
+      }
+    } catch (err) {
+      setError("Failed to fetch documents. Please try again.");
+    }
+  };
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setError(null);
+  };
+
+  const handleUpload = async () => {
+    if (!file) {
+      setError("Please select a file to upload.");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("Authentication token is missing.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("document", file);
+
+    try {
+      const response = await axios.post("/backend/api/chat/upload", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 200) {
+        fetchDocuments(); // Refresh the document list
+        setFile(null); // Reset the file input
+        setError(null); // Clear any error
+      }
+    } catch (err) {
+      setError("Failed to upload the document. Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    fetchDocuments();
+  }, []);
+
   const folders = [
     { name: "Court" },
     { name: "Invoice" },
     { name: "Evidence" },
     { name: "Others" },
     { name: "Opposition" },
-    { name: "Quotations" }
+    { name: "Quotations" },
   ];
 
   return (
-    <div className="flex flex-col items-center p-5 gap-4 w-[1104px] bg-white shadow-[0px_4px_20px_rgba(0,0,0,0.05)] rounded-[10px]">
-      {/* Header */}
-      <div className="flex justify-between items-center w-full">
-        <h2 className="text-[16px] font-medium text-[#343434]">Case documents</h2>
-        <button className="flex items-center justify-center transform rotate-180 w-[16px] h-[9px] bg-[#7A7A7A]"></button>
+    <div className="document-folders-container">
+      <div className="header">
+        <h2>Case documents</h2>
+        <button className="toggle-button" />
       </div>
 
-      {/* Divider */}
-      <div className="w-full h-[1px] bg-[rgba(29,53,87,0.1)]"></div>
+      <div className="divider" />
 
-      {/* Document Folders */}
-      <div className="flex gap-6">
+      <div className="folders">
         {folders.map((folder, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center gap-2 w-[70px] h-[100px] cursor-pointer hover:opacity-80 transition-opacity"
-          >
-            <div className="w-[50px] h-[50px] flex items-center justify-center">
+          <div key={index} className="folder-item">
+            <div className="folder-icon-container">
               <FolderIcon />
             </div>
-            <span className="text-[14px] font-medium text-[#343434] text-center">
-              {folder.name}
-            </span>
+            <span>{folder.name}</span>
           </div>
         ))}
       </div>
 
-      {/* Divider */}
-      <div className="w-full h-[1px] bg-[rgba(29,53,87,0.1)]"></div>
+      <div className="divider" />
 
-      {/* Document Rows */}
-      {[
-        { name: "March-12-03-2024.pdf", status: "Paid", color: "text-[#32B13B]", bgColor: "bg-[rgba(50,177,59,0.1)]" },
-        { name: "April-12-04-2024.pdf", status: "Pending", color: "text-[#EAB000]", bgColor: "bg-[rgba(234,176,0,0.1)]" },
-        { name: "May-12-04-2024.pdf", status: "Unpaid", color: "text-[#F44336]", bgColor: "bg-[rgba(244,67,54,0.1)]" },
-      ].map((doc, index) => (
-        <div
-          key={index}
-          className="flex justify-between items-center w-full py-2"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-[12px] h-[12px] bg-black rounded-full"></div>
-            <span className="text-[14px] font-normal text-[#343434]">
-              {doc.name}
-            </span>
-            <div
-              className={`flex items-center justify-center px-2 py-1 rounded-full text-[10px] font-medium ${doc.color} ${doc.bgColor}`}
+      {documents.map((doc, index) => (
+        <div key={index} className="document-row">
+          <div className="document-info">
+            <span>{doc.name}</span>
+            <a
+              href={`//backend/${doc.path}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="document-link"
             >
-              {doc.status}
-            </div>
+              View Document
+            </a>
           </div>
-
-          <div className="flex items-center gap-4">
-            <FiShare2 className="text-[#7A7A7A] w-[20px] h-[20px] cursor-pointer hover:text-[#0F67FD]" />
-            <FiEye className="text-[#7A7A7A] w-[20px] h-[20px] cursor-pointer hover:text-[#0F67FD]" />
-            <FiDownload className="text-[#7A7A7A] w-[20px] h-[20px] cursor-pointer hover:text-[#0F67FD]" />
+          <div className="document-actions">
+            <a href={`//backend/${doc.path}`} download>
+              <FiDownload className="icon" />
+            </a>
           </div>
         </div>
       ))}
 
-      {/* Add Document Button */}
-      <div className="flex justify-end w-full">
-        <button className="flex items-center gap-2 px-6 py-3 border border-[#0F67FD] rounded-[10px] text-[#0F67FD] font-medium text-[16px] hover:bg-[#0F67FD] hover:text-white transition-colors">
-          <div className="w-[24px] h-[24px] bg-[#0F67FD] flex justify-center items-center rounded-full">
-            <AiOutlinePlus className="w-[14px] h-[14px] text-white" />
+      <div className="add-document-button-container">
+        <input
+          id="file-input"
+          type="file"
+          onChange={handleFileChange}
+          accept="application/pdf"
+          style={{ display: "none" }}
+        />
+        <button
+          className="add-document-button"
+          onClick={() => document.getElementById("file-input").click()}
+        >
+          <div className="add-icon">
+            <AiOutlinePlus className="plus-icon" />
           </div>
           ADD CASE DOCUMENTS
         </button>
       </div>
+
+      {file && (
+        <div className="upload-button-container">
+          <p>Selected File: {file.name}</p>
+          <button className="upload-button" onClick={handleUpload}>
+            Upload
+          </button>
+        </div>
+      )}
+
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };
