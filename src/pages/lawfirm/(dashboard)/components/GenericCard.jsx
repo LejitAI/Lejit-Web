@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const GenericCard = ({ heading, viewAllLink, className = "", children }) => {
   return (
     <div
-      className={`w-full bg-white rounded-[20px] shadow-md p-4 ${className} overflow-auto`}
+      className={`w-full bg-white rounded-[20px] shadow-md p-4 ${className}`}
     >
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-medium">{heading}</h2>
