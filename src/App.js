@@ -44,6 +44,8 @@ import LegalDocumentTemplates from './pages/AI/components/Chat/docgen/overallleg
 import QnaScreen from './pages/AI/components/QNA/OverallQnaScreen';
 import FloatingButton from './FAB';
 import CaseDetails from './pages/lawfirm/(dashboard)/CaseDetails';
+import ClientDashboard from "./pages/citizen/citizendashboard/DashboardLayout";
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -106,6 +108,8 @@ function App() {
             <Route path="/legaldoctemplates" element={<LegalDocumentTemplates />} />
             <Route path="/qnascreen" element={<QnaScreen />} />
             <Route path="/casedetails/:id" element={<CaseDetails />} />
+            <Route path="/cdashboard" element={<ClientDashboard />} />
+
           </Routes>
 
           {!authRoutes.includes(window.location.pathname) && <FloatingButton />}
