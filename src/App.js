@@ -41,7 +41,7 @@ import ProfileInside from "./pages/citizen/lawyers/lawyerprofile"; // Import Pro
 import TeamMemberDetails from "./pages/citizen/lawyers/TeamMemberDetails";
 import BookAppointment from "./pages/citizen/lawyers/BookAppointment";
 import LegalDocumentTemplates from "./pages/AI/components/Chat/docgen/overalllegaldoctemplates";
-
+import CaseDocuments from "./pages/corporate/(dashboard)/CaseDocuments/CaseDocuments";
 import ClientDashboard from "./pages/citizen/citizendashboard/DashboardLayout";
 
 function App() {
@@ -98,6 +98,7 @@ function App() {
             {/* Dynamic Route for Law Firm Details */}
             <Route path="/law-firm/:id" element={<ProfileInside />} />
             <Route path="/book-appointment" element={<BookAppointment />} />
+            <Route path="/casedocuments" element={<CaseDocuments />} />
             <Route
               path="/legaldoctemplates"
               element={<LegalDocumentTemplates />}
