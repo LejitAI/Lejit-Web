@@ -9,28 +9,31 @@ const HearingListView = ({ hearings }) => {
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-        gap: "20px",
+        gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))", // Reduced min width
+        gap: "15px", // Reduced gap
         width: "100%",
-        maxWidth: "1200px",
+        maxWidth: "900px", // Reduced max width
         margin: "0 auto",
+        overflowY: "auto", // Enable scrolling
+        maxHeight: "80vh", // Limit height for scrollable area
+        paddingRight: "8px",
       }}
     >
       {hearings.map((hearing, index) => (
         <Card
           key={index}
           sx={{
-            width: "357.67px",
-            height: "130px",
+            width: "268.25px", // Reduced width
+            height: "97.5px", // Reduced height
             background: "#FFFFFF",
             border: "1px solid rgba(0, 0, 0, 0.1)",
-            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
-            borderRadius: "10px",
-            padding: "12px 16px",
+            boxShadow: "0px 3px 15px rgba(0, 0, 0, 0.05)", // Reduced shadow
+            borderRadius: "7.5px", // Reduced border-radius
+            padding: "9px 12px", // Reduced padding
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            gap: "12px",
+            gap: "9px", // Reduced gap
           }}
         >
           {/* Date and Time */}
@@ -38,22 +41,25 @@ const HearingListView = ({ hearings }) => {
             sx={{
               display: "flex",
               alignItems: "center",
-              gap: "8px",
+              gap: "6px", // Reduced gap
             }}
           >
             <AccessTimeIcon
-              sx={{ fontSize: "16px", color: "#7A7A7A" }}
+              sx={{ fontSize: "12px", color: "#7A7A7A" }} // Reduced icon size
             />
             <Typography
               sx={{
                 fontFamily: "Poppins",
                 fontWeight: 600,
-                fontSize: "14px",
-                lineHeight: "19px",
+                fontSize: "10.5px", // Reduced font size
+                lineHeight: "14.25px", // Adjusted line height
                 color: "#7A7A7A",
               }}
             >
-              {hearing.date ? new Date(hearing.date).toLocaleDateString() : "N/A"} at {hearing.time || "N/A"}
+              {hearing.date
+                ? new Date(hearing.date).toLocaleDateString()
+                : "N/A"}{" "}
+              at {hearing.time || "N/A"}
             </Typography>
           </Box>
 
@@ -61,7 +67,7 @@ const HearingListView = ({ hearings }) => {
           <Box
             sx={{
               width: "100%",
-              height: "1px",
+              height: "0.75px", // Reduced height
               backgroundColor: "#C7C7C7",
               opacity: "0.5",
             }}
@@ -79,15 +85,15 @@ const HearingListView = ({ hearings }) => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: "12px",
+                gap: "9px", // Reduced gap
               }}
             >
               <Avatar
                 sx={{
-                  width: "40px",
-                  height: "40px",
+                  width: "30px", // Reduced size
+                  height: "30px", // Reduced size
                   borderRadius: "50%",
-                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.02)",
+                  boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.02)", // Reduced shadow
                 }}
               >
                 {hearing.caseName ? hearing.caseName.charAt(0) : "N/A"}
@@ -97,8 +103,8 @@ const HearingListView = ({ hearings }) => {
                   sx={{
                     fontFamily: "Poppins",
                     fontWeight: 500,
-                    fontSize: "18px",
-                    lineHeight: "27px",
+                    fontSize: "13.5px", // Reduced font size
+                    lineHeight: "20.25px", // Adjusted line height
                     color: "#343434",
                   }}
                 >
@@ -111,17 +117,17 @@ const HearingListView = ({ hearings }) => {
             <Box
               sx={{
                 display: "flex",
-                gap: "10px",
+                gap: "7.5px", // Reduced gap
               }}
             >
               <IconButton
                 sx={{
-                  width: "35px",
-                  height: "35px",
+                  width: "26.25px", // Reduced size
+                  height: "26.25px", // Reduced size
                   background: "#FFFFFF",
-                  border: "2px solid rgba(186, 186, 186, 0.15)",
+                  border: "1.5px solid rgba(186, 186, 186, 0.15)", // Adjusted border thickness
                   borderRadius: "50%",
-                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.05)",
+                  boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.05)", // Reduced shadow
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -130,18 +136,18 @@ const HearingListView = ({ hearings }) => {
                 <NoteIcon
                   sx={{
                     color: "#7A7A7A",
-                    fontSize: "18px",
+                    fontSize: "13.5px", // Reduced icon size
                   }}
                 />
               </IconButton>
               <IconButton
                 sx={{
-                  width: "35px",
-                  height: "35px",
+                  width: "26.25px", // Reduced size
+                  height: "26.25px", // Reduced size
                   background: "#FFFFFF",
-                  border: "2px solid rgba(186, 186, 186, 0.15)",
+                  border: "1.5px solid rgba(186, 186, 186, 0.15)", // Adjusted border thickness
                   borderRadius: "50%",
-                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.05)",
+                  boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.05)", // Reduced shadow
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -150,7 +156,7 @@ const HearingListView = ({ hearings }) => {
                 <CallIcon
                   sx={{
                     color: "#7A7A7A",
-                    fontSize: "18px",
+                    fontSize: "13.5px", // Reduced icon size
                   }}
                 />
               </IconButton>

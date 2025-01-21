@@ -190,26 +190,27 @@ const Cases = () => {
     return (
       <Box className="case-details-container">
         <Box className="header" style={{ marginBottom: "16px" }}>
-          <IconButton onClick={handleBack}>
-            <ArrowBackIcon style={{ color: "#343434" }} />
-          </IconButton>
-          <Typography variant="h5" className="title">
-            Case Details
-          </Typography>
-        </Box>
-        <Box
-          className="case-details"
-          style={{
-            padding: "24px",
-            background: "#FFFFFF",
-            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-            borderRadius: "10px",
-            maxWidth: "800px",
-            margin: "0 auto",
-          }}
-        >
-          <Typography variant="h6"><strong>Title:</strong> {selectedCase.title}</Typography>
-          <Typography variant="body1"><strong>Client Name:</strong> {selectedCase.clientName}</Typography>
+        <IconButton onClick={handleBack}>
+  <ArrowBackIcon style={{ color: "#343434", fontSize: "1.125rem" }} /> {/* Reduced by 25% */}
+</IconButton>
+<Typography variant="h6" className="title"> {/* Changed from h5 to h6 */}
+  Case Details
+</Typography>
+</Box>
+<Box
+  className="case-details"
+  style={{
+    padding: "18px", /* Reduced by 25% */
+    background: "#FFFFFF",
+    boxShadow: "0px 3px 15px rgba(0, 0, 0, 0.1)", /* Reduced by 25% */
+    borderRadius: "7.5px", /* Reduced by 25% */
+    maxWidth: "600px", /* Reduced by 25% */
+    margin: "0 auto",
+  }}
+>
+  <Typography variant="body1"><strong>Title:</strong> {selectedCase.title}</Typography> {/* Changed from h6 to subtitle1 */}
+  <Typography variant="body1"><strong>Client Name:</strong> {selectedCase.clientName}</Typography> {/* Changed from body1 to body2 */}
+
           <Typography variant="body1"><strong>Case Type:</strong> {selectedCase.caseType}</Typography>
           <Typography variant="body1"><strong>Opposite Client:</strong> {selectedCase.oppositeClient || "N/A"}</Typography>
           <Typography variant="body1"><strong>Witness:</strong> {selectedCase.caseWitness || "N/A"}</Typography>

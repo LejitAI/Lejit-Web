@@ -5,7 +5,6 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import DownloadIcon from "@mui/icons-material/Download";
 import SortIcon from "@mui/icons-material/Sort";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import StarIcon from "@mui/icons-material/Star";
 import "./ViewClients.css";
 
 const ViewClients = () => {
@@ -104,75 +103,90 @@ const ViewClients = () => {
 
   return (
     <Box className="view-team-container">
-      <Box className="header">
-        <Box className="header-left">
-          <IconButton>
-            <ArrowBackIcon style={{ color: "#343434" }} />
+      <Box className="header" style={{ padding: "12px" }}>
+        <Box className="header-left" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <IconButton size="small">
+            <ArrowBackIcon style={{ color: "#343434", fontSize: "18px" }} />
           </IconButton>
-          <Typography variant="h5" className="title">Clients</Typography>
+          <Typography
+            variant="h6"
+            className="title"
+            style={{
+              fontSize: "18px",
+              lineHeight: "22px",
+              fontWeight: "bold",
+              color: "#343434",
+            }}
+          >
+            Clients
+          </Typography>
         </Box>
-        <Box className="header-right">
-          <Box className="action-button">
-            <SearchIcon />
+        <Box className="header-right" style={{ display: "flex", gap: "12px" }}>
+          <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <SearchIcon style={{ fontSize: "18px" }} />
             <TextField
               variant="outlined"
               size="small"
               placeholder="Search by name"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ marginLeft: "8px" }}
+              style={{ fontSize: "12px", width: "150px" }}
             />
           </Box>
-          <Box className="action-button">
-            <FilterListIcon />
+          <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <FilterListIcon style={{ fontSize: "18px" }} />
             <TextField
               select
               variant="outlined"
               size="small"
               value={filterOption}
               onChange={(e) => setFilterOption(e.target.value)}
-              style={{ marginLeft: "8px", width: "150px" }}
+              style={{ fontSize: "12px", width: "120px" }}
             >
-              <MenuItem value="">No Filter</MenuItem>
-              <MenuItem value="rating">High Rating (= 4)</MenuItem>
-              <MenuItem value="experience">Experience (= 5 years)</MenuItem>
+              <MenuItem value="" style={{ fontSize: "12px" }}>No Filter</MenuItem>
+              <MenuItem value="rating" style={{ fontSize: "12px" }}>High Rating (= 4)</MenuItem>
+              <MenuItem value="experience" style={{ fontSize: "12px" }}>Experience (= 5 years)</MenuItem>
             </TextField>
           </Box>
-          <Box className="action-button" onClick={handleDownload}>
-            <DownloadIcon />
-            <Typography>Download List</Typography>
+          <Box
+            className="action-button"
+            onClick={handleDownload}
+            style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}
+          >
+            <DownloadIcon style={{ fontSize: "18px" }} />
+            <Typography style={{ fontSize: "12px" }}>Download List</Typography>
           </Box>
-          <Box className="action-button">
-            <SortIcon />
+          <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <SortIcon style={{ fontSize: "18px" }} />
             <TextField
               select
               variant="outlined"
               size="small"
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value)}
-              style={{ marginLeft: "8px", width: "150px" }}
+              style={{ fontSize: "12px", width: "120px" }}
             >
-              <MenuItem value="">No Sort</MenuItem>
-              <MenuItem value="name">Name</MenuItem>
-              <MenuItem value="rating">Rating</MenuItem>
+              <MenuItem value="" style={{ fontSize: "12px" }}>No Sort</MenuItem>
+              <MenuItem value="name" style={{ fontSize: "12px" }}>Name</MenuItem>
+              <MenuItem value="rating" style={{ fontSize: "12px" }}>Rating</MenuItem>
             </TextField>
           </Box>
         </Box>
       </Box>
 
       {error ? (
-        <Typography style={{ color: "red", margin: "20px" }}>{error}</Typography>
+        <Typography style={{ color: "red", margin: "16px", fontSize: "12px" }}>{error}</Typography>
       ) : filteredClients.length > 0 ? (
         <Box
           className="team-list"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(540px, 1fr))",
-            gap: "16px",
+            gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
+            gap: "12px",
             justifyContent: "center",
-            maxHeight: "500px",
+            maxHeight: "375px",
             overflowY: "auto",
-            paddingRight: "8px",
+            paddingRight: "6px",
           }}
         >
           {filteredClients.map((client, index) => (
@@ -183,23 +197,23 @@ const ViewClients = () => {
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
-                padding: "0px 20px 0px 0px",
-                gap: "16px",
+                padding: "0px 15px 0px 0px",
+                gap: "12px",
                 width: "100%",
-                maxWidth: "540px",
-                height: "110px",
+                maxWidth: "400px",
+                height: "82.5px",
                 background: "#FFFFFF",
-                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
-                borderRadius: "10px",
+                boxShadow: "0px 3px 15px rgba(0, 0, 0, 0.05)",
+                borderRadius: "7.5px",
               }}
             >
               <Avatar
                 src={client.profilePhoto || "/default-profile.png"}
                 style={{
-                  width: "120px",
-                  height: "110px",
-                  borderRadius: "10px 0px 0px 10px",
-                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.02)",
+                  width: "90px",
+                  height: "82.5px",
+                  borderRadius: "7.5px 0px 0px 7.5px",
+                  boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.02)",
                 }}
               />
               <Box
@@ -208,16 +222,16 @@ const ViewClients = () => {
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "flex-start",
-                  width: "384.5px",
-                  height: "72px",
+                  width: "288px",
+                  height: "54px",
                 }}
               >
                 <Typography
                   style={{
                     fontFamily: "Poppins",
                     fontWeight: "500",
-                    fontSize: "16px",
-                    lineHeight: "24px",
+                    fontSize: "12px",
+                    lineHeight: "18px",
                     color: "#343434",
                   }}
                 >
@@ -227,8 +241,8 @@ const ViewClients = () => {
                   style={{
                     fontFamily: "Poppins",
                     fontWeight: "400",
-                    fontSize: "12px",
-                    lineHeight: "16px",
+                    fontSize: "9px",
+                    lineHeight: "12px",
                     color: "#7A7A7A",
                   }}
                 >
@@ -238,8 +252,8 @@ const ViewClients = () => {
                   style={{
                     fontFamily: "Poppins",
                     fontWeight: "400",
-                    fontSize: "12px",
-                    lineHeight: "16px",
+                    fontSize: "9px",
+                    lineHeight: "12px",
                     color: "#7A7A7A",
                   }}
                 >
@@ -250,7 +264,7 @@ const ViewClients = () => {
           ))}
         </Box>
       ) : (
-        <Typography style={{ margin: "20px" }}>No client details available.</Typography>
+        <Typography style={{ margin: "16px", fontSize: "12px" }}>No client details available.</Typography>
       )}
     </Box>
   );

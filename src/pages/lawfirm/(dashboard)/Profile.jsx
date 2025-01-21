@@ -91,17 +91,17 @@ function App() {
             onClick={handleAddTeamMember}
             style={{
               position: "fixed",
-              bottom: "100px",
-              right: "80px",
-              padding: "16px 40px",
+              bottom: "75px",
+              right: "60px",
+              padding: "12px 30px",
               backgroundColor: "#0F67FD",
               color: "#FFFFFF",
-              borderRadius: "15px",
+              borderRadius: "11.25px",
               fontFamily: "Poppins",
               fontWeight: "500",
-              fontSize: "16px",
+              fontSize: "12px",
               textTransform: "uppercase",
-              zIndex: 1000,
+              zIndex: 1000, // Ensure it appears on top
             }}
           >
             Add Team Member

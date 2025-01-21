@@ -1,5 +1,4 @@
 import React from 'react';
-import { ColorModeContext, useMode } from "../../../theme";
 import { CssBaseline, ThemeProvider, Box } from "@mui/material";
 import Topbar from "../../lawfirm/global/Topbar";
 import Sidebar from "../../lawfirm/global/Sidebar";
@@ -9,8 +8,6 @@ function App() {
     const [theme, colorMode] = useMode();
 
     return (
-        <ColorModeContext.Provider value={colorMode}>
-            <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <Box display="flex" height="100vh">
                     <Sidebar />
@@ -26,8 +23,6 @@ function App() {
                         </Box>
                     </Box>
                 </Box>
-            </ThemeProvider>
-        </ColorModeContext.Provider>
     );
 }
 
