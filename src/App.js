@@ -46,7 +46,7 @@ import FloatingButton from './FAB';
 import CaseDetails from './pages/lawfirm/(dashboard)/CaseDetails';
 import ClientDashboard from "./pages/citizen/citizendashboard/DashboardLayout";
 import CaseDocuments from './pages/lawfirm/(dashboard)/CaseDocuments/CaseDocuments';
-
+import SignOut from './pages/authentication/SignOut';
 function App() {
   const [theme, colorMode] = useMode();
 
@@ -110,6 +110,8 @@ function App() {
             <Route path="/casedetails/:id" element={<CaseDetails />} />
             <Route path="/cdashboard" element={<ClientDashboard />} />
             <Route path="/casedocuments" element={<CaseDocuments />} />
+            <Route path="/signout" element={<SignOut />} />
+
 
           </Routes>
 

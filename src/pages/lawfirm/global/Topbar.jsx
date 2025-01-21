@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Box, IconButton, Typography, InputBase, Avatar } from '@mui/material';
+import { AppBar, Toolbar, Box, IconButton, Typography, InputBase, Avatar, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FlagIcon from '@mui/icons-material/Flag'; // Placeholder for the flag icon
-import profilePic from './Avatar.png'; // Replace with actual path to the profile picture
+import FlagIcon from '@mui/icons-material/Flag';
+import profilePic from './Avatar.png'; // Replace with actual profile picture path
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Topbar = () => {
@@ -14,35 +15,37 @@ const Topbar = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
+  // Handle sign-out
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    navigate('/signin');
+  };
+
+  // Fetch user profile details
   useEffect(() => {
     const fetchUserDetails = async () => {
       const token = localStorage.getItem('token');
-      const userId = localStorage.getItem('userId');
-      
-      if (!token || !userId) {
-        setError('No authentication token or user ID found');
+
+      if (!token) {
+        setError('No authentication token found');
         setLoading(false);
         return;
       }
 
       try {
-        const response = await axios.get(`backend/api/admin/get-users`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const response = await axios.get('backend/api/auth/profile', {
+          headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Find the current user from the users list
-        const currentUser = response.data.find(user => user._id === userId);
-        if (currentUser) {
-          setUserDetails(currentUser);
-        } else {
-          setError('User not found');
-        }
+        const userData = response.data.user;
+        setUserDetails(userData);
         setLoading(false);
       } catch (error) {
-        console.error('Failed to fetch user details:', error);
-        setError(error.response?.data?.message || 'Failed to fetch user data');
+        console.error('Failed to fetch user profile:', error);
+        setError(error.response?.data?.message || 'Failed to fetch user profile');
         setLoading(false);
       }
     };
@@ -50,14 +53,14 @@ const Topbar = () => {
     fetchUserDetails();
   }, []);
 
+  // Get display info for user
   const getUserDisplayInfo = () => {
     if (loading) return { name: 'Loading...', role: '...' };
     if (error) return { name: 'Guest', role: 'Error loading profile' };
-    if (!userDetails) return { name: 'Guest', role: 'No profile found' };
 
     return {
-      name: userDetails.username || 'Guest',
-      role: userDetails.role === 'law_firm' ? 'Law Firm' : userDetails.role
+      name: userDetails?.username || 'Guest',
+      role: userDetails?.role || 'Unknown',
     };
   };
 
@@ -69,16 +72,16 @@ const Topbar = () => {
       elevation={0}
       sx={{
         backgroundColor: '#FFFFFF',
-        boxShadow: '0px 3px 7px rgba(0, 0, 0, 0.1)', // Reduced from 4px 10px
-        padding: '6px 18px', // Reduced from 8px 24px
+        boxShadow: '0px 3px 7px rgba(0, 0, 0, 0.1)',
+        padding: '6px 18px',
         display: 'flex',
         alignItems: 'center',
         zIndex: 1100,
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', width: '100%' }}>
-        {/* Left side */}
-        <Box display="flex" alignItems="center" gap="12px"> {/* Reduced from 16px */}
+        {/* Left side: Menu and Search */}
+        <Box display="flex" alignItems="center" gap="12px">
           <IconButton
             edge="start"
             color="inherit"
@@ -87,10 +90,10 @@ const Topbar = () => {
               color: '#404040',
               transition: 'transform 0.2s ease, color 0.2s ease',
               '&:hover': { transform: 'scale(1.1)', color: '#0F67FD' },
-              padding: '4px', // Reduced from 6px
+              padding: '4px',
             }}
           >
-            <MenuIcon sx={{ fontSize: '18px' }} /> {/* Reduced from 24px */}
+            <MenuIcon sx={{ fontSize: '18px' }} />
           </IconButton>
 
           <Box
@@ -98,14 +101,14 @@ const Topbar = () => {
               display: 'flex',
               alignItems: 'center',
               backgroundColor: '#FFFFFF',
-              boxShadow: searchFocused ? '0px 4px 12px rgba(0, 0, 0, 0.2)' : '0px 3px 7px rgba(0, 0, 0, 0.1)', // Reduced
-              borderRadius: '37px', // Reduced from 50px
-              padding: '3px 12px', // Reduced from 4px 16px
-              width: searchFocused ? '375px' : '300px', // Reduced from 500px and 400px
-              height: '28px', // Reduced from 38px
+              boxShadow: searchFocused ? '0px 4px 12px rgba(0, 0, 0, 0.2)' : '0px 3px 7px rgba(0, 0, 0, 0.1)',
+              borderRadius: '37px',
+              padding: '3px 12px',
+              width: searchFocused ? '375px' : '300px',
+              height: '28px',
               transition: 'width 0.4s ease, box-shadow 0.3s ease',
               '&:hover': {
-                boxShadow: '0px 6px 15px rgba(0, 103, 253, 0.15)', // Reduced from 8px 20px
+                boxShadow: '0px 6px 15px rgba(0, 103, 253, 0.15)',
               },
             }}
             onFocus={() => setSearchFocused(true)}
@@ -114,15 +117,15 @@ const Topbar = () => {
             <SearchIcon
               sx={{
                 color: searchFocused ? '#0F67FD' : '#B7B7B7',
-                marginRight: '6px', // Reduced from 8px
-                fontSize: '18px', // Reduced from 24px
+                marginRight: '6px',
+                fontSize: '18px',
               }}
             />
             <InputBase
               placeholder="Search"
               sx={{
                 width: '100%',
-                fontSize: '10px', // Reduced from 14px
+                fontSize: '10px',
                 color: searchFocused ? '#404040' : '#B7B7B7',
                 fontFamily: 'Poppins, sans-serif',
               }}
@@ -130,24 +133,23 @@ const Topbar = () => {
           </Box>
         </Box>
 
-        {/* Right side */}
-        <Box display="flex" alignItems="center" gap="18px"> {/* Reduced from 24px */}
+        {/* Right side: Notifications, Profile, and Sign-Out */}
+        <Box display="flex" alignItems="center" gap="18px">
           <IconButton
             sx={{
               color: '#404040',
-              padding: '4px', // Reduced from 6px
+              padding: '4px',
               '&:hover': { transform: 'scale(1.1)', color: '#0F67FD' },
             }}
           >
-            <NotificationsNoneOutlinedIcon sx={{ fontSize: '18px' }} /> {/* Reduced from 24px */}
+            <NotificationsNoneOutlinedIcon sx={{ fontSize: '18px' }} />
           </IconButton>
 
-          {/* Language Selector */}
-          <Box display="flex" alignItems="center" gap="6px"> {/* Reduced from 8px */}
-            <FlagIcon sx={{ fontSize: 18, borderRadius: '4px', color: '#D8D8D8' }} /> {/* Reduced from 24px */}
+          <Box display="flex" alignItems="center" gap="6px">
+            <FlagIcon sx={{ fontSize: 18, borderRadius: '4px', color: '#D8D8D8' }} />
             <Typography
               sx={{
-                fontSize: '10px', // Reduced from 14px
+                fontSize: '10px',
                 fontWeight: 500,
                 color: '#646464',
                 fontFamily: 'Poppins, sans-serif',
@@ -155,13 +157,12 @@ const Topbar = () => {
             >
               English
             </Typography>
-            <ExpandMoreIcon sx={{ color: '#7A7A7A', fontSize: '12px' }} /> {/* Reduced from 16px */}
+            <ExpandMoreIcon sx={{ color: '#7A7A7A', fontSize: '12px' }} />
           </Box>
 
-          {/* Profile Section */}
-          <Box display="flex" alignItems="center" gap="6px"> {/* Reduced from 8px */}
+          <Box display="flex" alignItems="center" gap="6px">
             <Avatar
-              src={userDetails?.logo || profilePic}
+              src={userDetails?.profilePicture || profilePic}
               sx={{
                 width: 33,
                 height: 33,
@@ -192,6 +193,20 @@ const Topbar = () => {
             </Box>
             <ExpandMoreIcon sx={{ color: '#7A7A7A', fontSize: '12px' }} />
           </Box>
+
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleSignOut}
+            sx={{
+              fontSize: '10px',
+              textTransform: 'none',
+              padding: '4px 8px',
+              fontFamily: 'Poppins, sans-serif',
+            }}
+          >
+            Sign Out
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>
