@@ -53,7 +53,7 @@ const HearingListView = ({ hearings }) => {
                 color: "#7A7A7A",
               }}
             >
-              {hearing.date}
+              {hearing.date ? new Date(hearing.date).toLocaleDateString() : "N/A"} at {hearing.time || "N/A"}
             </Typography>
           </Box>
 
@@ -83,15 +83,15 @@ const HearingListView = ({ hearings }) => {
               }}
             >
               <Avatar
-                src={hearing.client.image || ""}
-                alt={hearing.client.name}
                 sx={{
                   width: "40px",
                   height: "40px",
                   borderRadius: "50%",
                   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.02)",
                 }}
-              />
+              >
+                {hearing.caseName ? hearing.caseName.charAt(0) : "N/A"}
+              </Avatar>
               <Box>
                 <Typography
                   sx={{
@@ -102,30 +102,7 @@ const HearingListView = ({ hearings }) => {
                     color: "#343434",
                   }}
                 >
-                  {hearing.client.name}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 400,
-                    fontSize: "12px",
-                    lineHeight: "18px",
-                    color: "#7A7A7A",
-                  }}
-                >
-                  {hearing.client.caseType}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 400,
-                    fontSize: "12px",
-                    lineHeight: "18px",
-                    color: "#7A7A7A",
-                    opacity: 0.7,
-                  }}
-                >
-                  {hearing.location}
+                  {hearing.caseName || "N/A"}
                 </Typography>
               </Box>
             </Box>

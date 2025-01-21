@@ -47,6 +47,8 @@ import CaseDetails from './pages/lawfirm/(dashboard)/CaseDetails';
 import ClientDashboard from "./pages/citizen/citizendashboard/DashboardLayout";
 import CaseDocuments from './pages/lawfirm/(dashboard)/CaseDocuments/CaseDocuments';
 import SignOut from './pages/authentication/SignOut';
+import HearingSchedulesPage from './pages/lawfirm/(dashboard)/HearingSchedules/HearingSchedulesPage';
+
 function App() {
   const [theme, colorMode] = useMode();
 
@@ -78,7 +80,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/appointments" element={<Appointments />} />
             <Route path="/citizenappointments" element={<CitizenAppointments />} />
-            <Route path="/hearing" element={<OverallHearing />} />
+            <Route path="/hearing" element={<HearingSchedulesPage/>} />
             <Route path="/citizenhearing" element={<CitizenHearing />} />
             <Route path="/AI" element={<AskAI />} />
             <Route path="/convoagent" element={<ConvoAgent />} />
