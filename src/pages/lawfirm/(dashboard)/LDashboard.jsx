@@ -258,13 +258,13 @@ const LDashboard = () => {
   return (
     <div className="max-h-screen overflow-auto grid grid-cols-4 gap-3 p-3">
       {/* Analytics Navigation Button */}
-      <div className="col-span-4 flex justify-end mb-2">
+      <div className="col-span-4 flex justify-end mb-1.5">
         <button
           onClick={() => navigate('/analytics')}
-          className="flex items-center gap-0.5 bg-blue-600 text-white px-1.5 py-0.5 rounded-sm hover:bg-blue-700 transition-colors"
+          className="flex items-center gap-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1.5 rounded-[4px] hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-xs hover:shadow-sm"
         >
-          <BarChart3 size={8} />
-          <span className="text-[12px]">View Analytics</span>
+          <BarChart3 className="w-3 h-3" />
+          <span className="text-[11px] font-medium">View Analytics</span>
         </button>
       </div>
 
@@ -335,12 +335,24 @@ const LDashboard = () => {
             heading={<span className="text-[12px] font-medium">Recent Cases</span>}
             viewAllLink={() => navigate("/overallcases")}
           >
-            {updates.length > 0 ? (
-              <GenericCaseList cases={pending} />
+            {loading ? (
+              <EmptyState
+                icon={<ClipboardList className="w-4 h-4 text-gray-500" />}
+                message={<span className="text-[11px]">Loading cases...</span>}
+              />
+            ) : cases && cases.length > 0 ? (
+              <GenericCaseList 
+                cases={cases.map(caseItem => ({
+                  title: caseItem.title,
+                  caseType: caseItem.caseType,
+                  startingDate: new Date(caseItem.startingDate).toLocaleDateString(),
+                  status: caseItem.endDate ? 'Closed' : 'Active'
+                }))}
+              />
             ) : (
               <EmptyState
                 icon={<ClipboardList className="w-4 h-4 text-gray-500" />}
-                message={<span className="text-[11px]">No recent updates</span>}
+                message={<span className="text-[11px]">No recent cases</span>}
               />
             )}
           </GenericCard>

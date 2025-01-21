@@ -10,28 +10,58 @@ import axios from 'axios';
 
 const Topbar = () => {
   const [searchFocused, setSearchFocused] = useState(false);
-  const [user, setUser] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fetch user data using token
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem('token'); // Assume token is stored in localStorage
-      if (!token) return;
+    const fetchUserDetails = async () => {
+      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('userId');
+      
+      if (!token || !userId) {
+        setError('No authentication token or user ID found');
+        setLoading(false);
+        return;
+      }
 
       try {
-        const response = await axios.get('/api/user/profile', {
+        const response = await axios.get(`backend/api/admin/get-users`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUser(response.data.user);
+
+        // Find the current user from the users list
+        const currentUser = response.data.find(user => user._id === userId);
+        if (currentUser) {
+          setUserDetails(currentUser);
+        } else {
+          setError('User not found');
+        }
+        setLoading(false);
       } catch (error) {
-        console.error('Failed to fetch user data:', error);
+        console.error('Failed to fetch user details:', error);
+        setError(error.response?.data?.message || 'Failed to fetch user data');
+        setLoading(false);
       }
     };
 
-    fetchUser();
+    fetchUserDetails();
   }, []);
+
+  const getUserDisplayInfo = () => {
+    if (loading) return { name: 'Loading...', role: '...' };
+    if (error) return { name: 'Guest', role: 'Error loading profile' };
+    if (!userDetails) return { name: 'Guest', role: 'No profile found' };
+
+    return {
+      name: userDetails.username || 'Guest',
+      role: userDetails.role === 'law_firm' ? 'Law Firm' : userDetails.role
+    };
+  };
+
+  const { name, role } = getUserDisplayInfo();
 
   return (
     <AppBar
@@ -131,36 +161,36 @@ const Topbar = () => {
           {/* Profile Section */}
           <Box display="flex" alignItems="center" gap="6px"> {/* Reduced from 8px */}
             <Avatar
-              src={profilePic}
+              src={userDetails?.logo || profilePic}
               sx={{
-                width: 33, // Reduced from 44
-                height: 33, // Reduced from 44
-                boxShadow: '0px 3px 7px rgba(0, 0, 0, 0.1)', // Reduced from 4px 10px
+                width: 33,
+                height: 33,
+                boxShadow: '0px 3px 7px rgba(0, 0, 0, 0.1)',
               }}
             />
             <Box>
               <Typography
                 sx={{
-                  fontSize: '10px', // Reduced from 14px
+                  fontSize: '10px',
                   fontWeight: 700,
                   color: '#404040',
                   fontFamily: 'Poppins, sans-serif',
                 }}
               >
-                Hi, {user ? user.username : 'Guest'}!
+                Hi, {name}!
               </Typography>
               <Typography
                 sx={{
-                  fontSize: '9px', // Reduced from 12px
+                  fontSize: '9px',
                   fontWeight: 500,
                   color: '#565656',
                   fontFamily: 'Poppins, sans-serif',
                 }}
               >
-                {user ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'Role'}
+                {role}
               </Typography>
             </Box>
-            <ExpandMoreIcon sx={{ color: '#7A7A7A', fontSize: '12px' }} /> {/* Reduced from 16px */}
+            <ExpandMoreIcon sx={{ color: '#7A7A7A', fontSize: '12px' }} />
           </Box>
         </Box>
       </Toolbar>
