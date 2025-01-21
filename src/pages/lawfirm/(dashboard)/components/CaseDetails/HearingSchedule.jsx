@@ -21,14 +21,21 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 const localizer = momentLocalizer(moment);
 
+const userId = "678f4c732214726f83a51ae7";
+const caseIds = ["678f816584f697ba9f2c6614", "678f813684f697ba9f2c6611", "678f811984f697ba9f2c660e"];
+const caseNames = ["MurderAttempt#245", "DivorceCase#987", "LandDispute#067"];
+
 const HearingSchedule = () => {
   const [events, setEvents] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [caseIndex, setCaseIndex] = useState(0);
   const [formData, setFormData] = useState({
-    title: '',
-    time: null,
-    location: ''
+    userId: userId,
+    caseId: caseIds[0],
+    caseName: caseNames[0],
+    date: '',
+    time: moment() // Initialize with a valid moment object
   });
 
   const handleSelectSlot = ({ start }) => {
@@ -36,21 +43,48 @@ const HearingSchedule = () => {
     setOpenDialog(true);
   };
 
-  const handleSubmit = () => {
-    if (!formData.title || !formData.time || !formData.location) {
+  const handleSubmit = async () => {
+    if (!formData.date || !formData.time) {
       return;
     }
 
-    const newEvent = {
-      title: formData.title,
-      start: moment(selectedDate).hours(formData.time.hours()).minutes(formData.time.minutes()).toDate(),
-      end: moment(selectedDate).hours(formData.time.hours()).minutes(formData.time.minutes()).add(1, 'hours').toDate(),
-      location: formData.location
-    };
+    try {
+      const response = await fetch('http://backend.lejit.ai/backend/api/hearing-schedule', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          time: formData.time.format('HH:mm') // Format time as string
+        }),
+      });
 
-    setEvents([...events, newEvent]);
-    setOpenDialog(false);
-    setFormData({ title: '', time: null, location: '' });
+      if (!response.ok) {
+        throw new Error('Failed to create hearing schedule');
+      }
+
+      const newEvent = {
+        title: formData.caseName,
+        start: moment(formData.date).hours(formData.time.hours()).minutes(formData.time.minutes()).toDate(),
+        end: moment(formData.date).hours(formData.time.hours()).minutes(formData.time.minutes()).add(1, 'hours').toDate(),
+        caseId: formData.caseId,
+        userId: formData.userId,
+      };
+
+      setEvents([...events, newEvent]);
+      setOpenDialog(false);
+      setCaseIndex((prevIndex) => (prevIndex + 1) % caseIds.length);
+      setFormData({
+        userId: userId,
+        caseId: caseIds[(caseIndex + 1) % caseIds.length],
+        caseName: caseNames[(caseIndex + 1) % caseNames.length],
+        date: '',
+        time: moment()
+      });
+    } catch (error) {
+      console.error('Error creating hearing schedule:', error);
+    }
   };
 
   return (
@@ -125,29 +159,24 @@ const HearingSchedule = () => {
 
         <DialogContent sx={{ mt: 2 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, py: 1 }}>
-            <TextField
-              label="Hearing Title"
-              value={formData.title}
-              onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              fullWidth
-              required
-            />
-
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <TimePicker
                 label="Time"
                 value={formData.time}
-                onChange={(newValue) => setFormData(prev => ({ ...prev, time: newValue }))}
+                onChange={(newValue) => setFormData({ ...formData, time: newValue })}
                 renderInput={(params) => <TextField {...params} fullWidth required />}
               />
             </LocalizationProvider>
-
             <TextField
-              label="Location"
-              value={formData.location}
-              onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+              label="Date"
+              type="date"
+              value={formData.date}
+              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
               fullWidth
               required
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Box>
         </DialogContent>
