@@ -1,70 +1,106 @@
-import React from 'react';
-import { Box, Typography, Card, CardActions, Avatar, Divider, Button } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, Card, CardActions, Avatar, Divider, Button, CircularProgress } from '@mui/material';
 import { Close, Check } from '@mui/icons-material';
 
 const AppointmentListView = () => {
-  const appointments = Array(6).fill({
-    title: "Appointment Request",
-    date: "22nd August, 2:00 pm - 4:00 pm",
-    client: {
-      name: "John Doe",
-      caseType: "Family Dispute Case",
-      description:
-        "The client was charged with multiple counts of fraud and faced significant prison time. The Client...",
-    },
-  });
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchAppointments();
+  }, []);
+
+  const fetchAppointments = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("token");
+      const lawyerId = "678f4c742214726f83a51aec"; // Hardcoded lawyerId
+
+      console.log("Fetching appointments for lawyerId:", lawyerId);
+
+      const response = await fetch(`http://backend.lejit.ai/backend/api/admin/appointments/${lawyerId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch appointments");
+      }
+
+      const data = await response.json();
+      console.log("Fetched appointments:", data);
+      setAppointments(data);
+    } catch (err) {
+      console.error("Error fetching appointments:", err);
+      setError(err.message || "An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-        gap: '20px',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', // Reduced by 25%
+        gap: '15px', // Reduced by 25%
         width: '100%',
-        maxWidth: '1200px',
+        maxWidth: '900px', // Reduced by 25%
       }}
     >
-      {appointments.map((appointment, index) => (
+      {loading && (
+        <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+          <CircularProgress />
+        </Box>
+      )}
+      {error && (
+        <Typography style={{ color: "red", textAlign: "center" }}>{error}</Typography>
+      )}
+      {!loading && appointments.length > 0 && appointments.map((appointment, index) => (
         <Card
           key={index}
           sx={{
             backgroundColor: '#FFFFFF',
-            borderRadius: '10px',
-            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.05)',
-            padding: '16px',
-            border: '1px solid rgba(0, 0, 0, 0.1)',
+            borderRadius: '7.5px', // Reduced by 25%
+            boxShadow: '0px 3px 15px rgba(0, 0, 0, 0.05)', // Reduced by 25%
+            padding: '12px', // Reduced by 25%
+            border: '0.75px solid rgba(0, 0, 0, 0.1)', // Reduced by 25%
           }}
         >
           <Typography
             sx={{
               fontFamily: 'Poppins',
               fontWeight: 400,
-              fontSize: '12px',
+              fontSize: '9px', // Reduced by 25%
               color: '#7A7A7A',
             }}
           >
-            {appointment.title}
+            Appointment Request
           </Typography>
           <Typography
             sx={{
               fontFamily: 'Poppins',
               fontWeight: 600,
-              fontSize: '14px',
+              fontSize: '10.5px', // Reduced by 25%
               color: '#7A7A7A',
-              marginBottom: '8px',
+              marginBottom: '6px', // Reduced by 25%
             }}
           >
-            {appointment.date}
+            {new Date(appointment.appointmentDate).toLocaleDateString()} {appointment.appointmentTime}
           </Typography>
-          <Divider sx={{ marginBottom: '12px' }} />
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Divider sx={{ marginBottom: '9px' }} /> {/* Reduced by 25% */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '9px' }}> {/* Reduced by 25% */}
             <Avatar
               src=""
-              alt={appointment.client.name}
+              alt={appointment.clientId?.name || "Unknown Client"}
               sx={{
-                width: '40px',
-                height: '40px',
-                border: '2px solid rgba(0, 0, 0, 0.1)',
+                width: '30px', // Reduced by 25%
+                height: '30px', // Reduced by 25%
+                border: '1.5px solid rgba(0, 0, 0, 0.1)', // Reduced by 25%
               }}
             />
             <Box>
@@ -72,21 +108,21 @@ const AppointmentListView = () => {
                 sx={{
                   fontFamily: 'Poppins',
                   fontWeight: 500,
-                  fontSize: '16px',
+                  fontSize: '12px', // Reduced by 25%
                   color: '#343434',
                 }}
               >
-                {appointment.client.name}
+                {appointment.clientId?.name || "Unknown Client"}
               </Typography>
               <Typography
                 sx={{
                   fontFamily: 'Poppins',
                   fontWeight: 400,
-                  fontSize: '12px',
+                  fontSize: '9px', // Reduced by 25%
                   color: '#7A7A7A',
                 }}
               >
-                {appointment.client.caseType}
+                {appointment.caseType || "Unknown Case Type"}
               </Typography>
             </Box>
           </Box>
@@ -94,21 +130,21 @@ const AppointmentListView = () => {
             sx={{
               fontFamily: 'Poppins',
               fontWeight: 400,
-              fontSize: '12px',
+              fontSize: '9px', // Reduced by 25%
               color: '#7A7A7A',
-              marginTop: '12px',
+              marginTop: '9px', // Reduced by 25%
             }}
           >
-            {appointment.client.description}
+            {appointment.caseNotes || "No description available."}
           </Typography>
-          <CardActions sx={{ justifyContent: 'space-between', marginTop: '12px' }}>
+          <CardActions sx={{ justifyContent: 'space-between', marginTop: '9px' }}> {/* Reduced by 25% */}
             <Button
               startIcon={<Close />}
               sx={{
                 backgroundColor: 'rgba(255, 14, 0, 0.1)',
                 color: '#FF0E00',
-                borderRadius: '10px',
-                padding: '8px 16px',
+                borderRadius: '7.5px', // Reduced by 25%
+                padding: '6px 12px', // Reduced by 25%
                 textTransform: 'none',
                 '&:hover': {
                   backgroundColor: 'rgba(255, 14, 0, 0.2)',
@@ -122,8 +158,8 @@ const AppointmentListView = () => {
               sx={{
                 backgroundColor: '#F2F5FA',
                 color: '#0F67FD',
-                borderRadius: '10px',
-                padding: '8px 16px',
+                borderRadius: '7.5px', // Reduced by 25%
+                padding: '6px 12px', // Reduced by 25%
                 textTransform: 'none',
                 '&:hover': {
                   backgroundColor: '#E0EBFF',
@@ -135,6 +171,9 @@ const AppointmentListView = () => {
           </CardActions>
         </Card>
       ))}
+      {!loading && appointments.length === 0 && (
+        <Typography style={{ textAlign: "center" }}>No appointments found.</Typography>
+      )}
     </Box>
   );
 };
