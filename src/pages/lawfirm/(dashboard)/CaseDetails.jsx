@@ -11,9 +11,11 @@ import HearingSchedule from "./components/CaseDetails/HearingSchedule";
 import CaseStrategy from "./components/CaseDetails/CaseStrategy";
 import TeamMembers from "./components/CaseDetails/TeamMembers";
 import DocumentFolders from "./components/Documents/DocumentFolders";
+import { useParams } from "react-router-dom";
 
 const CaseDetails = () => {
   const [theme, colorMode] = useMode();
+  const { id } = useParams();
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -61,7 +63,7 @@ const CaseDetails = () => {
                 <TeamMembers />
 
                 {/* Documents Section */}
-                <DocumentFolders />
+                <DocumentFolders caseId={id} /> 
               </Box>
             </Box>
           </Box>
