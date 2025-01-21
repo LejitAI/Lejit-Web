@@ -3,6 +3,7 @@ import { Box, CssBaseline, Button, Typography } from '@mui/material';
 import { ColorModeContext, useMode } from '../../../theme';
 import Topbar from '../../citizen/global/Topbar';
 import Sidebar from '../../citizen/global/Sidebar';
+import { useLocation } from 'react-router-dom';
 import './BookAppointment.css';
 
 const BookAppointment = () => {
@@ -18,6 +19,14 @@ const BookAppointment = () => {
     caseNotes: 'Lorem ipsum dolor sit amet...',
   });
 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const lawyerId = queryParams.get('lawyerId');
+  const lawFirmId = queryParams.get('lawFirmId');
+
+  console.log("Received lawyerId:", lawyerId);
+  console.log("Received lawFirmId:", lawFirmId);
+
   // Generate dates dynamically
   useEffect(() => {
     const generateDates = () => {
@@ -28,6 +37,8 @@ const BookAppointment = () => {
         return {
           day: date.toLocaleString('default', { weekday: 'short' }).toUpperCase(),
           date: date.getDate(),
+          month: date.getMonth() + 1, // Months are zero-based
+          year: date.getFullYear(),
         };
       });
       setDates(newDates);
@@ -65,28 +76,37 @@ const BookAppointment = () => {
       alert("Please select a date and time for your appointment.");
       return;
     }
-  
+
+    const appointmentDate = `${selectedDate.year}-${String(selectedDate.month).padStart(2, '0')}-${String(selectedDate.date).padStart(2, '0')}`;
+
+    const appointmentData = {
+      clientId: "6772ba52eeb40fc1b9939094",
+      lawyerId,
+      lawFirmId: "678f4c742214726f83a51ae9",
+      appointmentDate,
+      appointmentTime: selectedTime,
+      gender,
+      caseNotes: formData.caseNotes,
+    };
+
+    console.log("Submitting appointment with data:", appointmentData);
+
     try {
       // API call to book appointment
-      const response = await fetch("http://52.74.188.1:5000/api/admin/book-appointment", {
+      const response = await fetch("http://backend.lejit.ai/backend/api/admin/book-appointment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({
-          clientId: "client-id-from-state-or-context",
-          appointmentDate: `${new Date().getFullYear()}-${selectedDate.date}`,
-          appointmentTime: selectedTime,
-          gender,
-          caseNotes: formData.caseNotes,
-        }),
+        body: JSON.stringify(appointmentData),
       });
-  
+
       if (response.ok) {
         alert("Appointment booked successfully!");
       } else {
         const error = await response.json();
+        console.error("Failed to book appointment:", error);
         alert(`Failed to book appointment: ${error.message}`);
       }
     } catch (error) {
@@ -94,7 +114,6 @@ const BookAppointment = () => {
       alert("An error occurred. Please try again.");
     }
   };
-  
 
   return (
     <ColorModeContext.Provider value={colorMode}>

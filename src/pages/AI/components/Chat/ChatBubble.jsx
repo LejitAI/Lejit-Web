@@ -18,7 +18,7 @@ const ChatBubble = ({ message }) => {
       setIsLoading(true); // Start loading animation
       try {
         const response = await axios.post(
-          "http://backend.lejit.ai/backend/api/tts",
+          "backend/api/tts",
           { text },
           { responseType: "blob" }
         );

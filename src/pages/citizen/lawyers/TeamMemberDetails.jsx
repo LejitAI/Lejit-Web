@@ -15,6 +15,7 @@ const TeamMemberDetails = () => {
   const [theme, colorMode] = useMode();
 
   useEffect(() => {
+    console.log("Fetching member details for memberId:", memberId);
     fetchMemberDetails();
   }, []);
 
@@ -23,8 +24,9 @@ const TeamMemberDetails = () => {
     setError(null);
     try {
       const token = localStorage.getItem("token");
+      console.log("Token:", token);
       const response = await fetch(
-        `http://52.74.188.1:5000/api/admin/get-team-member-details/${memberId}`,
+        `http://backend.lejit.ai/backend/api/admin/get-team-member-details/${memberId}`,
         {
           method: "GET",
           headers: {
@@ -38,6 +40,7 @@ const TeamMemberDetails = () => {
       }
 
       const data = await response.json();
+      console.log("Fetched member details:", data);
       setMemberDetails(data);
     } catch (err) {
       console.error("Error fetching team member details:", err);
@@ -112,17 +115,17 @@ const TeamMemberDetails = () => {
                       </Box>
                     </Box>
                     <Button
-  variant="contained"
-  color="primary"
-  onClick={() => {
-    const lawyerId = memberDetails._id;
-    const lawFirmId = memberDetails.createdBy._id;
-    window.location.href = `/book-appointment?lawyerId=${lawyerId}&lawFirmId=${lawFirmId}`;
-  }}
->
-  Book Appointment
-</Button>
-
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        const lawyerId = memberDetails._id;
+                        const lawFirmId = memberDetails.createdBy; // Use createdBy as lawFirmId
+                        console.log("Navigating to book appointment with lawyerId:", lawyerId, "and lawFirmId:", lawFirmId);
+                        window.location.href = `/book-appointment?lawyerId=${lawyerId}&lawFirmId=${lawFirmId}`;
+                      }}
+                    >
+                      Book Appointment
+                    </Button>
                   </Box>
 
                   {/* Key Metrics Section */}

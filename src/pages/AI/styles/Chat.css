@@ -116,6 +116,7 @@ body {
   animation-delay: 0.4s;
 }
 
+
 /* Typing Indicator Animation */
 @keyframes bounce {
   0%, 80%, 100% {

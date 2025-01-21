@@ -44,7 +44,11 @@ const LawFirmSignUp = () => {
     setErrorMessage("");
     setIsLoading(true);
 
-    const payload = {
+    // Clear any existing authentication data
+    localStorage.clear();
+
+    // Create user payload
+    const userPayload = {
         role: 'law_firm',
         law_firm_name: lawFirmName,
         username: fullName,
@@ -53,22 +57,142 @@ const LawFirmSignUp = () => {
         confirmPassword: confirmPassword,
     };
 
-    console.log("Payload being sent to API:", payload);
-
     try {
+        // Register the law firm user
         const response = await fetch('backend/api/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
+            body: JSON.stringify(userPayload),
         });
 
         const data = await response.json();
+        
         if (response.ok) {
-            navigate('/otp');
+            // Store authentication data
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+
+            // Create team member entry for the law firm owner
+            const teamMemberPayload = {
+                personalDetails: {
+                    name: fullName,
+                    email: email,
+                    mobile: '',
+                    gender: '',
+                    yearsOfExperience: 0,
+                    address: {
+                        line1: '',
+                        line2: '',
+                        city: '',
+                        state: '',
+                        country: '',
+                        postalCode: '',
+                    }
+                },
+                professionalDetails: {
+                    lawyerType: 'Owner',
+                    governmentID: '',
+                    degreeType: '',
+                    degreeInstitution: '',
+                    specialization: '',
+                },
+                bankAccountDetails: {
+                    paymentMethod: 'Card',
+                    cardDetails: {
+                        cardNumber: '',
+                        expirationDate: '',
+                        cvv: '',
+                        saveCard: false,
+                    },
+                    bankDetails: {
+                        accountNumber: '',
+                        bankName: '',
+                        ifscCode: '',
+                    },
+                    upiId: '',
+                },
+                password: password, // Same password as the user account
+            };
+
+            // Create law firm details
+            const lawFirmPayload = {
+                lawFirmDetails: {
+                    lawFirmName: lawFirmName,
+                    operatingSince: new Date().getFullYear().toString(), // Current year
+                    yearsOfExperience: '0',
+                    specialization: '',
+                    contactInfo: {
+                        email: email,
+                        mobile: '',
+                        address: {
+                            line1: '',
+                            line2: '',
+                            city: '',
+                            state: '',
+                            postalCode: '',
+                        }
+                    }
+                },
+                professionalDetails: {
+                    lawyerType: 'Law Firm',
+                    caseDetails: {
+                        caseSolvedCount: 0,
+                        caseBasedBillRate: '',
+                        timeBasedBillRate: '',
+                        previousCases: []
+                    }
+                },
+                bankAccountDetails: {
+                    paymentMethod: 'Card',
+                    cardDetails: {
+                        cardNumber: '',
+                        expirationDate: '',
+                        cvv: '',
+                        saveCard: false
+                    },
+                    bankDetails: {
+                        accountNumber: '',
+                        bankName: '',
+                        ifscCode: ''
+                    },
+                    upiId: ''
+                }
+            };
+
+            // Create team member entry
+            const teamMemberResponse = await fetch('backend/api/admin/add-team-member', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${data.token}`
+                },
+                body: JSON.stringify(teamMemberPayload),
+            });
+
+            // Create law firm details entry
+            const lawFirmResponse = await fetch('backend/api/admin/add-law-firm-details', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${data.token}`
+                },
+                body: JSON.stringify(lawFirmPayload),
+            });
+
+            if (!teamMemberResponse.ok) {
+                console.error('Failed to create team member entry');
+            }
+
+            if (!lawFirmResponse.ok) {
+                console.error('Failed to create law firm details');
+            }
+
+            navigate('/ldashboard');
         } else {
             setErrorMessage(data.message || 'Failed to create account.');
         }
     } catch (error) {
+        console.error('Signup error:', error);
         setErrorMessage('Server error. Please try again later.');
     } finally {
         setIsLoading(false);
