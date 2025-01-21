@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Card, Typography, CircularProgress } from '@mui/material';
-import { ColorModeContext, useMode } from '../../../theme';
 import Topbar from '../../global/Topbar';
 import Sidebar from '../../global/Sidebar';
 
 const AppointmentListView = () => {
-  const [theme, colorMode] = useMode();
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -42,7 +40,6 @@ const AppointmentListView = () => {
   };
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
       <Box display="flex" height="100vh" position="relative">
         <Sidebar />
         <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden">
@@ -75,7 +72,6 @@ const AppointmentListView = () => {
           </Box>
         </Box>
       </Box>
-    </ColorModeContext.Provider>
   );
 };
 

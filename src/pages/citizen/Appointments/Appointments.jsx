@@ -1,16 +1,12 @@
 import React from 'react';
 import { Box, CssBaseline, ThemeProvider } from '@mui/material';
-import { ColorModeContext, useMode } from '../../../theme';
 import Sidebar from '../../global/Sidebar';
 import Topbar from '../../global/Topbar';
 import Appointments from './Appointmentsub'; // Make sure to adjust the import path as per your structure
 
 function App() {
-  const [theme, colorMode] = useMode();
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box display="flex" height="75vh"> {/* Reduced by 25% */}
           <Sidebar />
@@ -26,8 +22,6 @@ function App() {
             </Box>
           </Box>
         </Box>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
   );
 }
 

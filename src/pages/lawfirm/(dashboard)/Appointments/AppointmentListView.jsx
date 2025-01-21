@@ -1,179 +1,205 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Typography, Card, CardActions, Avatar, Divider, Button, CircularProgress } from '@mui/material';
-import { Close, Check } from '@mui/icons-material';
+import React, { useEffect, useState } from "react";
+import { Box, Typography, Card, Avatar, IconButton } from "@mui/material";
+import CallIcon from "@mui/icons-material/Call";
+import NoteIcon from "@mui/icons-material/Note";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 const AppointmentListView = () => {
   const [appointments, setAppointments] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchAppointments = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const token = localStorage.getItem("token");
+        const lawyerId = "678f4c742214726f83a51aec"; // Hardcoded lawyer ID
+        const response = await fetch(`http://backend.lejit.ai/backend/api/admin/appointments/${lawyerId}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch appointments");
+        }
+
+        const data = await response.json();
+        setAppointments(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchAppointments();
   }, []);
 
-  const fetchAppointments = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const token = localStorage.getItem("token");
-      const lawyerId = "678f4c742214726f83a51aec"; // Hardcoded lawyerId
+  if (loading) {
+    return <Typography>Loading...</Typography>;
+  }
 
-      console.log("Fetching appointments for lawyerId:", lawyerId);
-
-      const response = await fetch(`http://backend.lejit.ai/backend/api/admin/appointments/${lawyerId}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch appointments");
-      }
-
-      const data = await response.json();
-      console.log("Fetched appointments:", data);
-      setAppointments(data);
-    } catch (err) {
-      console.error("Error fetching appointments:", err);
-      setError(err.message || "An unexpected error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (error) {
+    return <Typography>Error: {error}</Typography>;
+  }
 
   return (
     <Box
       sx={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', // Reduced by 25%
-        gap: '15px', // Reduced by 25%
-        width: '100%',
-        maxWidth: '900px', // Reduced by 25%
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+        gap: "20px",
+        width: "100%",
+        maxWidth: "1200px",
+        margin: "0 auto",
       }}
     >
-      {loading && (
-        <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-          <CircularProgress />
-        </Box>
-      )}
-      {error && (
-        <Typography style={{ color: "red", textAlign: "center" }}>{error}</Typography>
-      )}
-      {!loading && appointments.length > 0 && appointments.map((appointment, index) => (
+      {appointments.map((appointment, index) => (
         <Card
           key={index}
           sx={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: '7.5px', // Reduced by 25%
-            boxShadow: '0px 3px 15px rgba(0, 0, 0, 0.05)', // Reduced by 25%
-            padding: '12px', // Reduced by 25%
-            border: '0.75px solid rgba(0, 0, 0, 0.1)', // Reduced by 25%
+            width: "357.67px",
+            height: "130px",
+            background: "#FFFFFF",
+            border: "1px solid rgba(0, 0, 0, 0.1)",
+            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
+            borderRadius: "10px",
+            padding: "12px 16px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            gap: "12px",
           }}
         >
-          <Typography
+          {/* Date and Time */}
+          <Box
             sx={{
-              fontFamily: 'Poppins',
-              fontWeight: 400,
-              fontSize: '9px', // Reduced by 25%
-              color: '#7A7A7A',
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
             }}
           >
-            Appointment Request
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: 'Poppins',
-              fontWeight: 600,
-              fontSize: '10.5px', // Reduced by 25%
-              color: '#7A7A7A',
-              marginBottom: '6px', // Reduced by 25%
-            }}
-          >
-            {new Date(appointment.appointmentDate).toLocaleDateString()} {appointment.appointmentTime}
-          </Typography>
-          <Divider sx={{ marginBottom: '9px' }} /> {/* Reduced by 25% */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '9px' }}> {/* Reduced by 25% */}
-            <Avatar
-              src=""
-              alt={appointment.clientId?.name || "Unknown Client"}
-              sx={{
-                width: '30px', // Reduced by 25%
-                height: '30px', // Reduced by 25%
-                border: '1.5px solid rgba(0, 0, 0, 0.1)', // Reduced by 25%
-              }}
+            <AccessTimeIcon
+              sx={{ fontSize: "16px", color: "#7A7A7A" }}
             />
-            <Box>
-              <Typography
+            <Typography
+              sx={{
+                fontFamily: "Poppins",
+                fontWeight: 600,
+                fontSize: "14px",
+                lineHeight: "19px",
+                color: "#7A7A7A",
+              }}
+            >
+              {appointment.date ? new Date(appointment.date).toLocaleDateString() : "N/A"} at {appointment.time || "N/A"}
+            </Typography>
+          </Box>
+
+          {/* Divider */}
+          <Box
+            sx={{
+              width: "100%",
+              height: "1px",
+              backgroundColor: "#C7C7C7",
+              opacity: "0.5",
+            }}
+          />
+
+          {/* Client Details */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+              }}
+            >
+              <Avatar
                 sx={{
-                  fontFamily: 'Poppins',
-                  fontWeight: 500,
-                  fontSize: '12px', // Reduced by 25%
-                  color: '#343434',
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.02)",
                 }}
               >
-                {appointment.clientId?.name || "Unknown Client"}
-              </Typography>
-              <Typography
+                {appointment.clientName ? appointment.clientName.charAt(0) : "N/A"}
+              </Avatar>
+              <Box>
+                <Typography
+                  sx={{
+                    fontFamily: "Poppins",
+                    fontWeight: 500,
+                    fontSize: "18px",
+                    lineHeight: "27px",
+                    color: "#343434",
+                  }}
+                >
+                  {appointment.clientName || "N/A"}
+                </Typography>
+              </Box>
+            </Box>
+
+            {/* Action Buttons */}
+            <Box
+              sx={{
+                display: "flex",
+                gap: "10px",
+              }}
+            >
+              <IconButton
                 sx={{
-                  fontFamily: 'Poppins',
-                  fontWeight: 400,
-                  fontSize: '9px', // Reduced by 25%
-                  color: '#7A7A7A',
+                  width: "35px",
+                  height: "35px",
+                  background: "#FFFFFF",
+                  border: "2px solid rgba(186, 186, 186, 0.15)",
+                  borderRadius: "50%",
+                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.05)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                {appointment.caseType || "Unknown Case Type"}
-              </Typography>
+                <NoteIcon
+                  sx={{
+                    color: "#7A7A7A",
+                    fontSize: "18px",
+                  }}
+                />
+              </IconButton>
+              <IconButton
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  background: "#FFFFFF",
+                  border: "2px solid rgba(186, 186, 186, 0.15)",
+                  borderRadius: "50%",
+                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.05)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CallIcon
+                  sx={{
+                    color: "#7A7A7A",
+                    fontSize: "18px",
+                  }}
+                />
+              </IconButton>
             </Box>
           </Box>
-          <Typography
-            sx={{
-              fontFamily: 'Poppins',
-              fontWeight: 400,
-              fontSize: '9px', // Reduced by 25%
-              color: '#7A7A7A',
-              marginTop: '9px', // Reduced by 25%
-            }}
-          >
-            {appointment.caseNotes || "No description available."}
-          </Typography>
-          <CardActions sx={{ justifyContent: 'space-between', marginTop: '9px' }}> {/* Reduced by 25% */}
-            <Button
-              startIcon={<Close />}
-              sx={{
-                backgroundColor: 'rgba(255, 14, 0, 0.1)',
-                color: '#FF0E00',
-                borderRadius: '7.5px', // Reduced by 25%
-                padding: '6px 12px', // Reduced by 25%
-                textTransform: 'none',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 14, 0, 0.2)',
-                },
-              }}
-            >
-              Reject
-            </Button>
-            <Button
-              startIcon={<Check />}
-              sx={{
-                backgroundColor: '#F2F5FA',
-                color: '#0F67FD',
-                borderRadius: '7.5px', // Reduced by 25%
-                padding: '6px 12px', // Reduced by 25%
-                textTransform: 'none',
-                '&:hover': {
-                  backgroundColor: '#E0EBFF',
-                },
-              }}
-            >
-              Accept
-            </Button>
-          </CardActions>
         </Card>
       ))}
-      {!loading && appointments.length === 0 && (
-        <Typography style={{ textAlign: "center" }}>No appointments found.</Typography>
-      )}
     </Box>
   );
 };
