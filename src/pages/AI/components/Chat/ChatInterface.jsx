@@ -31,7 +31,7 @@ const ChatInterface = () => {
     try {
       const sessionId = getSessionId();
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/chat/history/${sessionId}`
+        `api/api/chat/history/${sessionId}`
       );
   
       if (response.status === 200) {
