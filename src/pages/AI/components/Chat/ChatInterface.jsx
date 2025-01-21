@@ -10,11 +10,12 @@ const ChatInterface = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [uploadMessage, setUploadMessage] = useState("");
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);// For scroll loading state
   const mediaRecorderRef = useRef(null);
   const audioChunks = useRef([]);
   const chatRef = useRef(null);
   const sessionKey = "lejit_ai_session_id";
+  const MAX_MESSAGES = 50;
 
   useEffect(() => {
     const existingSession = localStorage.getItem(sessionKey);
@@ -22,9 +23,35 @@ const ChatInterface = () => {
       const newSessionId = `session_${Date.now()}`;
       localStorage.setItem(sessionKey, newSessionId);
     }
+    fetchChatHistory();
   }, []);
 
   const getSessionId = () => localStorage.getItem(sessionKey);
+  const fetchChatHistory = async () => {
+    try {
+      const sessionId = getSessionId();
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/chat/history/${sessionId}`
+      );
+  
+      if (response.status === 200) {
+        // Assuming the backend returns messages in descending order (latest first)
+        const fetchedMessages = response.data.chat_history.map((chat) => [
+          { role: "assistant", content: chat.response },
+          { role: "user", content: chat.query },
+          
+        ]).flat(); // Flatten user-assistant pairs into a single array
+  
+        // If the backend already limits to 50, you just add these messages as they are
+        setMessages(fetchedMessages.reverse());
+      } else {
+        console.error("Failed to fetch chat history:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching chat history:", error);
+    }
+  };
+  
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -70,6 +97,7 @@ const ChatInterface = () => {
     }
   };
 
+
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -107,7 +135,7 @@ const ChatInterface = () => {
       const formData = new FormData();
       formData.append("audio", audioBlob, "audio.webm");
 
-      const response = await fetch("http://backend.lejit.ai/backend/api/speech-to-text", {
+      const response = await fetch("/backend/api/speech-to-text", {
         method: "POST",
         body: formData,
       });
@@ -121,6 +149,7 @@ const ChatInterface = () => {
       const audioMessage = { role: "user", content: transcription };
 
       setMessages((prev) => [...prev, audioMessage]);
+      setInputValue("");
       try {
         setIsLoading(true);
   
@@ -129,7 +158,7 @@ const ChatInterface = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             session_id: getSessionId(),
-            query: inputValue,
+            query: transcription,
           }),
         });
   
