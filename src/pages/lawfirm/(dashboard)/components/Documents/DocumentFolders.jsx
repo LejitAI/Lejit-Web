@@ -12,10 +12,29 @@ const FolderIcon = () => (
   </div>
 );
 
-const DocumentFolders = () => {
+const correctDocumentUrl = (url) => {
+  const requiredPath = "/backend/uploads/";
+  if (!url.includes(requiredPath)) {
+    const parts = url.split("/uploads/");
+    if (parts.length > 1) {
+      return `${parts[0]}${requiredPath}${parts[1]}`;
+    }
+  }
+  return url;
+};
+
+const DocumentFolders = ({ caseId }) => {
   const [documents, setDocuments] = useState([]);
+  // const [caseId, setCaseId] = useState("");
+  const [tags, setTags] = useState([]);
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (caseId) {
+      fetchDocuments();
+    }
+  }, [caseId]); // Fetch documents when caseId changes
 
   const fetchDocuments = async () => {
     const token = localStorage.getItem("token");
@@ -25,14 +44,20 @@ const DocumentFolders = () => {
     }
 
     try {
-      const response = await axios.get("/backend/api/chat/documents", {
+      const response = await axios.get("/backend/api/chat/documents?caseId=${caseId}", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       if (response.status === 200) {
-        setDocuments(response.data.documents);
+        const updatedDocuments = response.data.documents.map((doc) => ({
+          ...doc,
+          url: correctDocumentUrl(doc.url),
+        }));
+        setDocuments(updatedDocuments);
+        // setCaseId(response.data.caseId);
+        setTags(response.data.tags);
       }
     } catch (err) {
       setError("Failed to fetch documents. Please try again.");
@@ -58,6 +83,8 @@ const DocumentFolders = () => {
 
     const formData = new FormData();
     formData.append("document", file);
+    formData.append("caseId", caseId); // Include caseId in the upload request
+    formData.append("tags", JSON.stringify(tags)); // Include tags in the upload request
 
     try {
       const response = await axios.post("/backend/api/chat/upload", formData, {
@@ -112,12 +139,17 @@ const DocumentFolders = () => {
 
       <div className="divider" />
 
+      <div className="case-info">
+        <p><strong>Case ID:</strong> {caseId || "N/A"}</p>
+        {/* <p><strong>Tags:</strong> {tags.length > 0 ? tags.join(", ") : "None"}</p> */}
+      </div>
+
       {documents.map((doc, index) => (
         <div key={index} className="document-row">
           <div className="document-info">
             <span>{doc.name}</span>
             <a
-              href={`//backend/${doc.path}`}
+              href={doc.url}
               target="_blank"
               rel="noopener noreferrer"
               className="document-link"
@@ -126,7 +158,7 @@ const DocumentFolders = () => {
             </a>
           </div>
           <div className="document-actions">
-            <a href={`//backend/${doc.path}`} download>
+            <a href={doc.url} download>
               <FiDownload className="icon" />
             </a>
           </div>
