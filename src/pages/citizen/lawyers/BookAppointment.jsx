@@ -68,7 +68,7 @@ const BookAppointment = () => {
   
     try {
       // API call to book appointment
-      const response = await fetch("http://52.74.188.1:5000/api/admin/book-appointment", {
+      const response = await fetch("http://backend.lejit.ai/backend/api/admin/book-appointment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

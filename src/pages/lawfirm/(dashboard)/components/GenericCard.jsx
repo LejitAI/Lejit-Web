@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 const GenericCard = ({ heading, viewAllLink, className = "", children }) => {
   return (
     <div
-      className={`w-full bg-white rounded-[20px] shadow-md p-4 ${className}`}
+      className={`w-full bg-white rounded-[11px] shadow-md p-2 ${className}`}
     >
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-medium">{heading}</h2>
+      <div className="flex justify-between items-center mb-2">
+        <h2 className="text-sm font-medium">{heading}</h2>
         {viewAllLink && (
           <button
             onClick={() => viewAllLink()}
-            className="text-blue-600 hover:text-blue-700 text-sm"
+            className="text-blue-600 hover:text-blue-700 text-[10px]"
           >
             View All
           </button>

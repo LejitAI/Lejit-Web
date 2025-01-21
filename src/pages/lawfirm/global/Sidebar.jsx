@@ -52,12 +52,12 @@ const Sidebar = () => {
   const drawerContent = (
     <Box
       sx={{
-        width: isMobile ? '80vw' : '240px',
+        width: isMobile ? '56vw' : '168px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: '2px 0',
-        gap: '20px',
+        padding: '1.4px 0',
+        gap: '14px',
       }}
     >
       <Box
@@ -67,16 +67,16 @@ const Sidebar = () => {
           alignItems: 'center',
           width: '100%',
           height: 'auto',
-          padding: '20px 0',
+          padding: '14px 0',
         }}
       >
         <img
           src={logo}
           alt="Lejit Logo"
           style={{
-            width: isMobile ? '100px' : '130px',
-            height: isMobile ? '40px' : '50px',
-            borderRadius: '300px',
+            width: isMobile ? '70px' : '91px',
+            height: isMobile ? '28px' : '35px',
+            borderRadius: '210px',
           }}
         />
       </Box>
@@ -87,46 +87,35 @@ const Sidebar = () => {
               button
               onClick={() => navigate(item.path)}
               sx={{
-                display: 'flex',
-                cursor: 'pointer', 
-                alignItems: 'center',
-                padding: isActive(item.path) ? '0px 16px' : '0px 24px',
-                gap: '16px',
+                padding: isActive(item.path) ? '0px 11px' : '0px 17px',
+                gap: '11px',
                 width: isActive(item.path) ? '90%' : '100%',
-                height: '47.34px',
+                height: '33px',
                 backgroundColor: isActive(item.path) ? '#0F67FD' : '#FFFFFF',
-                borderRadius: '10px',
+                borderRadius: '7px',
                 color: isActive(item.path) ? '#FFFFFF' : '#7A7A7A',
-                marginLeft: isActive(item.path) ? '12px' : '0px',
-                transition: 'all 0.3s ease',
-                transform: isActive(item.path) ? 'scale(1.02)' : 'scale(1)',
+                marginLeft: isActive(item.path) ? '8.4px' : '0px',
                 boxShadow: isActive(item.path)
-                  ? '0px 4px 10px rgba(15, 103, 253, 0.3)'  // Shadow for active item
-                  : '2px 2px 6px rgba(0, 0, 0, 0.05)',      // Subtle shadow for non-active items
-                '&:hover': {
-                  backgroundColor: isActive(item.path) ? '#0F67FD' : 'rgba(15, 103, 253, 0.08)',
-                  boxShadow: '0px 6px 12px rgba(0, 103, 253, 0.15)', // Larger shadow on hover
-                  transform: 'scale(1.03)', // Slight scaling effect on hover
-                },
+                  ? '0px 3px 7px rgba(15, 103, 253, 0.3)'
+                  : '1.4px 1.4px 4.2px rgba(0, 0, 0, 0.05)',
                 '& .MuiListItemIcon-root': {
                   color: isActive(item.path) ? '#FFFFFF' : '#7A7A7A',
-                  minWidth: '16px',
-                  marginRight: '16px',
-                  width: '16px',
-                  height: '16px',
-                  transition: 'transform 0.3s ease',
+                  minWidth: '11px',
+                  marginRight: '11px',
+                  width: '11px',
+                  height: '11px',
                 },
               }}
             >
-              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemIcon sx={{ fontSize: '15px' }}>{item.icon}</ListItemIcon>
               <ListItemText
                 primary={item.text}
                 primaryTypographyProps={{
                   fontFamily: 'Poppins, sans-serif',
                   fontWeight: 500,
-                  fontSize: '14px',
-                  lineHeight: '21px',
-                  letterSpacing: '0.3px',
+                  fontSize: '10px',
+                  lineHeight: '15px',
+                  letterSpacing: '0.21px',
                 }}
               />
             </ListItem>
@@ -146,28 +135,26 @@ const Sidebar = () => {
             onClick={handleDrawerToggle}
             sx={{
               position: 'fixed',
-              top: '16px',
-              left: '16px',
+              top: '11px',
+              left: '11px',
               zIndex: 1100,
               color: '#404040',
-              transition: 'transform 0.2s ease',
+              padding: '4px',
               '&:hover': { transform: 'scale(1.1)', color: '#0F67FD' },
             }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ fontSize: '15px' }} />
           </IconButton>
           <Drawer
             variant="temporary"
             open={mobileOpen}
             onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true, // Better performance on mobile
-            }}
             sx={{
               '& .MuiDrawer-paper': {
-                width: '80vw',
+                width: '56vw',
+                maxWidth: '168px',
                 backgroundColor: '#FFFFFF',
-                boxShadow: '4px 0 8px rgba(0, 0, 0, 0.1)',
+                boxShadow: '3px 0 6px rgba(0, 0, 0, 0.1)',
               },
             }}
           >
@@ -178,13 +165,13 @@ const Sidebar = () => {
         <Drawer
           variant="permanent"
           sx={{
-            width: '240px',
+            width: '168px',
             flexShrink: 0,
             '& .MuiDrawer-paper': {
-              width: '240px',
+              width: '168px',
               boxSizing: 'border-box',
               backgroundColor: '#FFFFFF',
-              boxShadow: '4px 0 8px rgba(0, 0, 0, 0.1)',
+              boxShadow: '3px 0 6px rgba(0, 0, 0, 0.1)',
             },
           }}
         >
