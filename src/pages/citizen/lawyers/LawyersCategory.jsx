@@ -18,7 +18,7 @@ const LawFirmsPage = () => {
         setError(null);
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://52.74.188.1:5000/api/admin/get-all-law-firms', {
+            const response = await fetch('backend/api/admin/get-all-law-firms', {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,

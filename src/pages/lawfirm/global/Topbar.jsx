@@ -1,37 +1,70 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Box, IconButton, Typography, InputBase, Avatar } from '@mui/material';
+import { AppBar, Toolbar, Box, IconButton, Typography, InputBase, Avatar, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FlagIcon from '@mui/icons-material/Flag'; // Placeholder for the flag icon
-import profilePic from './Avatar.png'; // Replace with actual path to the profile picture
+import FlagIcon from '@mui/icons-material/Flag';
+import profilePic from './Avatar.png'; // Replace with actual profile picture path
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Topbar = () => {
   const [searchFocused, setSearchFocused] = useState(false);
-  const [user, setUser] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fetch user data using token
+  const navigate = useNavigate();
+
+  // Handle sign-out
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    navigate('/signin');
+  };
+
+  // Fetch user profile details
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem('token'); // Assume token is stored in localStorage
-      if (!token) return;
+    const fetchUserDetails = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        setError('No authentication token found');
+        setLoading(false);
+        return;
+      }
 
       try {
-        const response = await axios.get('/api/user/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const response = await axios.get('backend/api/auth/profile', {
+          headers: { Authorization: `Bearer ${token}` },
         });
-        setUser(response.data.user);
+
+        const userData = response.data.user;
+        setUserDetails(userData);
+        setLoading(false);
       } catch (error) {
-        console.error('Failed to fetch user data:', error);
+        console.error('Failed to fetch user profile:', error);
+        setError(error.response?.data?.message || 'Failed to fetch user profile');
+        setLoading(false);
       }
     };
 
-    fetchUser();
+    fetchUserDetails();
   }, []);
+
+  // Get display info for user
+  const getUserDisplayInfo = () => {
+    if (loading) return { name: 'Loading...', role: '...' };
+    if (error) return { name: 'Guest', role: 'Error loading profile' };
+
+    return {
+      name: userDetails?.username || 'Guest',
+      role: userDetails?.role || 'Unknown',
+    };
+  };
+
+  const { name, role } = getUserDisplayInfo();
 
   return (
     <AppBar
@@ -39,16 +72,16 @@ const Topbar = () => {
       elevation={0}
       sx={{
         backgroundColor: '#FFFFFF',
-        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // 3D shadow effect for the app bar
-        padding: '8px 24px',
+        boxShadow: '0px 3px 7px rgba(0, 0, 0, 0.1)',
+        padding: '6px 18px',
         display: 'flex',
         alignItems: 'center',
-        zIndex: 1100, // Ensure it sits above other components if needed
+        zIndex: 1100,
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', width: '100%' }}>
-        {/* Left side: Menu icon and Search box */}
-        <Box display="flex" alignItems="center" gap="16px">
+        {/* Left side: Menu and Search */}
+        <Box display="flex" alignItems="center" gap="12px">
           <IconButton
             edge="start"
             color="inherit"
@@ -56,10 +89,11 @@ const Topbar = () => {
             sx={{
               color: '#404040',
               transition: 'transform 0.2s ease, color 0.2s ease',
-              '&:hover': { transform: 'scale(1.1)', color: '#0F67FD' }, // Interactive hover effect
+              '&:hover': { transform: 'scale(1.1)', color: '#0F67FD' },
+              padding: '4px',
             }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ fontSize: '18px' }} />
           </IconButton>
 
           <Box
@@ -67,14 +101,14 @@ const Topbar = () => {
               display: 'flex',
               alignItems: 'center',
               backgroundColor: '#FFFFFF',
-              boxShadow: searchFocused ? '0px 6px 16px rgba(0, 0, 0, 0.2)' : '0px 4px 10px rgba(0, 0, 0, 0.1)', // Dynamic shadow effect
-              borderRadius: '50px',
-              padding: '4px 16px',
-              width: searchFocused ? '500px' : '400px', // Expanded width on focus
-              height: '38px',
-              transition: 'width 0.4s ease, box-shadow 0.3s ease', // Smooth expansion transition
+              boxShadow: searchFocused ? '0px 4px 12px rgba(0, 0, 0, 0.2)' : '0px 3px 7px rgba(0, 0, 0, 0.1)',
+              borderRadius: '37px',
+              padding: '3px 12px',
+              width: searchFocused ? '375px' : '300px',
+              height: '28px',
+              transition: 'width 0.4s ease, box-shadow 0.3s ease',
               '&:hover': {
-                boxShadow: '0px 8px 20px rgba(0, 103, 253, 0.15)', // Enhanced hover shadow
+                boxShadow: '0px 6px 15px rgba(0, 103, 253, 0.15)',
               },
             }}
             onFocus={() => setSearchFocused(true)}
@@ -83,42 +117,39 @@ const Topbar = () => {
             <SearchIcon
               sx={{
                 color: searchFocused ? '#0F67FD' : '#B7B7B7',
-                marginRight: '8px',
-                transition: 'color 0.3s ease', // Smooth color change on focus
+                marginRight: '6px',
+                fontSize: '18px',
               }}
             />
             <InputBase
               placeholder="Search"
               sx={{
                 width: '100%',
-                fontSize: '14px',
+                fontSize: '10px',
                 color: searchFocused ? '#404040' : '#B7B7B7',
                 fontFamily: 'Poppins, sans-serif',
-                transition: 'color 0.3s ease', // Smooth color transition
               }}
             />
           </Box>
         </Box>
 
-        {/* Right side: Notification, Language, and Profile */}
-        <Box display="flex" alignItems="center" gap="24px">
-          {/* Notification Icon */}
+        {/* Right side: Notifications, Profile, and Sign-Out */}
+        <Box display="flex" alignItems="center" gap="18px">
           <IconButton
             sx={{
               color: '#404040',
-              transition: 'transform 0.2s ease, color 0.2s ease',
+              padding: '4px',
               '&:hover': { transform: 'scale(1.1)', color: '#0F67FD' },
             }}
           >
-            <NotificationsNoneOutlinedIcon />
+            <NotificationsNoneOutlinedIcon sx={{ fontSize: '18px' }} />
           </IconButton>
 
-          {/* Language Selector */}
-          <Box display="flex" alignItems="center" gap="8px">
-            <FlagIcon sx={{ fontSize: 24, borderRadius: '5px', color: '#D8D8D8' }} /> {/* Placeholder for Flag */}
+          <Box display="flex" alignItems="center" gap="6px">
+            <FlagIcon sx={{ fontSize: 18, borderRadius: '4px', color: '#D8D8D8' }} />
             <Typography
               sx={{
-                fontSize: '14px',
+                fontSize: '10px',
                 fontWeight: 500,
                 color: '#646464',
                 fontFamily: 'Poppins, sans-serif',
@@ -126,45 +157,56 @@ const Topbar = () => {
             >
               English
             </Typography>
-            <ExpandMoreIcon sx={{ color: '#7A7A7A', fontSize: '16px' }} />
+            <ExpandMoreIcon sx={{ color: '#7A7A7A', fontSize: '12px' }} />
           </Box>
 
-          {/* Profile Section */}
-          <Box display="flex" alignItems="center" gap="8px">
+          <Box display="flex" alignItems="center" gap="6px">
             <Avatar
-              src={profilePic}
+              src={userDetails?.profilePicture || profilePic}
               sx={{
-                width: 44,
-                height: 44,
-                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // 3D effect for avatar
-                transition: 'box-shadow 0.3s ease',
-                '&:hover': { boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.3)' }, // Enhanced shadow on hover
+                width: 33,
+                height: 33,
+                boxShadow: '0px 3px 7px rgba(0, 0, 0, 0.1)',
               }}
             />
             <Box>
               <Typography
                 sx={{
-                  fontSize: '14px',
+                  fontSize: '10px',
                   fontWeight: 700,
                   color: '#404040',
                   fontFamily: 'Poppins, sans-serif',
                 }}
               >
-                Hi, {user ? user.username : 'Guest'}!
+                Hi, {name}!
               </Typography>
               <Typography
                 sx={{
-                  fontSize: '12px',
+                  fontSize: '9px',
                   fontWeight: 500,
                   color: '#565656',
                   fontFamily: 'Poppins, sans-serif',
                 }}
               >
-                {user ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'Role'}
+                {role}
               </Typography>
             </Box>
-            <ExpandMoreIcon sx={{ color: '#7A7A7A', fontSize: '16px' }} />
+            <ExpandMoreIcon sx={{ color: '#7A7A7A', fontSize: '12px' }} />
           </Box>
+
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleSignOut}
+            sx={{
+              fontSize: '10px',
+              textTransform: 'none',
+              padding: '4px 8px',
+              fontFamily: 'Poppins, sans-serif',
+            }}
+          >
+            Sign Out
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>

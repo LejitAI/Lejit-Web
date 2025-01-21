@@ -4,7 +4,7 @@
 
 /* Logo Container */
 .logo-container {
-  padding: 24px 20px;
+  padding: 18px 15px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,31 +17,31 @@
 
 /* Menu Section */
 .menu-section {
-  margin: 8px 0;
-  padding: 0 12px;
+  margin: 6px 0;
+  padding: 0 9px;
 }
 
 .section-title {
-  font-size: 12px;
+  font-size: 9px;
   color: #64748b;
-  padding: 8px 16px;
+  padding: 6px 12px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.375px;
   font-weight: 600;
 }
 
 /* Menu Item */
 .menu-item {
   position: relative;
-  margin: 4px 0;
+  margin: 3px 0;
   transition: all 0.3s ease;
 }
 
 .menu-item-content {
   display: flex;
   align-items: center;
-  padding: 10px 16px;
-  border-radius: 12px;
+  padding: 7.5px 12px;
+  border-radius: 9px;
   cursor: pointer;
   transition: all 0.3s ease;
   color: #64748b;
@@ -50,20 +50,20 @@
 .menu-item-content:hover {
   background-color: rgba(15, 103, 253, 0.08);
   color: #0F67FD;
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 
 .menu-item.active .menu-item-content {
   background-color: #0F67FD;
   color: white;
-  box-shadow: 0 4px 12px rgba(15, 103, 253, 0.2);
+  box-shadow: 0 3px 9px rgba(15, 103, 253, 0.2);
 }
 
 /* Icon */
 .menu-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 12px;
+  width: 15px;
+  height: 15px;
+  margin-right: 9px;
   transition: all 0.3s ease;
 }
 
@@ -72,7 +72,7 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
-  margin-left: 36px;
+  margin-left: 27px;
 }
 
 .submenu.open {
@@ -80,19 +80,19 @@
 }
 
 .submenu-item {
-  padding: 8px 16px;
-  margin: 4px 0;
-  border-radius: 8px;
+  padding: 6px 12px;
+  margin: 3px 0;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 14px;
+  font-size: 10.5px;
   color: #64748b;
 }
 
 .submenu-item:hover {
   background-color: rgba(15, 103, 253, 0.08);
   color: #0F67FD;
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 
 .submenu-item.active {
@@ -114,14 +114,14 @@
 /* Mobile Drawer */
 .mobile-drawer {
   width: 85vw;
-  max-width: 300px;
+  max-width: 225px;
 }
 
 /* Animations */
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(-10px);
+    transform: translateX(-7.5px);
   }
   to {
     opacity: 1;
@@ -145,13 +145,13 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 3px;
+  width: 2.25px;
   height: 0;
   background-color: #0F67FD;
-  border-radius: 3px;
+  border-radius: 2.25px;
   transition: height 0.3s ease;
 }
 
 .menu-item.active .active-indicator {
-  height: 24px;
+  height: 18px;
 }

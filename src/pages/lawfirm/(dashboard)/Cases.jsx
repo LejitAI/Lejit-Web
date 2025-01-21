@@ -8,6 +8,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import SortIcon from "@mui/icons-material/Sort";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./Cases.css";
+import { useNavigate } from 'react-router-dom';
 
 const getStatusClass = (status) => {
   switch (status.toLowerCase()) {
@@ -36,6 +37,7 @@ const getStatusIndicatorClass = (status) => {
 };
 
 const Cases = () => {
+  const navigate = useNavigate();
   const [casesData, setCasesData] = useState([]);
   const [filteredCases, setFilteredCases] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +53,7 @@ const Cases = () => {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Token not found. Please log in again.");
 
-        const response = await fetch("backend/api/admin/get-cases", {
+        const response = await fetch("http://backend.lejit.ai/backend/api/admin/get-cases", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -171,6 +173,10 @@ const Cases = () => {
     }
   };
 
+  const handleCaseClick = (caseItem) => {
+    navigate(`/casedetails/${caseItem.id}`, { state: { caseData: caseItem } });
+  };
+
   if (loading) {
     return <Typography>Loading cases...</Typography>;
   }
@@ -259,7 +265,7 @@ const Cases = () => {
       {/* Cases */}
       <Box className="team-list">
         {filteredCases.map((caseItem, index) => (
-          <Box key={index} className="case-team-card" onClick={() => setSelectedCase(caseItem)}>
+          <Box key={index} className="case-team-card" onClick={() => handleCaseClick(caseItem)}>
             <Box className="case-date">
               <Typography className="case-day">
                 {caseItem.startingDate ? caseItem.startingDate.getDate() : "N/A"}

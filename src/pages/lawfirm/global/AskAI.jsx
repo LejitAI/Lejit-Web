@@ -14,37 +14,37 @@ const AskAI = () => {
   };
 
   return (
-    <div className="w-full">
+    <>
       {/* AskAI Blue Box */}
       <div
-        className="flex flex-row justify-between items-center p-4 gap-6 w-full h-[239px] bg-gradient-to-r from-[#0F67FD] to-[#093D97] rounded-[20px] flex-grow mx-auto box-border shadow-md"
+        className="flex flex-row justify-between items-center p-1.5 gap-4.5 w-full bg-gradient-to-r from-blue-600 to-blue-900 rounded-xl shadow-md"
         onClick={handleClick}
       >
-        <div className="flex flex-col items-center gap-3 flex-shrink-0">
-          <div className="flex justify-center items-center w-[111px] h-[101px] rounded-full bg-transparent">
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex justify-center items-center w-21 h-21 rounded-full bg-transparent">
             <img
               src={AiIcon}
               alt="AI Icon"
-              className="w-[85px] h-[85px] object-cover rounded-full bg-transparent"
+              className="w-15 h-15 object-cover rounded-full bg-transparent"
             />
           </div>
-          <h2 className="font-poppins text-[22px] font-medium leading-[33px] text-white text-center">
+          <h2 className="font-poppins text-sm font-medium leading-6 text-white text-center">
             Ask AI
           </h2>
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           {menuOptions.map((option, index) => (
             <div
               key={index}
-              className="flex flex-row items-center p-2 gap-1.5 w-[162px] h-[36px] bg-white bg-opacity-20 rounded-[10px]"
+              className="flex flex-row items-center p-1.5 gap-1 w-30 h-7 bg-white bg-opacity-20 rounded-md"
             >
               <img
                 src={option.icon}
                 alt={`${option.label} Icon`}
-                className="w-5 h-5 object-contain"
+                className="w-4 h-4 object-contain"
               />
-              <span className="font-poppins text-[10px] font-medium leading-[15px] text-white flex-grow">
+              <span className="font-poppins text-[10px] font-medium leading-3 text-white flex-grow">
                 {option.label}
               </span>
             </div>
@@ -54,7 +54,7 @@ const AskAI = () => {
 
       {/* ChatAI Popup */}
       {isChatOpen && <ChatAI closeChat={() => setChatOpen(false)} />}
-    </div>
+    </>
   );
 };
 
