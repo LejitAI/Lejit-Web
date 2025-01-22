@@ -1,5 +1,10 @@
 import React, { useState, useRef } from "react";
 import GavelIcon from "@mui/icons-material/Gavel"; // MUI Law Icon
+import VolumeUpIcon from "@mui/icons-material/VolumeUp"; // MUI Volume Up Icon
+import StopIcon from "@mui/icons-material/Stop"; // MUI Stop Icon
+import ReplayIcon from "@mui/icons-material/Replay"; // MUI Replay Icon
+import CircularProgress from "@mui/material/CircularProgress"; // MUI Circular Progress
+import PlayArrowIcon from "@mui/icons-material/PlayArrow"; // MUI Play Arrow Icon
 import axios from "axios";
 
 const ChatBubble = ({ message }) => {
@@ -14,7 +19,6 @@ const ChatBubble = ({ message }) => {
 
   const handlePlayAudio = async (text) => {
     if (!audioRef.current || isPaused === false) {
-      // If audio not loaded or it's a new play request
       setIsLoading(true); // Start loading animation
       try {
         const response = await axios.post(
@@ -64,21 +68,25 @@ const ChatBubble = ({ message }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: isUser ? "flex-end" : "flex-start",
-        marginBottom: "10px",
+        marginBottom: "12px",
       }}
     >
       {!isUser && (
-        <div style={{ marginBottom: "5px" }}>
+        <div style={{ marginBottom: "6px" }}>
           <GavelIcon style={{ color: "#0F67FD", fontSize: "20px" }} />
         </div>
       )}
       <div
         style={{
-          backgroundColor: isUser ? "#8bbdf7" : "#FFF",
-          borderRadius: "10px",
-          padding: "10px",
-          maxWidth: "70%",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+          backgroundColor: isUser ? "#E3F2FD" : "#F9FAFB", // Professional light backgrounds
+          borderRadius: "14px", // Rounded corners for modern look
+          padding: "12px 16px", // Consistent padding
+          maxWidth: "75%", // Slightly wider for readability
+          boxShadow: "0 3px 8px rgba(0, 0, 0, 0.08)", // Subtle shadow for depth
+          fontSize: "15px", // Standard font size
+          lineHeight: "22px", // Comfortable line height
+          color: isUser ? "#1A237E" : "#4A4A4A", // Professional text colors
+          wordBreak: "break-word", // Ensure long text breaks properly
         }}
         dangerouslySetInnerHTML={{
           __html: content
@@ -93,91 +101,68 @@ const ChatBubble = ({ message }) => {
           style={{
             display: "flex",
             gap: "10px",
-            marginTop: "5px",
+            marginTop: "8px",
             justifyContent: "flex-end",
           }}
         >
-          {/* Play Button */}
+          {/* Read Aloud Icon */}
           {!isPlaying && !isLoading && !isPaused && (
-            <button
+            <VolumeUpIcon
               style={{
-                backgroundColor: "#0F67FD",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                padding: "5px 10px",
+                color: "#0F67FD",
+                fontSize: "24px",
                 cursor: "pointer",
+                transition: "color 0.3s ease",
               }}
               onClick={() => handlePlayAudio(content)}
-            >
-              Play
-            </button>
+            />
           )}
 
           {/* Loading Animation */}
           {isLoading && (
-            <button
+            <CircularProgress
+              size={24}
               style={{
-                backgroundColor: "#FFD700",
-                color: "black",
-                border: "none",
-                borderRadius: "5px",
-                padding: "5px 10px",
-                cursor: "not-allowed",
+                color: "#FFD700",
               }}
-              disabled
-            >
-              Loading...
-            </button>
+            />
           )}
 
-          {/* Stop and Reset Buttons */}
+          {/* Stop and Reset Icons */}
           {(isPlaying || isPaused) && !isLoading && (
             <>
-              <button
+              <StopIcon
                 style={{
-                  backgroundColor: "#FF4500",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "5px",
-                  padding: "5px 10px",
+                  color: "#FF4500",
+                  fontSize: "24px",
                   cursor: "pointer",
+                  transition: "color 0.3s ease",
                 }}
                 onClick={handleStopAudio}
-              >
-                Stop
-              </button>
-              <button
+              />
+              <ReplayIcon
                 style={{
-                  backgroundColor: "#32CD32",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "5px",
-                  padding: "5px 10px",
+                  color: "#32CD32",
+                  fontSize: "24px",
                   cursor: "pointer",
+                  transition: "color 0.3s ease",
                 }}
                 onClick={handleResetAudio}
-              >
-                Reset
-              </button>
+              />
             </>
           )}
 
-          {/* Resume Button */}
+          {/* Resume Icon */}
           {isPaused && !isPlaying && (
-            <button
+            <PlayArrowIcon
               style={{
-                backgroundColor: "#0F67FD",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                padding: "5px 10px",
+                color: "#0F67FD",
+                fontSize: "24px",
                 cursor: "pointer",
+                transition: "color 0.3s ease",
               }}
               onClick={() => handlePlayAudio(content)}
-            >
-              Resume
-            </button>
+            />
           )}
         </div>
       )}

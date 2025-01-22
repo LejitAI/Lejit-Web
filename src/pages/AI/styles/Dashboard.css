@@ -1,34 +1,87 @@
 /* Dashboard Layout */
 .dashboard {
   display: flex;
-  height: 90vh;
+  flex-direction: column;
+  height: 100vh; /* Fixed height */
   font-family: "Poppins", sans-serif;
   background-color: #f2f5fa; /* Lejit light background */
-  gap: 16px; /* Add spacing between sections */
+  gap: 13.68px; /* Reduced by 5% */
+}
+
+.dashboard.dark-mode {
+  background-color: #1e1e1e; /* Dark background */
+  color: #ffffff; /* Light text */
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard.dark-mode .topbar {
+  background-color: #333333; /* Dark background */
+}
+
+.lejit-logo {
+  width: 90px;
+  height: auto;
 }
 
 /* Sidebar Styles (History Panel) */
 .dashboard-sidebar {
-  width: 250px;
+  width: 213.75px; /* Reduced by 5% */
   background-color: #ffffff; /* Neutral Background */
   color: #7a7a7a; /* Neutral Text Color */
-  padding: 20px;
+  padding: 17.1px; /* Reduced by 5% */
   border-right: 1px solid rgba(0, 0, 0, 0.1); /* Light Divider */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle Shadow */
   border-radius: 12px; /* Smooth Rounded Corners */
   transition: all 0.3s ease; /* Smooth Transition */
 }
 
+.dashboard.dark-mode .dashboard-sidebar {
+  background-color: #333333; /* Dark background */
+  color: #ffffff; /* Light text */
+}
+
+/* Main Content Area */
+.dashboard-main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px; /* Smooth Rounded Corners */
+  background-color: #ffffff; /* Content Background */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle Shadow */
+  overflow: hidden; /* Prevent overflow */
+}
+
+.dashboard-main.with-sidebar {
+  margin-left: 213.75px; /* Adjust based on sidebar width */
+}
+
+.dashboard.dark-mode .dashboard-main {
+  background-color: #1e1e1e; /* Dark background */
+}
+
 /* Sidebar Title */
 .history-title {
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 15.39px; /* Reduced by 5% */
+  margin-bottom: 17.1px; /* Reduced by 5% */
   font-weight: 600;
   color: #1d3557; /* Dark Text */
   text-align: center;
   letter-spacing: 0.5px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Divider */
-  padding-bottom: 10px;
+  padding-bottom: 8.55px; /* Reduced by 5% */
+}
+
+.dashboard.dark-mode .history-title {
+  color: #ffffff; /* Light text */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Light divider */
 }
 
 /* History List */
@@ -42,20 +95,31 @@
 .history-item {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  gap: 12px;
-  margin-bottom: 12px;
-  border-radius: 8px;
+  padding: 10.26px 13.68px; /* Reduced by 5% */
+  gap: 10.26px; /* Reduced by 5% */
+  margin-bottom: 10.26px; /* Reduced by 5% */
+  border-radius: 6.84px; /* Reduced by 5% */
   background-color: #ffffff; /* Neutral Background */
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); /* Subtle Shadow */
 }
 
+.dashboard.dark-mode .history-item {
+  background-color: #333333; /* Dark background */
+  color: #ffffff; /* Light text */
+  box-shadow: 0 1px 4px rgba(255, 255, 255, 0.1); /* Light shadow */
+}
+
 .history-item:hover {
   background-color: rgba(15, 103, 253, 0.1); /* Light Blue Hover */
   transform: scale(1.03); /* Slight Scale Effect */
   box-shadow: 0 4px 8px rgba(15, 103, 253, 0.15); /* Elevated Hover Shadow */
+}
+
+.dashboard.dark-mode .history-item:hover {
+  background-color: rgba(15, 103, 253, 0.2); /* Darker Blue Hover */
+  box-shadow: 0 4px 8px rgba(15, 103, 253, 0.3); /* Stronger Hover Shadow */
 }
 
 .history-item.active {
@@ -71,44 +135,41 @@
 
 /* History Icon */
 .history-icon {
-  font-size: 20px;
+  font-size: 17.1px; /* Reduced by 5% */
   color: #7a7a7a; /* Neutral Icon Color */
   transition: color 0.3s ease; /* Smooth Transition */
 }
 
+.dashboard.dark-mode .history-icon {
+  color: #ffffff; /* Light Icon Color */
+}
+
 .history-info {
   flex: 1;
-  font-size: 14px;
+  font-size: 11.97px; /* Reduced by 5% */
   font-weight: 500;
   color: #1d3557; /* Neutral Text Color */
   transition: color 0.3s ease; /* Smooth Transition */
 }
 
+.dashboard.dark-mode .history-info {
+  color: #ffffff; /* Light Text Color */
+}
+
 /* History Date */
 .history-date {
-  font-size: 12px;
+  font-size: 10.26px; /* Reduced by 5% */
   color: #a0a0a0; /* Subtle Gray Text */
 }
 
-/* Main Content Area */
-.dashboard-main {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  border-radius: 12px; /* Smooth Rounded Corners */
-  background-color: #ffffff; /* Content Background */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle Shadow */
-  overflow: hidden;
+.dashboard.dark-mode .history-date {
+  color: #cccccc; /* Light Gray Text */
 }
 
 /* Top Tabs */
 .dashboard-tabs {
   display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 16px 20px;
-  background-color: #f9f9f9;
-  border-bottom: 2px solid #e3e5e5;
+  gap: 6.84px; /* Reduced by 5% */
 }
 
 .dashboard-tab {
@@ -118,15 +179,21 @@
   gap: 8px;
   flex: 1;
   text-align: center;
-  padding: 12px;
-  font-size: 14px;
+  padding: 10.26px; /* Reduced by 5% */
+  font-size: 11.97px; /* Reduced by 5% */
   font-weight: 500;
   color: #1d3557; /* Neutral Text */
   background-color: #ffffff; /* Neutral Tab */
-  border-radius: 8px;
+  border-radius: 6.84px; /* Reduced by 5% */
   transition: all 0.3s ease;
   cursor: pointer;
   border: 1px solid #e3e5e5; /* Border for Clarity */
+}
+
+.dashboard.dark-mode .dashboard-tab {
+  background-color: #333333; /* Dark background */
+  color: #ffffff; /* Light text */
+  border: 1px solid #555555; /* Dark border */
 }
 
 .dashboard-tab:hover {
@@ -146,22 +213,60 @@
 
 /* Tab Icons */
 .tab-icon {
-  width: 20px;
-  height: 20px;
+  width: 17.1px; /* Reduced by 5% */
+  height: 17.1px; /* Reduced by 5% */
   color: inherit;
 }
 
 .dashboard-content {
-  height: 90%;
+  height: 100%; /* Ensure chat container fills the content */
   flex-grow: 1;
-  display: flex; /* Ensure chat container fills the content */
+  display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 20.52px; /* Reduced by 5% */
   background-color: #f9f9f9; /* Light Neutral Background */
-  border-radius: 8px; /* Smooth Corners */
-  overflow-y: hidden; /* Prevent overflow beyond boundaries */
+  border-radius: 6.84px; /* Reduced by 5% */
+  overflow-y: auto; /* Enable scrolling */
   box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05); /* Subtle Inner Shadow */
   margin: 0; /* Remove any default margin */
+}
+
+.dashboard.dark-mode .dashboard-content {
+  background-color: #1e1e1e; /* Dark background */
+  box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.1); /* Light Inner Shadow */
+}
+
+/* User Profile */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 7.6px; /* Reduced by 5% */
+  background-color: #ffffff;
+  padding: 7.6px; /* Reduced by 5% */
+  border-radius: 7.6px; /* Reduced by 5% */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard.dark-mode .user-profile {
+  background-color: #333333; /* Dark background */
+}
+
+.profile-pic {
+  width: 30.4px; /* Reduced by 5% */
+  height: 30.4px; /* Reduced by 5% */
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-name {
+  font-size: 13.3px; /* Reduced by 5% */
+  font-weight: 500;
+  color: #404040;
+  font-family: "Poppins", sans-serif;
+}
+
+.dashboard.dark-mode .profile-name {
+  color: #ffffff; /* Light text */
 }
 
 /* Responsive Design */
@@ -174,7 +279,7 @@
     width: 100%;
     height: auto;
     border-radius: 0;
-    padding: 16px;
+    padding: 13.68px; /* Reduced by 5% */
   }
   .dashboard-main {
     border-radius: 0;
@@ -182,9 +287,9 @@
   }
   .dashboard-tabs {
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6.84px; /* Reduced by 5% */
   }
   .dashboard-tab {
-    flex: 1 1 calc(50% - 8px); /* Tabs Take Half Width */
+    flex: 1 1 calc(42.75% - 6.84px); /* Reduced by 5% */
   }
 }
