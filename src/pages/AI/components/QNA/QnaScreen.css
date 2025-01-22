@@ -3,13 +3,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  padding: 36px 18px; /* Reduced by 10% */
   font-family: "Poppins", sans-serif;
+  font-size: 90%; /* Reduced by 10% */
 }
 
 .qna-upload-section {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1080px; /* Reduced by 10% */
   display: flex;
   flex-wrap: nowrap; /* Ensure sections don't wrap */
   gap: 0; /* No gap to avoid space between split sections */
@@ -18,7 +19,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
-  height: 600px; /* Fixed height for container */
+  height: 540px; /* Reduced by 10% */
 }
 
 .qna-upload-section:hover {
@@ -30,18 +31,19 @@
 .qna-results-container {
   flex: 1;
   overflow-y: auto; /* Enable vertical scrolling */
-  padding: 24px;
+  padding: 21.6px; /* Reduced by 10% */
 }
 
 .qna-results-container {
   flex: 1;
-  padding: 24px;
+  padding: 21.6px; /* Reduced by 10% */
   background-color: #f9f9f9;
 }
 
 .qna-results-container h2 {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 14.4px; /* Reduced by 10% */
+  font-size: 90%; /* Reduced by 10% */
 }
 
 .qna-results-container ul {
@@ -50,45 +52,56 @@
 }
 
 .qna-results-container li {
-  margin-bottom: 16px;
+  margin-bottom: 14.4px; /* Reduced by 10% */
 }
 
 .qna-upload-button,
 .qna-process-button {
-display: inline-block; /* Make the button size dependent on its content */
-padding: 10px 20px; /* Adjust padding for smaller buttons */
-font-size: 14px;
-font-weight: 500;
-background-color: #0f67fd; /* Lejit Blue */
-color: white;
-border: none;
-border-radius: 8px;
-cursor: pointer;
-transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-margin-top: 8px; /* Add spacing above the button */
+  display: inline-block; /* Make the button size dependent on its content */
+  padding: 9px 18px; /* Reduced by 10% */
+  font-size: 12.6px; /* Reduced by 10% */
+  font-weight: 500;
+  background-color: #0f67fd; /* Lejit Blue */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  margin-top: 7.2px; /* Reduced by 10% */
 }
 
 .qna-upload-button:hover,
 .qna-process-button:hover {
-background-color: #093d97; /* Darker Blue on hover */
-transform: translateY(-2px); /* Slight lift on hover */
-box-shadow: 0 4px 12px rgba(15, 103, 253, 0.3); /* Shadow effect on hover */
+  background-color: #093d97; /* Darker Blue on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 4px 12px rgba(15, 103, 253, 0.3); /* Shadow effect on hover */
 }
 
 .qna-upload-button:disabled,
 .qna-process-button:disabled {
-background-color: #cccccc;
-cursor: not-allowed;
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
 /* Button Container for Alignment */
 .qna-button-container {
-display: flex;
-gap: 10px; /* Space between buttons */
-justify-content: flex-start; /* Align buttons to the left */
-margin-top: 12px; /* Add some space above the button group */
+  display: flex;
+  gap: 9px; /* Reduced by 10% */
+  justify-content: flex-start; /* Align buttons to the left */
+  margin-top: 10.8px; /* Reduced by 10% */
 }
 
+.qna-upload-container h1,
+.qna-results-container h2 {
+  font-size: 90%; /* Reduced by 10% */
+}
+
+.qna-form-group label,
+.qna-status-message,
+.qna-results-container li strong,
+.qna-results-container li p {
+  font-size: 90%; /* Reduced by 10% */
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {

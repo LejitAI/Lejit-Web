@@ -22,16 +22,16 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {/* Entire Page Container */}
-        <Box display="flex" height="100vh" position="relative">
+        <Box display="flex" height="100vh" position="relative" overflow="hidden">
           <Sidebar />
           <Box
             display="flex"
             flexDirection="column"
             flexGrow={1}
-            overflow="hidden"
+            overflow="auto"
           >
             <Topbar />
-            <Box component="main" flexGrow={1} p={2}>
+            <Box component="main" flexGrow={1} p={2} overflow="auto">
               <ProfileInside />
             </Box>
           </Box>

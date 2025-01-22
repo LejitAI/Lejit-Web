@@ -9,27 +9,59 @@ const ProfileInside = () => {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [metrics, setMetrics] = useState({
+    totalCases: 0,
+    totalClients: 0,
+    totalTeamMembers: 0,
+  });
 
   useEffect(() => {
-    // Fetch law firm details from the backend
-    const fetchLawFirmDetails = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get("backend/api/admin/get-law-firm-details", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setLawFirmDetails(response.data);
-        setEditedDetails(response.data); // Initialize edited details
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching law firm details:", err);
-        setError("Failed to load law firm details. Please try again later.");
-        setLoading(false);
-      }
-    };
-
     fetchLawFirmDetails();
+    fetchMetrics();
   }, []);
+
+  const fetchLawFirmDetails = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("backend/api/admin/get-law-firm-details", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setLawFirmDetails(response.data);
+      setEditedDetails(response.data); // Initialize edited details
+      setLoading(false);
+    } catch (err) {
+      console.error("Error fetching law firm details:", err);
+      setError("Failed to load law firm details. Please try again later.");
+      setLoading(false);
+    }
+  };
+
+  const fetchMetrics = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+
+      const casesRes = await fetch("backend/api/admin/get-cases", { headers });
+      const cases = await casesRes.json();
+
+      const teamMembersRes = await fetch("backend/api/admin/get-team-members", { headers });
+      const teamMembers = await teamMembersRes.json();
+
+      const clientsRes = await fetch("backend/api/admin/get-client", { headers });
+      const clients = await clientsRes.json();
+
+      setMetrics({
+        totalCases: cases.length,
+        totalClients: clients.length,
+        totalTeamMembers: teamMembers.length,
+      });
+    } catch (err) {
+      console.error("Error fetching metrics:", err);
+    }
+  };
 
   // Handle field changes during editing
   const handleFieldChange = (section, field, value) => {
@@ -198,7 +230,7 @@ const ProfileInside = () => {
   };
 
   return (
-    <div className="profile-container">
+    <div className="profile-container" style={{ transform: "scale(0.9)", overflowY: "auto", maxHeight: "100vh" }}>
       <div className="profile-header">
         <div className="profile-image">
           <img src="/path/to/image.jpg" alt="Profile" />
@@ -219,15 +251,15 @@ const ProfileInside = () => {
 
       <div className="metrics">
         <div className="metric" style={{ backgroundColor: "#FFFEE8" }}>
-          <h3>23</h3>
+          <h3>{metrics.totalCases}</h3>
           <p>Total Cases</p>
         </div>
         <div className="metric" style={{ backgroundColor: "#FFEEED" }}>
-          <h3>10</h3>
+          <h3>{metrics.totalTeamMembers}</h3>
           <p>No. of Team Members</p>
         </div>
         <div className="metric" style={{ backgroundColor: "#EEF4FF" }}>
-          <h3>17</h3>
+          <h3>{metrics.totalClients}</h3>
           <p>No. of Clients</p>
         </div>
         <div className="metric" style={{ backgroundColor: "#F0FFEE" }}>
