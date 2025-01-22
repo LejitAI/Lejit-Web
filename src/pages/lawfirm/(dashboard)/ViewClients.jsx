@@ -125,7 +125,6 @@ const ViewClients = () => {
           <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <SearchIcon style={{ fontSize: "18px" }} />
             <TextField
-              variant="outlined"
               size="small"
               placeholder="Search by name"
               value={searchTerm}

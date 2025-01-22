@@ -63,15 +63,15 @@ function App() {
             onClick={handleAddCase}
             style={{
               position: "fixed",
-              bottom: "100px",
-              right: "80px",
-              padding: "16px 40px",
+              bottom: "80px", // Adjusted position
+              right: "40px", // Adjusted position
+              padding: "12px 30px", // Adjusted size
               backgroundColor: "#0F67FD",
               color: "#FFFFFF",
-              borderRadius: "15px",
+              borderRadius: "12px", // Adjusted border radius
               fontFamily: "Poppins",
               fontWeight: "500",
-              fontSize: "16px",
+              fontSize: "14px", // Adjusted font size
               textTransform: "uppercase",
               zIndex: 1000,
             }}
@@ -88,7 +88,7 @@ function App() {
               width="100%"
               height="100%"
               backgroundColor="rgba(0, 0, 0, 0.5)"
-              zIndex={1300}
+              zIndex={1600} // Increased zIndex to ensure it appears above all components
             />
           )}
 
@@ -107,7 +107,7 @@ function App() {
                 backgroundColor: '#FFFFFF',
                 borderRadius: '12px',
                 boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-                zIndex: 1400,
+                zIndex: 1700, // Increased zIndex to ensure it appears above the overlay
                 padding: '24px'
               }}
             >
