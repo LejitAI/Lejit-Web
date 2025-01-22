@@ -15,11 +15,13 @@ const LegalDocumentTemplates = () => {
   ];
 
   const [templates, setTemplates] = useState([]);
+  const [filteredTemplates, setFilteredTemplates] = useState([]);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [templateData, setTemplateData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showCreateTemplate, setShowCreateTemplate] = useState(false);
   const [newTemplate, setNewTemplate] = useState({ title: '', description: '', files: null });
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -35,6 +37,7 @@ const LegalDocumentTemplates = () => {
         }));
 
         setTemplates([{ category: "Agreements", items: templateList }]);
+        setFilteredTemplates([{ category: "Agreements", items: templateList }]);
       } catch (error) {
         console.error("Error fetching templates:", error);
       }
@@ -96,36 +99,55 @@ const LegalDocumentTemplates = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchTerm(query);
+    if (!query) {
+      setFilteredTemplates(templates);
+    } else {
+      const filtered = templates.map((category) => ({
+        ...category,
+        items: category.items.filter((item) =>
+          item.title.toLowerCase().includes(query) ||
+          item.description.toLowerCase().includes(query)
+        ),
+      }));
+      setFilteredTemplates(filtered);
+    }
+  };
+
   return (
-    <div style={{ padding: "20px", fontFamily: "Poppins, sans-serif", color: "#333" }}>
+    <div style={{ padding: "18px", fontFamily: "Poppins, sans-serif", color: "#333", transform: "scale(0.9)" }}>
       {!selectedTemplate && !showCreateTemplate && (
         <>
-          <header style={{ marginBottom: "20px" }}>
-            <h1 style={{ fontSize: "24px", fontWeight: "bold" }}>Legal Document and Review Templates</h1>
+          <header style={{ marginBottom: "18px" }}>
+            <h1 style={{ fontSize: "21.6px", fontWeight: "bold" }}>Legal Document and Review Templates</h1>
             <p style={{ color: "#666" }}>
               Our team of lawyers have pre-defined legal templates to generate your law content within seconds.
             </p>
             <input
               type="text"
               placeholder="Search for your template..."
+              value={searchTerm}
+              onChange={handleSearch}
               style={{
                 width: "100%",
-                padding: "10px",
+                padding: "9px",
                 border: "1px solid #ccc",
-                borderRadius: "5px",
-                marginTop: "10px",
+                borderRadius: "4.5px",
+                marginTop: "9px",
               }}
             />
           </header>
 
-          <nav style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+          <nav style={{ display: "flex", gap: "9px", marginBottom: "18px" }}>
             {categories.map((category, index) => (
               <button
                 key={index}
                 style={{
-                  padding: "10px 20px",
+                  padding: "9px 18px",
                   border: "none",
-                  borderRadius: "20px",
+                  borderRadius: "18px",
                   backgroundColor: index === 0 ? "#0f67fd" : "#f5f5f5",
                   color: index === 0 ? "#fff" : "#0f67fd",
                   cursor: "pointer",
@@ -137,9 +159,9 @@ const LegalDocumentTemplates = () => {
           </nav>
 
           <section>
-            {templates.map((templateCategory, index) => (
-              <div key={index} style={{ marginBottom: "20px" }}>
-                <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "10px" }}>
+            {filteredTemplates.map((templateCategory, index) => (
+              <div key={index} style={{ marginBottom: "18px" }}>
+                <h2 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "9px" }}>
                   {templateCategory.category}
                 </h2>
                 <p style={{ color: "#666" }}>Create agreement content</p>
@@ -147,9 +169,9 @@ const LegalDocumentTemplates = () => {
                 <div
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-                    gap: "20px",
-                    marginTop: "20px",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(225px, 1fr))",
+                    gap: "18px",
+                    marginTop: "18px",
                   }}
                 >
                   {templateCategory.items.map((item, idx) => (
@@ -157,64 +179,68 @@ const LegalDocumentTemplates = () => {
                     key={idx}
                     style={{
                       border: "1px solid transparent",
-                      borderRadius: "10px",
-                      padding: "15px",
+                      borderRadius: "9px",
+                      padding: "13.5px",
                       backgroundColor: "#fff",
                       cursor: "pointer",
                       transition: "transform 0.3s, box-shadow 0.3s, border-color 0.3s",
-                      boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+                      boxShadow: "0 1.8px 4.5px rgba(0, 0, 0, 0.1)",
                       position: "relative",
                     }}
                     onClick={() => handleCardClick(item.apiKey)}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "scale(1.05)";
-                      e.currentTarget.style.boxShadow = "0 4px 10px rgba(15, 103, 253, 0.4)";
+                      e.currentTarget.style.boxShadow = "0 3.6px 9px rgba(15, 103, 253, 0.4)";
                       e.currentTarget.style.borderColor = "#0f67fd"; // Lejit blue
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = "scale(1)";
-                      e.currentTarget.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.1)";
+                      e.currentTarget.style.boxShadow = "0 1.8px 4.5px rgba(0, 0, 0, 0.1)";
                       e.currentTarget.style.borderColor = "transparent";
                     }}
                   >
-                    <div style={{ fontSize: "30px", marginBottom: "10px" }}>{item.icon}</div>
-                    <h3 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>
+                    <div style={{ fontSize: "27px", marginBottom: "9px" }}>{item.icon}</div>
+                    <h3 style={{ fontSize: "16.2px", fontWeight: "bold", marginBottom: "9px" }}>
                       {item.title}
                     </h3>
                     <p style={{ color: "#666" }}>{item.description}</p>
                   </div>
                   
                   ))}
-                  <div
-                    style={{
-                      border: "1px solid #eaeaea",
-                      borderRadius: "10px",
-                      padding: "15px",
-                      boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-                      backgroundColor: "#f5f5f5",
-                      cursor: "pointer",
-                      transition: "transform 0.3s, box-shadow 0.3s",
-                      textAlign: "center",
-                    }}
-                    onClick={() => setShowCreateTemplate(true)}
-                  >
-                    <div style={{ fontSize: "30px", marginBottom: "10px",  }}>➕</div>
-                    <h3 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>Create New Template</h3>
-                    <p style={{ color: "#666" }}>Upload and configure a new template</p>
-                  </div>
                 </div>
               </div>
             ))}
           </section>
+
+          {/* Add Template Button */}
+          <button
+            onClick={() => setShowCreateTemplate(true)}
+            style={{
+              position: "fixed",
+              bottom: "80px", // Adjusted position
+              right: "40px", // Adjusted position
+              padding: "12px 30px", // Adjusted size
+              backgroundColor: "#0F67FD",
+              color: "#FFFFFF",
+              borderRadius: "12px", // Adjusted border radius
+              fontFamily: "Poppins",
+              fontWeight: "500",
+              fontSize: "14px", // Adjusted font size
+              textTransform: "uppercase",
+              zIndex: 1000,
+            }}
+          >
+            Create New Template
+          </button>
         </>
       )}
 
       {showCreateTemplate && (
-        <form onSubmit={handleCreateTemplate} style={{ maxWidth: "600px", margin: "auto" }}>
-          <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "20px" }}>Create a New Template</h2>
+        <form onSubmit={handleCreateTemplate} style={{ maxWidth: "540px", margin: "auto" }}>
+          <h2 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "18px" }}>Create a New Template</h2>
 
-          <div style={{ marginBottom: "15px" }}>
-            <label style={{ display: "block", marginBottom: "5px" }}>Title</label>
+          <div style={{ marginBottom: "13.5px" }}>
+            <label style={{ display: "block", marginBottom: "4.5px" }}>Title</label>
             <input
               type="text"
               value={newTemplate.title}
@@ -222,30 +248,30 @@ const LegalDocumentTemplates = () => {
               required
               style={{
                 width: "100%",
-                padding: "10px",
+                padding: "9px",
                 border: "1px solid #ccc",
-                borderRadius: "5px",
+                borderRadius: "4.5px",
               }}
             />
           </div>
 
-          <div style={{ marginBottom: "15px" }}>
-            <label style={{ display: "block", marginBottom: "5px" }}>Description</label>
+          <div style={{ marginBottom: "13.5px" }}>
+            <label style={{ display: "block", marginBottom: "4.5px" }}>Description</label>
             <textarea
               value={newTemplate.description}
               onChange={(e) => setNewTemplate({ ...newTemplate, description: e.target.value })}
               required
               style={{
                 width: "100%",
-                padding: "10px",
+                padding: "9px",
                 border: "1px solid #ccc",
-                borderRadius: "5px",
+                borderRadius: "4.5px",
               }}
             ></textarea>
           </div>
 
-          <div style={{ marginBottom: "15px" }}>
-            <label style={{ display: "block", marginBottom: "5px" }}>Files</label>
+          <div style={{ marginBottom: "13.5px" }}>
+            <label style={{ display: "block", marginBottom: "4.5px" }}>Files</label>
             <input
               type="file"
               multiple
@@ -253,9 +279,9 @@ const LegalDocumentTemplates = () => {
               required
               style={{
                 width: "100%",
-                padding: "10px",
+                padding: "9px",
                 border: "1px solid #ccc",
-                borderRadius: "5px",
+                borderRadius: "4.5px",
               }}
             />
           </div>
@@ -263,11 +289,11 @@ const LegalDocumentTemplates = () => {
           <button
             type="submit"
             style={{
-              padding: "10px 20px",
+              padding: "9px 18px",
               backgroundColor: "#0f67fd",
               color: "#fff",
               border: "none",
-              borderRadius: "10px",
+              borderRadius: "9px",
               cursor: "pointer",
             }}
           >
@@ -278,12 +304,12 @@ const LegalDocumentTemplates = () => {
             type="button"
             onClick={() => setShowCreateTemplate(false)}
             style={{
-              marginLeft: "10px",
-              padding: "10px 20px",
+              marginLeft: "9px",
+              padding: "9px 18px",
               backgroundColor: "#ccc",
               color: "#000",
               border: "none",
-              borderRadius: "10px",
+              borderRadius: "9px",
               cursor: "pointer",
             }}
           >
@@ -297,10 +323,10 @@ const LegalDocumentTemplates = () => {
           <button
             onClick={() => setSelectedTemplate(null)}
             style={{
-              marginBottom: "20px",
-              padding: "10px 20px",
+              marginBottom: "18px",
+              padding: "9px 18px",
               border: "none",
-              borderRadius: "10px",
+              borderRadius: "9px",
               backgroundColor: "#0f67fd",
               color: "#fff",
               cursor: "pointer",
@@ -309,7 +335,7 @@ const LegalDocumentTemplates = () => {
             Back to Templates
           </button>
 
-          <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>Template Details</h2>
+          <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>Template Details</h2>
 
           {loading ? (
             <p>Loading...</p>

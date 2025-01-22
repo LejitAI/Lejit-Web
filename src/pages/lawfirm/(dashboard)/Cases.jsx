@@ -47,6 +47,27 @@ const Cases = () => {
   const [sortOption, setSortOption] = useState("");
   const [filterOption, setFilterOption] = useState("");
 
+const handleDownload = () => {
+  const csvContent =
+    "data:text/csv;charset=utf-8," +
+    "Title,Client Name,Case Type,Status,Starting Date\n" +
+    filteredCases
+      .map(
+        (caseItem) =>
+          `${caseItem.title},${caseItem.clientName},${caseItem.caseType},${caseItem.status},${caseItem.startingDate.toLocaleDateString()}`
+      )
+      .join("\n");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "cases.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+
+
   useEffect(() => {
     const fetchCases = async () => {
       try {
@@ -238,62 +259,86 @@ const Cases = () => {
           Cases
         </Typography>
         <Box className="header-right">
-          <Box className="action-button">
-            <SearchIcon />
+          <Box className="action-button" style={{ display: 'flex', alignItems: 'center', gap: '4.5px' }}> {/* Reduced by 25% */}
+            <SearchIcon style={{ fontSize: '10.5px' }} /> {/* Reduced by 25% */}
             <TextField
               variant="standard"
               placeholder="Search"
               value={searchQuery}
               onChange={handleSearch}
-              style={{ width: "200px" }}
+              InputProps={{ style: { fontSize: '10.5px' } }} 
             />
           </Box>
-          <Box className="action-button" onClick={handleFilter}>
-            <FilterListIcon />
-            <Typography>{filterOption || "Filter"}</Typography>
+          <Box className="action-button" style={{ display: 'flex', alignItems: 'center', gap: '4.5px' }}> {/* Reduced by 25% */}
+            <FilterListIcon style={{ fontSize: '10.5px' }} /> {/* Reduced by 25% */}
+            <Typography style={{ fontSize: '10.5px' }}>{filterOption || "Filter"}</Typography> {/* Reduced by 25% */}
           </Box>
-          <Box className="action-button" onClick={handleSort}>
-            <SortIcon />
-            <Typography>{sortOption === "date-desc" ? "Sort Desc" : "Sort Asc"}</Typography>
+          <Box className="action-button" onClick={handleSort} style={{ display: 'flex', alignItems: 'center', gap: '4.5px' }}> {/* Reduced by 25% */}
+            <SortIcon style={{ fontSize: '10.5px' }} /> {/* Reduced by 25% */}
+            <Typography style={{ fontSize: '10.5px' }}>{sortOption === "date-desc" ? "Sort Desc" : "Sort Asc"}</Typography> {/* Reduced by 25% */}
           </Box>
-          <Box className="action-button">
-            <DownloadIcon />
-            <Typography>Download List</Typography>
+          <Box
+            className="action-button"
+            onClick={handleDownload}
+            style={{ display: "flex", alignItems: "center", gap: "6px", cursor: "pointer" }} 
+          >
+            <DownloadIcon style={{ fontSize: "13.5px" }} /> {/* Reduced by 25% */}
+            <Typography style={{ fontSize: "9px" }}>Download List</Typography> {/* Reduced by 25% */}
           </Box>
         </Box>
       </Box>
 
       {/* Cases */}
-      <Box className="team-list">
+      <Box className="team-list" style={{ gap: '8px' }}> {/* Reduced spacing */}
         {filteredCases.map((caseItem, index) => (
-          <Box key={index} className="case-team-card" onClick={() => handleCaseClick(caseItem)}>
+          <Box 
+            key={index} 
+            className="case-team-card" 
+            onClick={() => handleCaseClick(caseItem)} 
+            style={{ 
+              transform: 'scale(0.867)', 
+              boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.15)', // Enhanced shadow
+              border: '1px solid rgba(0, 0, 0, 0.1)', // Added border
+              borderRadius: '10px', // Slightly rounded corners
+              transition: 'transform 0.3s, box-shadow 0.3s', // Smooth transition
+              marginBottom: '8px' // Reduced spacing
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(0.9)';
+              e.currentTarget.style.boxShadow = '0px 6px 25px rgba(0, 0, 0, 0.2)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(0.867)';
+              e.currentTarget.style.boxShadow = '0px 4px 20px rgba(0, 0, 0, 0.15)';
+            }}
+          >
             <Box className="case-date">
-              <Typography className="case-day">
+              <Typography className="case-day" style={{ fontSize: '87%' }}> {/* Increased by 2% */}
                 {caseItem.startingDate ? caseItem.startingDate.getDate() : "N/A"}
               </Typography>
-              <Typography className="case-weekday">
+              <Typography className="case-weekday" style={{ fontSize: '87%' }}> {/* Increased by 2% */}
                 {caseItem.startingDate
                   ? caseItem.startingDate.toLocaleDateString("en-US", { weekday: "short" })
                   : "N/A"}
               </Typography>
             </Box>
             <Box className="team-info">
-              <Typography className="member-name">{caseItem.title}</Typography>
-              <Typography>Client Name: {caseItem.clientName}</Typography>
-              <Typography>Case Type: {caseItem.caseType}</Typography>
+              <Typography className="member-name" variant="h6" style={{ fontSize: '87%' }}>{caseItem.title}</Typography> {/* Increased by 2% */}
+              <Typography variant="body1" style={{ fontSize: '87%' }}>Client Name: {caseItem.clientName}</Typography> {/* Increased by 2% */}
+              <Typography variant="body2" style={{ fontSize: '87%' }}>Case Type: {caseItem.caseType}</Typography> {/* Increased by 2% */}
             </Box>
-            <Box className={`case-status ${getStatusClass(caseItem.status)}`}>
-              <span className={`status-indicator ${getStatusIndicatorClass(caseItem.status)}`} />
+            <Box className={`case-status ${getStatusClass(caseItem.status)}`} style={{ fontSize: '87%' }}> {/* Increased by 2% */}
+              <span className={`status-indicator ${getStatusIndicatorClass(caseItem.status)}`} style={{ transform: 'scale(0.867)' }} /> {/* Increased by 2% */}
               {caseItem.status}
             </Box>
             <Box className="case-actions">
-              <IconButton>
+              <IconButton style={{ transform: 'scale(0.867)' }}> {/* Increased by 2% */}
                 <VisibilityIcon />
               </IconButton>
               <IconButton onClick={(e) => {
                 e.stopPropagation(); // Prevent triggering parent click event
                 handleDelete(caseItem.id);
-              }}>
+              }} style={{ transform: 'scale(0.867)' }}> {/* Increased by 2% */}
                 <DeleteIcon />
               </IconButton>
             </Box>

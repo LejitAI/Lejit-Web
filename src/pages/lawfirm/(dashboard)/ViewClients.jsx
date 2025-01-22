@@ -20,9 +20,7 @@ const ViewClients = () => {
   }, []);
 
   useEffect(() => {
-    handleSearch();
-    handleFilter();
-    handleSort();
+    applyFilters(searchTerm, sortOption, filterOption);
   }, [searchTerm, filterOption, sortOption]);
 
   const fetchClients = async () => {
@@ -48,38 +46,50 @@ const ViewClients = () => {
     }
   };
 
-  const handleSearch = () => {
-    if (!searchTerm) {
-      setFilteredClients(clients);
-    } else {
-      const filtered = clients.filter((client) =>
-        client.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredClients(filtered);
-    }
-  };
-
-  const handleFilter = () => {
-    if (!filterOption) {
-      setFilteredClients(clients);
-    } else {
-      const filtered = clients.filter(
-        (client) =>
-          (filterOption === "rating" && client.rating >= 4) ||
-          (filterOption === "experience" && client.yearsOfExperience >= 5)
-      );
-      setFilteredClients(filtered);
-    }
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchTerm(query);
   };
 
   const handleSort = () => {
-    const sorted = [...filteredClients];
-    if (sortOption === "name") {
-      sorted.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortOption === "rating") {
-      sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    const newSortOption = sortOption === "name-asc" ? "name-desc" : "name-asc";
+    setSortOption(newSortOption);
+  };
+
+  const handleFilter = () => {
+    const newFilterOption =
+      filterOption === "rating" ? "experience" : filterOption === "experience" ? "" : "rating";
+    setFilterOption(newFilterOption);
+  };
+
+  const applyFilters = (search, sort, filter) => {
+    let result = [...clients];
+
+    // Apply search filter
+    if (search) {
+      result = result.filter(
+        (client) =>
+          client.name.toLowerCase().includes(search) ||
+          client.email.toLowerCase().includes(search) ||
+          client.mobile.toLowerCase().includes(search)
+      );
     }
-    setFilteredClients(sorted);
+
+    // Apply sorting
+    if (sort === "name-asc") {
+      result.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sort === "name-desc") {
+      result.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    // Apply filtering by rating or experience
+    if (filter === "rating") {
+      result = result.filter((client) => client.rating >= 4);
+    } else if (filter === "experience") {
+      result = result.filter((client) => client.yearsOfExperience >= 5);
+    }
+
+    setFilteredClients(result);
   };
 
   const handleDownload = () => {
@@ -122,54 +132,31 @@ const ViewClients = () => {
           </Typography>
         </Box>
         <Box className="header-right" style={{ display: "flex", gap: "12px" }}>
-          <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <SearchIcon style={{ fontSize: "18px" }} />
+          <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "4.5px" }}>
+            <SearchIcon style={{ fontSize: "10.5px" }} />
             <TextField
-              variant="outlined"
-              size="small"
-              placeholder="Search by name"
+              variant="standard"
+              placeholder="Search"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ fontSize: "12px", width: "150px" }}
+              onChange={handleSearch}
+              InputProps={{ style: { fontSize: "10.5px" } }}
             />
           </Box>
-          <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <FilterListIcon style={{ fontSize: "18px" }} />
-            <TextField
-              select
-              variant="outlined"
-              size="small"
-              value={filterOption}
-              onChange={(e) => setFilterOption(e.target.value)}
-              style={{ fontSize: "12px", width: "120px" }}
-            >
-              <MenuItem value="" style={{ fontSize: "12px" }}>No Filter</MenuItem>
-              <MenuItem value="rating" style={{ fontSize: "12px" }}>High Rating (= 4)</MenuItem>
-              <MenuItem value="experience" style={{ fontSize: "12px" }}>Experience (= 5 years)</MenuItem>
-            </TextField>
+          <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "4.5px" }}>
+            <FilterListIcon style={{ fontSize: "10.5px" }} />
+            <Typography style={{ fontSize: "10.5px" }}>{filterOption || "Filter"}</Typography>
+          </Box>
+          <Box className="action-button" onClick={handleSort} style={{ display: "flex", alignItems: "center", gap: "4.5px" }}>
+            <SortIcon style={{ fontSize: "10.5px" }} />
+            <Typography style={{ fontSize: "10.5px" }}>{sortOption === "name-desc" ? "Sort Desc" : "Sort Asc"}</Typography>
           </Box>
           <Box
             className="action-button"
             onClick={handleDownload}
-            style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}
+            style={{ display: "flex", alignItems: "center", gap: "6px", cursor: "pointer" }}
           >
-            <DownloadIcon style={{ fontSize: "18px" }} />
-            <Typography style={{ fontSize: "12px" }}>Download List</Typography>
-          </Box>
-          <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <SortIcon style={{ fontSize: "18px" }} />
-            <TextField
-              select
-              variant="outlined"
-              size="small"
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-              style={{ fontSize: "12px", width: "120px" }}
-            >
-              <MenuItem value="" style={{ fontSize: "12px" }}>No Sort</MenuItem>
-              <MenuItem value="name" style={{ fontSize: "12px" }}>Name</MenuItem>
-              <MenuItem value="rating" style={{ fontSize: "12px" }}>Rating</MenuItem>
-            </TextField>
+            <DownloadIcon style={{ fontSize: "13.5px" }} />
+            <Typography style={{ fontSize: "9px" }}>Download List</Typography>
           </Box>
         </Box>
       </Box>
@@ -184,8 +171,6 @@ const ViewClients = () => {
             gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
             gap: "12px",
             justifyContent: "center",
-            maxHeight: "375px",
-            overflowY: "auto",
             paddingRight: "6px",
           }}
         >

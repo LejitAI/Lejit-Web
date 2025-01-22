@@ -123,7 +123,7 @@ const Hearing = () => {
   };
 
   return (
-    <Box display="flex" height="100vh" position="relative">
+    <Box display="flex" height="100vh" position="relative" overflow="hidden">
       {/* Sidebar and Topbar */}
       <Sidebar />
       <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden">
@@ -135,7 +135,8 @@ const Hearing = () => {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            maxHeight: '1600px', // Adjust based on the topbar height
+            overflowY: 'auto', // Enable scrolling
+            maxHeight: 'calc(100vh - 64px)', // Adjust based on the topbar height
           }}
         >
           {/* 3D Shadow Container */}

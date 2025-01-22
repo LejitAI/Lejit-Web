@@ -22,7 +22,7 @@ function App() {
             overflow="hidden"
           >
             <Topbar />
-            <Box component="main" flexGrow={1} p={2}>
+            <Box component="main" flexGrow={1} p={2} overflow="auto">
               <QnaScreen />
             </Box>
           </Box>

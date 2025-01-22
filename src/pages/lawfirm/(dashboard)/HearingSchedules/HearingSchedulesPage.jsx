@@ -26,12 +26,20 @@ const HearingSchedulesPage = () => {
   }, [userId]);
 
   return (
-    <Box display="flex" height="100vh" position="relative">
+    <Box display="flex" height="100vh" position="relative" overflow="hidden">
       {/* Sidebar and Topbar */}
       <Sidebar />
       <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden">
         <Topbar />
-        <Box component="main" flexGrow={1} p={2}>
+        <Box 
+          component="main" 
+          flexGrow={1} 
+          p={2} 
+          sx={{
+            overflowY: "auto", // Enable scrolling
+            maxHeight: "calc(100vh - 64px)", // Adjust based on the topbar height
+          }}
+        >
           {/* Container for Hearing Schedules Page */}
           <Box className="view-team-container">
             {/* Action Items Header */}

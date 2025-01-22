@@ -35,7 +35,7 @@ function App() {
             overflow="hidden"
           >
             <Topbar />
-            <Box component="main" flexGrow={1} p={2}>
+            <Box component="main" flexGrow={1} p={2} style={{ overflowY: "auto", maxHeight: "calc(100vh - 64px)" }}>
               <ViewClients />
             </Box>
           </Box>

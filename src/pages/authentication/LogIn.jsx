@@ -118,10 +118,7 @@ const LogIn = () => {
           <img src={GoogleLogo} alt="Google Logo" className="social-icon" />
           Login with Google
         </button>
-        <button className="facebook-login">
-          <img src={FacebookLogo} alt="Facebook Logo" className="social-icon" />
-          Login with Facebook
-        </button>
+        
 
         <p className="sign-up-text">
           Don’t have an account? <a href="/lawfirmsignup">Sign Up</a>

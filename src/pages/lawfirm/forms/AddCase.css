@@ -14,32 +14,38 @@
 
 .addCaseModal {
     background: #FFFFFF;
-    border-radius: 10px;
-    width: 1152px;
-    padding: 24px;
-    overflow-y: hidden;
+    border-radius: 9px; /* Reduced by 10% */
+    width: 933px; /* Reduced overall size */
+    padding: 21.6px; /* Reduced by 10% */
+    overflow-y: auto; /* Enable scroll */
     max-height: 90vh;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+}
+
+.addCaseModal::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
 }
 
 .addCaseContainer {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 21.6px; /* Reduced by 10% */
     overflow: hidden;
 }
 
 .addCaseHeader {
     display: flex;
     flex-direction: column; /* Stacks title and subtitle vertically */
-    gap: 8px; /* Adds space between title and subtitle */
+    gap: 7.2px; /* Reduced by 10% */
     position: relative;
 }
 
 .addCaseTitle {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    font-size: 22px;
-    line-height: 33px;
+    font-size: 19.8px; /* Reduced by 10% */
+    line-height: 29.7px; /* Reduced by 10% */
     color: #343434;
     margin: 0;
 }
@@ -47,8 +53,8 @@
 .addCaseSubtitle {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 14.4px; /* Reduced by 10% */
+    line-height: 21.6px; /* Reduced by 10% */
     color: #7A7A7A;
     margin: 0;
 }
@@ -59,33 +65,32 @@
     right: 0;
     background: none;
     border: none;
-    font-size: 40px;
+    font-size: 36px; /* Reduced by 10% */
     color: #222B45;
     cursor: pointer;
 }
 
-
 .addCaseContent {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 21.6px; /* Reduced by 10% */
 }
 
 .caseForm {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 14.4px; /* Reduced by 10% */
 }
 
 .formGroup {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3.6px; /* Reduced by 10% */
 }
 
 .formGroup label {
     font-family: 'Poppins', sans-serif;
-    font-size: 14px;
+    font-size: 12.6px; /* Reduced by 10% */
     color: #7A7A7A;
 }
 
@@ -93,35 +98,35 @@
 .formGroup select,
 .formGroup textarea {
     width: 100%;
-    padding: 12px;
+    padding: 10.8px; /* Reduced by 10% */
     font-family: 'Poppins', sans-serif;
-    font-size: 14px;
+    font-size: 12.6px; /* Reduced by 10% */
     color: #343434;
-    border: 2px solid rgba(186, 186, 186, 0.15);
-    border-radius: 12px;
+    border: 1.8px solid rgba(186, 186, 186, 0.15); /* Reduced by 10% */
+    border-radius: 10.8px; /* Reduced by 10% */
     background: #FFFFFF;
 }
 
 .formGroup textarea {
-    height: 80px;
+    height: 72px; /* Reduced by 10% */
     resize: none;
 }
 
 .addCaseFooter {
-    margin-top: -12px;
+    margin-top: -10.8px; /* Reduced by 10% */
     display: flex;
     justify-content: flex-end;
-    gap: 16px;
+    gap: 14.4px; /* Reduced by 10% */
 }
 
 .cancelButton,
 .saveButton {
-    padding: 16px 40px;
+    padding: 14.4px 36px; /* Reduced by 10% */
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14.4px; /* Reduced by 10% */
     text-transform: uppercase;
-    border-radius: 15px;
+    border-radius: 13.5px; /* Reduced by 10% */
     cursor: pointer;
     border: none;
 }
@@ -136,32 +141,31 @@
     color: #FFFFFF;
 }
 
-
 .prepareDocuments {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px;
+    gap: 14.4px; /* Reduced by 10% */
+    padding: 14.4px; /* Reduced by 10% */
     background: #DFECFF;
-    border: 1px solid rgba(199, 199, 199, 0.3);
-    border-radius: 10px;
-    margin-top: 24px; 
+    border: 0.9px solid rgba(199, 199, 199, 0.3); /* Reduced by 10% */
+    border-radius: 9px; /* Reduced by 10% */
+    margin-top: 21.6px; /* Reduced by 10% */
     width: 100%;
-    height: 86px;
+    height: 77.4px; /* Reduced by 10% */
 }
 
 .iconWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 53px;
-    height: 53px;
+    width: 47.7px; /* Reduced by 10% */
+    height: 47.7px; /* Reduced by 10% */
     background: #FFFFFF;
     border-radius: 50%;
 }
 
 .icon {
-    font-size: 22px;
+    font-size: 19.8px; /* Reduced by 10% */
     color: #0F67FD;
 }
 
@@ -172,7 +176,7 @@
 .documentTitle {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 16.2px; /* Reduced by 10% */
     color: #343434;
     margin: 0;
 }
@@ -180,26 +184,25 @@
 .documentSubtitle {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 10.8px; /* Reduced by 10% */
     color: #7A7A7A;
-    margin: 4px 0 0 0;
+    margin: 3.6px 0 0 0; /* Reduced by 10% */
 }
 
 .arrowWrapper {
-    font-size: 24px;
+    font-size: 21.6px; /* Reduced by 10% */
     color: #0F67FD;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-
 /* Custom styles for react-select dropdown */
 .react-select__control {
-    border: 2px solid rgba(186, 186, 186, 0.15);
-    border-radius: 12px;
+    border: 1.8px solid rgba(186, 186, 186, 0.15); /* Reduced by 10% */
+    border-radius: 10.8px; /* Reduced by 10% */
     font-family: 'Poppins', sans-serif;
-    font-size: 14px;
+    font-size: 12.6px; /* Reduced by 10% */
     color: #343434;
     background: #FFFFFF;
 }
@@ -216,13 +219,12 @@
 
 .react-select__menu {
     font-family: 'Poppins', sans-serif;
-    font-size: 14px;
+    font-size: 12.6px; /* Reduced by 10% */
 }
 
 .react-select__option {
     color: #343434;
     font-family: 'Poppins', sans-serif;
-
 }
 
 .react-select__option--is-selected {
@@ -233,7 +235,7 @@
 
 .required {
     color: red;
-    margin-left: 2px; 
+    margin-left: 1.8px; /* Reduced by 10% */
     font-weight: bold;
 }
 
