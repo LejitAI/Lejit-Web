@@ -61,56 +61,56 @@ const CaseDocumentsContent = ({
   );
 
   return (
-    <div className="flex flex-col p-5 gap-4 bg-white shadow-lg rounded-lg">
+    <div className="flex flex-col p-4 gap-3 bg-white shadow-md rounded-md" style={{ transform: "scale(0.9)" }}>
       {/* Header */}
-      <div className="flex items-center mb-4">
-        <button onClick={onBackClick} className="mr-2">
-          <ArrowLeft className="w-6 h-6 text-gray-700" />
+      <div className="flex items-center mb-3">
+        <button onClick={onBackClick} className="mr-1.5">
+          <ArrowLeft className="w-5 h-5 text-gray-700" />
         </button>
-        <h2 className="text-lg">Case Documents</h2>
+        <h2 className="text-base">Case Documents</h2>
       </div>
 
-      <div className="p-3 rounded-md shadow-sm border">
-        <h3 className="text-lg font-medium">Case Documents</h3>
-        <hr className="my-2 border-gray-300" />
+      <div className="p-2.5 rounded-md shadow-sm border">
+        <h3 className="text-base font-medium">Case Documents</h3>
+        <hr className="my-1.5 border-gray-300" />
         
         {/* Folder Navigation */}
-        <div className="flex gap-4 mb-6 overflow-x-auto pb-2">
+        <div className="flex gap-3 mb-5 overflow-x-auto pb-1.5">
           {folders.map((folder) => (
             <button
               key={folder}
               onClick={() => setSelectedFolder(folder)}
-              className={`flex flex-col items-center gap-2 px-4 py-2 rounded-lg transition-colors
+              className={`flex flex-col items-center gap-1.5 px-3.5 py-1.5 rounded-md transition-colors
                 ${folder === selectedFolder ? "text-blue-600" : "hover:bg-gray-100"}`}
             >
               {folder === selectedFolder ? (
-                <FolderOpen size={50} className="text-blue-700" fill="#4A8CFF" />
+                <FolderOpen size={45} className="text-blue-700" fill="#4A8CFF" />
               ) : (
-                <FolderClosed size={50} className="text-gray-300" />
+                <FolderClosed size={45} className="text-gray-300" />
               )}
               {folder}
             </button>
           ))}
         </div>
 
-        <hr className="my-2 border-gray-300" />
+        <hr className="my-1.5 border-gray-300" />
 
         {/* Document List */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {filteredDocuments.length > 0 ? (
             filteredDocuments.map((doc, idx) => (
               <div
                 key={idx}
-                className="flex items-center justify-between gap-4 px-4 py-3 border-b border-gray-200"
+                className="flex items-center justify-between gap-3 px-3.5 py-2.5 border-b border-gray-200"
               >
                 {/* Document Name */}
-                <div className="flex items-center gap-2">
-                  <Paperclip size={18} />
+                <div className="flex items-center gap-1.5">
+                  <Paperclip size={16} />
                   <a href="#" className="">
                     {doc.name}
                   </a>
                   <span
-                    className={`px-2 py-1 text-xs font-medium rounded capitalize ${
+                    className={`px-1.5 py-0.5 text-xs font-medium rounded capitalize ${
                       statusClasses[doc.status]
                     }`}
                   >
@@ -118,24 +118,24 @@ const CaseDocumentsContent = ({
                   </span>
                 </div>
                 {/* Actions */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5">
                   <button
                     onClick={() => onShare?.(doc)}
-                    className="p-2 text-gray-500 hover:text-gray-700"
+                    className="p-1.5 text-gray-500 hover:text-gray-700"
                   >
-                    <Share2 size={18} />
+                    <Share2 size={16} />
                   </button>
                   <button
                     onClick={() => onView?.(doc)}
-                    className="p-2 text-gray-500 hover:text-gray-700"
+                    className="p-1.5 text-gray-500 hover:text-gray-700"
                   >
-                    <Eye size={18} />
+                    <Eye size={16} />
                   </button>
                   <button
                     onClick={() => onDownload?.(doc)}
-                    className="p-2 text-gray-500 hover:text-gray-700"
+                    className="p-1.5 text-gray-500 hover:text-gray-700"
                   >
-                    <Download size={18} />
+                    <Download size={16} />
                   </button>
                 </div>
               </div>
@@ -146,12 +146,12 @@ const CaseDocumentsContent = ({
         </div>
 
         {/* Add Button */}
-        <div className="mt-6">
+        <div className="mt-5">
           <button
             onClick={onAddDocument}
-            className="w-fit ml-auto flex items-center justify-center gap-2 px-4 py-3 text-blue-500 border-2 border-blue-500 rounded-lg hover:bg-blue-50 transition-colors"
+            className="w-fit ml-auto flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-blue-500 border-2 border-blue-500 rounded-md hover:bg-blue-50 transition-colors"
           >
-            <Upload size={20} />
+            <Upload size={18} />
             ADD CASE RELATED DOCUMENTS
           </button>
         </div>
@@ -172,7 +172,8 @@ const CaseDocumentsPage = () => {
             display: "flex",
             height: "100vh",
             backgroundColor: "#F5F6FA", // Light gray background
-            position: "relative"
+            position: "relative",
+            overflowY: "auto" // Enable scrolling
           }}
         >
           <Sidebar />
