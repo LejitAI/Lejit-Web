@@ -258,7 +258,6 @@ const LDashboard = () => {
 
   return (
     <div className="max-h-screen overflow-auto grid grid-cols-4 gap-3 p-3">
-      <AIPopup />
       {/* Analytics Navigation Button */}
       <div className="col-span-4 flex justify-end mb-1.5">
         <button
