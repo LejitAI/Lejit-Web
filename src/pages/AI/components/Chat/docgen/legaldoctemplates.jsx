@@ -117,7 +117,7 @@ const LegalDocumentTemplates = () => {
   };
 
   return (
-    <div style={{ padding: "18px", fontFamily: "Poppins, sans-serif", color: "#333", transform: "scale(0.9)" }}>
+    <div style={{ padding: "18px", fontFamily: "Poppins, sans-serif", color: "#333", transform: "scale(0.9)", overflow: "auto" }}>
       {!selectedTemplate && !showCreateTemplate && (
         <>
           <header style={{ marginBottom: "18px" }}>

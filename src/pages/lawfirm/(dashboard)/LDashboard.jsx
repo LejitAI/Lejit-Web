@@ -3,7 +3,7 @@ import "./LDashboard.css";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Slider from "react-slick";
-
+import AIPopup from "./components/AIPopup";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -25,6 +25,7 @@ import { Calendar, ChevronRight, Plus, Phone, XCircle } from "lucide-react";
 import { FaFolder, FaCalendar, FaTrophy } from "react-icons/fa";
 import AskAI from "../global/AskAI";
 import GenericCard from "./components/GenericCard";
+
 const randomAvatar =
   "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/92/92f6386ba5544c151dbce85dd4b42dafa510eeea.jpg";
 
@@ -257,6 +258,7 @@ const LDashboard = () => {
 
   return (
     <div className="max-h-screen overflow-auto grid grid-cols-4 gap-3 p-3">
+      <AIPopup />
       {/* Analytics Navigation Button */}
       <div className="col-span-4 flex justify-end mb-1.5">
         <button

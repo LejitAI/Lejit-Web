@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f2f5fa; /* Light background for consistency */
-  overflow: hidden; /* Prevent body from scrolling */
+  overflow:auto; /* Prevent body from scrolling */
 }
 
 /* Chat Container */

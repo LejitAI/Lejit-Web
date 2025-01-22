@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FlagIcon from '@mui/icons-material/Flag';
+import MagicIcon from '@mui/icons-material/AutoAwesome'; // Magic icon
 import profilePic from './Avatar.png'; // Replace with actual profile picture path
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -80,7 +81,7 @@ const Topbar = () => {
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', width: '100%' }}>
-        {/* Left side: Menu and Search */}
+        {/* Left side: Menu and Chat with AI */}
         <Box display="flex" alignItems="center" gap="12px">
           <IconButton
             edge="start"
@@ -97,40 +98,56 @@ const Topbar = () => {
           </IconButton>
 
           <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: '#FFFFFF',
-              boxShadow: searchFocused ? '0px 4px 12px rgba(0, 0, 0, 0.2)' : '0px 3px 7px rgba(0, 0, 0, 0.1)',
-              borderRadius: '37px',
-              padding: '3px 12px',
-              width: searchFocused ? '375px' : '300px',
-              height: '28px',
-              transition: 'width 0.4s ease, box-shadow 0.3s ease',
-              '&:hover': {
-                boxShadow: '0px 6px 15px rgba(0, 103, 253, 0.15)',
-              },
-            }}
-            onFocus={() => setSearchFocused(true)}
-            onBlur={() => setSearchFocused(false)}
-          >
-            <SearchIcon
-              sx={{
-                color: searchFocused ? '#0F67FD' : '#B7B7B7',
-                marginRight: '6px',
-                fontSize: '18px',
-              }}
-            />
-            <InputBase
-              placeholder="Search"
-              sx={{
-                width: '100%',
-                fontSize: '10px',
-                color: searchFocused ? '#404040' : '#B7B7B7',
-                fontFamily: 'Poppins, sans-serif',
-              }}
-            />
-          </Box>
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: '#F5F7FA', // Light magical background
+        boxShadow: searchFocused
+          ? '0px 8px 25px rgba(237, 234, 241, 0.5)'
+          : '0px 4px 15px rgba(56, 239, 125, 0.3)',
+        borderRadius: '50px',
+        padding: '8px 16px',
+        width: searchFocused ? '420px' : '320px',
+        height: '48px',
+        transition: 'all 0.4s ease-in-out',
+        border: '2px solid transparent',
+        backgroundImage: searchFocused
+          ? 'linear-gradient(#F5F7FA, #F5F7FA), linear-gradient(to right, #8C52FF, #38EF7D)'
+          : 'linear-gradient(#F5F7FA, #F5F7FA)',
+        backgroundOrigin: 'border-box',
+        backgroundClip: 'content-box, border-box',
+        '&:hover': {
+          boxShadow: '0px 10px 30px rgba(56, 239, 125, 0.4)',
+          transform: 'scale(1.05)',
+        },
+        cursor: 'pointer',
+      }}
+      onClick={() => navigate('/chatdashboard')} // Navigate on click
+      onFocus={() => setSearchFocused(true)}
+      onBlur={() => setSearchFocused(false)}
+    >
+      <MagicIcon
+        sx={{
+          color: searchFocused ? '#8C52FF' : '#38EF7D',
+          marginRight: '10px',
+          fontSize: '24px',
+          transition: 'color 0.3s ease',
+        }}
+      />
+      <Typography
+        sx={{
+          width: '100%',
+          fontSize: '14px',
+          fontWeight: 500,
+          color: searchFocused ? '#404040' : '#8E8E8E',
+          fontFamily: 'Poppins, sans-serif',
+          letterSpacing: '0.5px',
+          transition: 'color 0.3s ease',
+        }}
+      >
+        Chat with AI
+      </Typography>
+    </Box>
         </Box>
 
         {/* Right side: Notifications, Profile, and Sign-Out */}

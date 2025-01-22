@@ -33,6 +33,7 @@ const App = () => {
                     borderRadius: "15px",
                     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1)",
                     transform: "translateZ(0)",
+                    overflow: "auto", // Enable scrolling
                   }}
                 >
                   <LegalDocumentTemplates />
