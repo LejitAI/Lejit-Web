@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, IconButton, Avatar } from '@mui/material';
+import { Box, Typography, IconButton, Avatar, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -12,6 +12,9 @@ import './ViewTeam.css';
 const ViewTeam = () => {
   const [teamMembers, setTeamMembers] = useState([]);
   const [selectedMember, setSelectedMember] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState("");
+  const [filterOption, setFilterOption] = useState("");
 
   useEffect(() => {
     fetchTeamMembers();
@@ -61,6 +64,72 @@ const ViewTeam = () => {
 
   const handleBack = () => {
     setSelectedMember(null);
+  };
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchTerm(query);
+    applyFilters(query, sortOption, filterOption);
+  };
+
+  const handleSort = () => {
+    const newSortOption = sortOption === "name-asc" ? "name-desc" : "name-asc";
+    setSortOption(newSortOption);
+    applyFilters(searchTerm, newSortOption, filterOption);
+  };
+
+  const handleFilter = () => {
+    const newFilterOption =
+      filterOption === "experience" ? "" : "experience";
+    setFilterOption(newFilterOption);
+    applyFilters(searchTerm, sortOption, newFilterOption);
+  };
+
+  const applyFilters = (search, sort, filter) => {
+    let result = [...teamMembers];
+
+    // Apply search filter
+    if (search) {
+      result = result.filter(
+        (member) =>
+          member.personalDetails.name.toLowerCase().includes(search) ||
+          member.personalDetails.email.toLowerCase().includes(search) ||
+          member.personalDetails.mobile.toLowerCase().includes(search)
+      );
+    }
+
+    // Apply sorting
+    if (sort === "name-asc") {
+      result.sort((a, b) => a.personalDetails.name.localeCompare(b.personalDetails.name));
+    } else if (sort === "name-desc") {
+      result.sort((a, b) => b.personalDetails.name.localeCompare(a.personalDetails.name));
+    }
+
+    // Apply filtering by experience
+    if (filter === "experience") {
+      result = result.filter((member) => member.personalDetails.yearsOfExperience >= 5);
+    }
+
+    setTeamMembers(result);
+  };
+
+  const handleDownload = () => {
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      "Name,Email,Phone,Experience\n" +
+      teamMembers
+        .map(
+          (member) =>
+            `${member.personalDetails.name},${member.personalDetails.email || "N/A"},${member.personalDetails.mobile || "N/A"},${member.personalDetails.yearsOfExperience || "N/A"}`
+        )
+        .join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "team_members.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   if (selectedMember) {
@@ -158,22 +227,32 @@ const ViewTeam = () => {
             Team Members
           </Typography>
         </Box>
-        <Box className="header-right" style={{ display: 'flex', gap: '12px' }}>
-          <Box className="action-button" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <SearchIcon style={{ fontSize: '14px' }} />
-            <Typography style={{ fontSize: '12px' }}>Search List</Typography>
+        <Box className="header-right" style={{ display: "flex", gap: "12px" }}>
+          <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "4.5px" }}>
+            <SearchIcon style={{ fontSize: "10.5px" }} />
+            <TextField
+              variant="standard"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={handleSearch}
+              InputProps={{ style: { fontSize: "10.5px" } }}
+            />
           </Box>
-          <Box className="action-button" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <FilterListIcon style={{ fontSize: '14px' }} />
-            <Typography style={{ fontSize: '12px' }}>Filter</Typography>
+          <Box className="action-button" style={{ display: "flex", alignItems: "center", gap: "4.5px" }}>
+            <FilterListIcon style={{ fontSize: "10.5px" }} />
+            <Typography style={{ fontSize: "10.5px" }}>{filterOption || "Filter"}</Typography>
           </Box>
-          <Box className="action-button" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <DownloadIcon style={{ fontSize: '14px' }} />
-            <Typography style={{ fontSize: '12px' }}>Download List</Typography>
+          <Box className="action-button" onClick={handleSort} style={{ display: "flex", alignItems: "center", gap: "4.5px" }}>
+            <SortIcon style={{ fontSize: "10.5px" }} />
+            <Typography style={{ fontSize: "10.5px" }}>{sortOption === "name-desc" ? "Sort Desc" : "Sort Asc"}</Typography>
           </Box>
-          <Box className="action-button" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <SortIcon style={{ fontSize: '14px' }} />
-            <Typography style={{ fontSize: '12px' }}>Sort</Typography>
+          <Box
+            className="action-button"
+            onClick={handleDownload}
+            style={{ display: "flex", alignItems: "center", gap: "6px", cursor: "pointer" }}
+          >
+            <DownloadIcon style={{ fontSize: "13.5px" }} />
+            <Typography style={{ fontSize: "9px" }}>Download List</Typography>
           </Box>
         </Box>
       </Box>

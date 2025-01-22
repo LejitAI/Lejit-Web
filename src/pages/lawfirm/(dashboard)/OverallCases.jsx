@@ -79,54 +79,8 @@ function App() {
             ADD CASE
           </Button>
 
-          {/* Dimmed Overlay */}
-          {showAddCasePopup && (
-            <Box
-              position="fixed"
-              top={0}
-              left={0}
-              width="100%"
-              height="100%"
-              backgroundColor="rgba(0, 0, 0, 0.5)"
-              zIndex={1600} // Increased zIndex to ensure it appears above all components
-            />
-          )}
-
           {/* Add Case Popup */}
-          {showAddCasePopup && (
-            <Box
-              position="fixed"
-              top="50%"
-              left="50%"
-              style={{
-                transform: 'translate(-50%, -50%)',
-                width: '90%',
-                maxWidth: '720px',
-                maxHeight: '90vh',
-                overflowY: 'auto',
-                backgroundColor: '#FFFFFF',
-                borderRadius: '12px',
-                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-                zIndex: 1700, // Increased zIndex to ensure it appears above the overlay
-                padding: '24px'
-              }}
-            >
-              {/* Close Button */}
-              <Box
-                position="absolute"
-                top="16px"
-                right="16px"
-                fontSize="24px"
-                color="#333"
-                fontWeight="bold"
-                style={{ cursor: "pointer" }}
-                onClick={handleClosePopup}
-              >
-                &times;
-              </Box>
-              <AddCase isOpen={showAddCasePopup} onClose={handleClosePopup} />
-            </Box>
-          )}
+          <AddCase isOpen={showAddCasePopup} onClose={handleClosePopup} />
 
         </Box>
       </ThemeProvider>

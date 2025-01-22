@@ -71,7 +71,6 @@ const AddCase = ({ isOpen, onClose }) => {
                 body: JSON.stringify(data),
             });
 
-
             if (response.ok) {
                 const result = await response.json();
                 setSubmissionMessage(`Case titled "${result.case.title}" was successfully added.`);
@@ -90,7 +89,7 @@ const AddCase = ({ isOpen, onClose }) => {
     return (
         <Modal isOpen={isOpen} onRequestClose={onClose} className="addCaseModal" overlayClassName="modalOverlay">
             <div className="addCaseContainer">
-            <div className="addCaseHeader">
+                <div className="addCaseHeader">
                     <h2 className="addCaseTitle">Add Case</h2>
                     <p className="addCaseSubtitle">
                         Provide key details about your case to help clients understand your expertise and experience.
@@ -179,19 +178,19 @@ const AddCase = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="prepareDocuments">
-                        <div className="iconWrapper">
-                            <div className="iconBackground">
-                                <span className="icon">📄</span>
-                            </div>
+                    <div className="iconWrapper">
+                        <div className="iconBackground">
+                            <span className="icon">📄</span>
                         </div>
-                        <div className="documentContent">
-                            <p className="documentTitle">Prepare Case Documents</p>
-                            <p className="documentSubtitle">
-                                Prepare your case documents with the help of ChatGPT and get a list of lawyers who can assist with your case.
-                            </p>
-                        </div>
-                        <div className="arrowWrapper">→</div>
                     </div>
+                    <div className="documentContent">
+                        <p className="documentTitle">Prepare Case Documents</p>
+                        <p className="documentSubtitle">
+                            Prepare your case documents with the help of ChatGPT and get a list of lawyers who can assist with your case.
+                        </p>
+                    </div>
+                    <div className="arrowWrapper">→</div>
+                </div>
 
                 <div className="addCaseFooter">
                     <button className="cancelButton" onClick={onClose}>Cancel</button>
