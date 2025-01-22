@@ -1,0 +1,73 @@
+.ocr-container {
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ocr-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1d3557;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.ocr-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ocr-file-input {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1d3557;
+  background-color: #f2f5fa;
+  transition: all 0.3s ease;
+}
+
+.ocr-file-input:hover {
+  border-color: #0f67fd;
+}
+
+.ocr-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.extract-button {
+  background-color: #0f67fd;
+}
+
+.extract-button:hover {
+  background-color: #1a74ff;
+}
+
+.format-button {
+  background-color: #28a745;
+}
+
+.format-button:hover {
+  background-color: #218838;
+}
+
+.ocr-editor-container {
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}

@@ -48,7 +48,7 @@ import ClientDashboard from "./pages/citizen/citizendashboard/DashboardLayout";
 import CaseDocuments from './pages/lawfirm/(dashboard)/CaseDocuments/CaseDocuments';
 import SignOut from './pages/authentication/SignOut';
 import HearingSchedulesPage from './pages/lawfirm/(dashboard)/HearingSchedules/HearingSchedulesPage';
-
+import Ocr from './pages/AI/components/Chat/Ocr';
 function App() {
   const [theme, colorMode] = useMode();
 
@@ -113,6 +113,7 @@ function App() {
             <Route path="/cdashboard" element={<ClientDashboard />} />
             <Route path="/casedocuments" element={<CaseDocuments />} />
             <Route path="/signout" element={<SignOut />} />
+            <Route path="/ocr" element={<Ocr />} />
 
 
           </Routes>
