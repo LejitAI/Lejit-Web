@@ -3,14 +3,17 @@ import ChatBubble from "./ChatBubble";
 import TypingIndicator from "./TypingIndicator";
 import "../../styles/Chat.css";
 import axios from "axios";
+import SendIcon from "@mui/icons-material/Send";
+import MicIcon from "@mui/icons-material/Mic";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-const ChatInterface = () => {
+const ChatInterface = ({ selectedHistory, isDarkMode }) => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [uploadMessage, setUploadMessage] = useState("");
-  const [isUploading, setIsUploading] = useState(false);// For scroll loading state
+  const [isUploading, setIsUploading] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunks = useRef([]);
   const chatRef = useRef(null);
@@ -30,19 +33,16 @@ const ChatInterface = () => {
   const fetchChatHistory = async () => {
     try {
       const sessionId = getSessionId();
-      const response = await axios.get(
-        `api/api/chat/history/${sessionId}`
-      );
-  
+      const response = await axios.get(`api/api/chat/history/${sessionId}`);
+
       if (response.status === 200) {
-        // Assuming the backend returns messages in descending order (latest first)
-        const fetchedMessages = response.data.chat_history.map((chat) => [
-          { role: "assistant", content: chat.response },
-          { role: "user", content: chat.query },
-          
-        ]).flat(); // Flatten user-assistant pairs into a single array
-  
-        // If the backend already limits to 50, you just add these messages as they are
+        const fetchedMessages = response.data.chat_history
+          .map((chat) => [
+            { role: "assistant", content: chat.response },
+            { role: "user", content: chat.query },
+          ])
+          .flat();
+
         setMessages(fetchedMessages.reverse());
       } else {
         console.error("Failed to fetch chat history:", response);
@@ -51,7 +51,6 @@ const ChatInterface = () => {
       console.error("Error fetching chat history:", error);
     }
   };
-  
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -97,6 +96,11 @@ const ChatInterface = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSend();
+    }
+  };
 
   const startRecording = async () => {
     try {
@@ -133,7 +137,7 @@ const ChatInterface = () => {
   const sendAudioToBackend = async (audioBlob) => {
     try {
       const formData = new FormData();
-      formData.append("audio", audioBlob, "audio.webm");
+      formData.append("audio", audioBlob, "audio/webm");
 
       const response = await fetch("/backend/api/speech-to-text", {
         method: "POST",
@@ -152,7 +156,7 @@ const ChatInterface = () => {
       setInputValue("");
       try {
         setIsLoading(true);
-  
+
         const response = await fetch("/api/api/query/general", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -161,11 +165,11 @@ const ChatInterface = () => {
             query: transcription,
           }),
         });
-  
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-  
+
         const data = await response.json();
         const aiMessage = {
           role: "assistant",
@@ -233,7 +237,7 @@ const ChatInterface = () => {
   }, [messages, isLoading]);
 
   return (
-    <div className="chat-container">
+    <div className={`chat-container ${isDarkMode ? 'dark-mode' : ''}`} style={{ height: 'calc(100vh - 48px)' }}>
       <div className="chat-messages" ref={chatRef}>
         {messages.map((msg, index) => (
           <ChatBubble key={index} message={msg} />
@@ -245,6 +249,7 @@ const ChatInterface = () => {
           type="text"
           value={inputValue}
           onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
           className="chat-input"
           placeholder="Type your message..."
         />
@@ -253,17 +258,13 @@ const ChatInterface = () => {
             onClick={isRecording ? stopRecording : startRecording}
             className="record-button"
           >
-            {isRecording ? <button className="send-button">
-            ⏹️
-          </button> : <button className="send-button">
-          🎙️
-          </button>}
+            <MicIcon />
           </button>
           <button onClick={handleSend} className="send-button">
-            ➤
+            <SendIcon />
           </button>
           <button onClick={handleUploadDoc} className="upload-button">
-            📄
+            <CloudUploadIcon />
           </button>
         </div>
       </div>
