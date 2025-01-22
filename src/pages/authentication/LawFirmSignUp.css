@@ -7,19 +7,17 @@
     width: 100vw;
     height: 100vh;
     background: #F2F5FA;
-    margin-top: 0px;
+    overflow: hidden;
 }
 
 /* Left Box */
 .left-box {
-    position: relative;
     width: 50%;
-    background: #F2F5FA;
-    padding: 0 120px;
+    padding: 0 3rem; /* Further reduced from 5rem */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 16px;
+    gap: 0.5rem; /* Further reduced from 0.75rem */
 }
 
 /* Right Box */
@@ -43,15 +41,16 @@
 .signup-title {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 32px;
+    font-size: 1.3rem;
     color: #120D26;
-    margin-top: 20px;
+    margin-bottom: 0.6rem; /* Increased from 0.2rem */
+    padding-top: 0.4rem; /* Added padding top */
 }
 
 .welcome-back {
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
-    font-size: 16px;
+    font-size: 1rem;
     color: #120D26;
     margin-top: -20px;
 }
@@ -60,23 +59,18 @@
 .signup-input-fields {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 0.5rem; /* Further reduced from 0.75rem */
 }
 
-.input-container {
-    background: #FFFFFF;
-    border-radius: 12px;
-    padding: 16px;
-    height: 56px;
-}
+
 
 .signup-input-field {
     width: 100%;
     border: none;
     outline: none;
     font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    color: #7A7A7A;
+    font-size: 0.7rem; /* Further reduced from 0.875rem */
+    color: #120D26;
 }
 
 /* Remember Me and Forgot Password */
@@ -105,48 +99,53 @@
     color: #FFFFFF;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 0.7rem; /* Further reduced from 0.875rem */
     text-transform: uppercase;
     border: none;
-    border-radius: 15px;
-    padding: 16px;
+    border-radius: 0.5rem; /* Further reduced from 0.5rem */
+    padding: 0.5rem; /* Further reduced from 0.75rem */
     cursor: pointer;
+    margin-top: 0.5rem; /* Further reduced from 0.75rem */
+    transition: background-color 0.3s ease;
 }
 
 /* Divider */
-.divider {
+.signup-divider {
     text-align: center;
     font-family: 'Poppins', sans-serif;
-    font-size: 16px;
+    font-size: 0.7rem; /* Further reduced from 0.875rem */
     color: #7A7A7A;
+    margin: 0.3rem 0; /* Further reduced from 0.75rem */
 }
 
 /* Social Login Buttons */
-.google-login,
-.facebook-login {
+.google-login{
     background: #FFFFFF;
     color: #120D26;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 0.7rem; /* Further reduced from 0.875rem */
     border: none;
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 0.5rem; /* Further reduced from 0.5rem */
+    padding: 0.2rem; /* Further reduced from 0.75rem */
     width: 100%;
     cursor: pointer;
-    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem; /* Further reduced from 0.4rem */
+    margin-bottom: 0.5rem; /* Further reduced from 0.75rem */
+    box-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.1);
 }
 
-.google-login {
-    margin-bottom: 16px;
-}
 
 /* Sign Up Text */
 .sign-up-text {
     text-align: center;
     font-family: 'Poppins', sans-serif;
-    font-size: 16px;
+    font-size: 0.7rem; /* Further reduced from 0.875rem */
     color: #7A7A7A;
+    margin-top: 0.5rem; /* Further reduced from 0.75rem */
 }
 
 .sign-up-text a {
@@ -221,36 +220,24 @@
     vertical-align: middle; 
 }
 
-.google-login,
-.facebook-login {
-    background: #FFFFFF;
-    color: #120D26;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    border: none;
-    border-radius: 12px;
-    padding: 16px;
-    width: 100%;
-    cursor: pointer;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-}
 
-.google-login {
-    margin-bottom: 16px;
-}
 
 .social-icon {
     width: 40px; 
     height: 40px; 
     margin-right: 8px; 
 }
+.input-container {
+    background: #FFFFFF;
+    border-radius: 0.7rem; /* Further reduced from 0.5rem */
+    padding: 0.2rem; /* Further reduced from 0.75rem */
+    display: flex;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.1);
+}
 
-.signup-input-container {
-    position: relative; 
-  }
+
   
   .password-toggle {
     position: absolute;

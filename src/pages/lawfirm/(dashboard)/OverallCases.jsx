@@ -6,7 +6,6 @@ import Sidebar from "../../lawfirm/global/Sidebar";
 import ViewTeam from "./ViewTeam";
 import OverallCases from "./Cases";
 import AddCase from "../forms/AddCase";
-import BlueButton from "../global/BlueButton";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -129,7 +128,6 @@ function App() {
             </Box>
           )}
 
-          <BlueButton onClick={handleBlueButtonClick} />
         </Box>
       </ThemeProvider>
     </ColorModeContext.Provider>

@@ -207,7 +207,7 @@ const LawFirmSignUp = () => {
 
         <div className="signup-input-fields">
           {/* Law Firm Name */}
-          <div className="signup-input-container">
+          <div className="input-container">
             <input 
               type="text" 
               placeholder="Law Firm Name" 
@@ -218,7 +218,7 @@ const LawFirmSignUp = () => {
           </div>
 
           {/* Full Name */}
-          <div className="signup-input-container">
+          <div className="input-container">
             <input 
               type="text" 
               placeholder="Full Name" 
@@ -229,7 +229,7 @@ const LawFirmSignUp = () => {
           </div>
 
           {/* Email */}
-          <div className="signup-input-container">
+          <div className="input-container">
             <input 
               type="email" 
               placeholder="Email" 
@@ -240,7 +240,7 @@ const LawFirmSignUp = () => {
           </div>
 
           {/* Password */}
-          <div className="signup-input-container">
+          <div className="input-container">
             <input 
               type={passwordVisible ? "text" : "password"} 
               placeholder="Your password" 
@@ -258,7 +258,7 @@ const LawFirmSignUp = () => {
           </div>
 
           {/* Confirm Password */}
-          <div className="signup-input-container">
+          <div className="input-container">
             <input 
               type={confirmPasswordVisible ? "text" : "password"} 
               placeholder="Confirm password" 
@@ -293,17 +293,14 @@ const LawFirmSignUp = () => {
           {isLoading ? "Creating Account..." : "LET'S GET STARTED"}
         </button>
 
-        <div className="divider">OR</div>
+        <div className="signup-divider">OR</div>
 
         {/* Social Logins */}
         <button className="google-login">
           <img src={GoogleLogo} alt="Google Logo" className="social-icon" />
           Login with Google
         </button>
-        <button className="facebook-login">
-          <img src={FacebookLogo} alt="Facebook Logo" className="social-icon" />
-          Login with Facebook
-        </button>
+      
 
         {/* Sign-In Option */}
         <p className="sign-up-text">
