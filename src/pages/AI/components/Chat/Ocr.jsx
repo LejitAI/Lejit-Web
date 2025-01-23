@@ -4,6 +4,10 @@ import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import "../../styles/Ocr.css"; // Import custom styles
+import { ColorModeContext, useMode } from "../../../../theme";
+import { CssBaseline, ThemeProvider, Box } from "@mui/material";
+import Topbar from "../../../lawfirm/global/Topbar";
+import Sidebar from "../../../lawfirm/global/Sidebar";
 
 const Ocr = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -11,6 +15,7 @@ const Ocr = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [extractedText, setExtractedText] = useState('');
     const [showFormatButton, setShowFormatButton] = useState(false);
+    const [theme, colorMode] = useMode();
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
@@ -57,41 +62,54 @@ const Ocr = () => {
     };
 
     return (
-        <div className="ocr-container">
-            <h1 className="ocr-title">OCR Text Extraction</h1>
-            <div className="ocr-controls">
-                <input type="file" accept="image/*" onChange={handleImageUpload} className="ocr-file-input" />
-                <button
-                    onClick={handleExtractText}
-                    disabled={isLoading}
-                    className="ocr-button extract-button"
-                >
-                    {isLoading ? 'Extracting...' : 'Extract Text'}
-                </button>
-                {showFormatButton && (
-                    <button
-                        onClick={handleFormat}
-                        className="ocr-button format-button"
-                    >
-                        Format Text
-                    </button>
-                )}
-            </div>
-            <div className="ocr-editor-container">
-                <Editor
-                    editorState={editorState}
-                    onEditorStateChange={setEditorState}
-                    toolbar={{
-                        options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
-                        inline: { inDropdown: false },
-                        list: { inDropdown: false },
-                        textAlign: { inDropdown: false },
-                        link: { inDropdown: false },
-                        history: { inDropdown: false },
-                    }}
-                />
-            </div>
-        </div>
+        <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Box display="flex" height="100vh" position="relative">
+                    <Sidebar />
+                    <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden">
+                        <Topbar />
+                        <Box component="main" flexGrow={1} p={2} overflow="auto">
+                            <div className="ocr-container">
+                                <h1 className="ocr-title">OCR Text Extraction</h1>
+                                <div className="ocr-controls">
+                                    <input type="file" accept="image/*" onChange={handleImageUpload} className="ocr-file-input" />
+                                    <button
+                                        onClick={handleExtractText}
+                                        disabled={isLoading}
+                                        className="ocr-button extract-button"
+                                    >
+                                        {isLoading ? 'Extracting...' : 'Extract Text'}
+                                    </button>
+                                    {showFormatButton && (
+                                        <button
+                                            onClick={handleFormat}
+                                            className="ocr-button format-button"
+                                        >
+                                            Format Text
+                                        </button>
+                                    )}
+                                </div>
+                                <div className="ocr-editor-container">
+                                    <Editor
+                                        editorState={editorState}
+                                        onEditorStateChange={setEditorState}
+                                        toolbar={{
+                                            options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
+                                            inline: { inDropdown: false },
+                                            list: { inDropdown: false },
+                                            textAlign: { inDropdown: false },
+                                            link: { inDropdown: false },
+                                            history: { inDropdown: false },
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </Box>
+                    </Box>
+                </Box>
+            </ThemeProvider>
+        </ColorModeContext.Provider>
     );
 };
 
