@@ -42,25 +42,30 @@ const DocumentFolders = ({ caseId }) => {
       setError("Authentication token is missing.");
       return;
     }
-
+  
     try {
-      const response = await axios.get("/backend/api/chat/documents?caseId=${caseId}", {
+      const response = await axios.get(`http://backend.lejit.ai/backend/api/chat/documents?caseId=${caseId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
       if (response.status === 200) {
         const updatedDocuments = response.data.documents.map((doc) => ({
           ...doc,
           url: correctDocumentUrl(doc.url),
         }));
         setDocuments(updatedDocuments);
-        // setCaseId(response.data.caseId);
         setTags(response.data.tags);
       }
     } catch (err) {
-      setError("Failed to fetch documents. Please try again.");
+      if (err.response && err.response.status === 404) {
+        setDocuments([]); // Set empty documents array
+        setError("No documents have been uploaded for this case.");
+      } else {
+        console.error(err);
+        setError("Failed to fetch documents. Please try again.");
+      }
     }
   };
 
@@ -70,36 +75,45 @@ const DocumentFolders = ({ caseId }) => {
   };
 
   const handleUpload = async () => {
+    console.log("Uploading file...");
+    if (!caseId) {
+      setError("Case ID is required. Please select or create a case first.");
+      return;
+    }
+  
     if (!file) {
       setError("Please select a file to upload.");
       return;
     }
-
+  
     const token = localStorage.getItem("token");
     if (!token) {
       setError("Authentication token is missing.");
       return;
     }
-
+  
     const formData = new FormData();
+    formData.append("caseId", caseId);
     formData.append("document", file);
-    formData.append("caseId", caseId); // Include caseId in the upload request
-    formData.append("tags", JSON.stringify(tags)); // Include tags in the upload request
+    formData.append("tags", JSON.stringify(tags));
 
+    console.log("formData:", formData);
+  
     try {
-      const response = await axios.post("/backend/api/chat/upload", formData, {
+      const response = await axios.post("http://backend.lejit.ai/backend/api/chat/upload", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-
+  
       if (response.status === 200) {
-        fetchDocuments(); // Refresh the document list
-        setFile(null); // Reset the file input
-        setError(null); // Clear any error
+        await fetchDocuments();
+        setFile(null);
+        setError(null);
       }
     } catch (err) {
+      console.log(err);
       setError("Failed to upload the document. Please try again.");
     }
   };
