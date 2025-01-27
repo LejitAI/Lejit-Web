@@ -8,7 +8,7 @@ import Sidebar from "../../lawfirm/global/Sidebar";
 import Header from "./components/CaseDetails/Header";
 import CaseInfo from "./components/CaseDetails/CaseInfo";
 import HearingSchedule from "./components/CaseDetails/HearingSchedule";
-import CaseStrategy from "./components/CaseDetails/CaseStrategy";
+import CaseStrategies from "./components/CaseDetails/CaseStrategy";
 import TeamMembers from "./components/CaseDetails/TeamMembers";
 import DocumentFolders from "./components/Documents/DocumentFolders";
 import { useParams } from "react-router-dom";
@@ -57,7 +57,8 @@ const CaseDetails = () => {
                 <HearingSchedule />
 
                 {/* Case Strategies */}
-                <CaseStrategy />
+                <CaseStrategies caseId={id} />
+
 
                 {/* Team Members */}
                 <TeamMembers />

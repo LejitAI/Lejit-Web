@@ -1,38 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import "./CaseStrategy.css";
 
-const CaseStrategies = () => {
+const CaseStrategies = ({ caseId }) => {
+  const [caseArguments, setCaseArguments] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Fetch case arguments from the API
+    const fetchCaseArguments = async () => {
+      try {
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setError("Authentication token is missing.");
+          return;
+        }
+        const response = await fetch(`http://localhost:5000/api/chat/get-case-arguments?caseId=${caseId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+          },
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          setCaseArguments(data.arguments);
+        } else {
+          setError(data.message || "Failed to fetch case arguments");
+        }
+      } catch (err) {
+        setError("Error fetching case arguments. Please try again later.");
+      }
+    };
+
+    fetchCaseArguments();
+  }, [caseId]);
   return (
-    <div className="flex flex-col p-5 gap-4 bg-white shadow-lg rounded-lg w-[1104px] h-[345px]">
+    <div className="case-strategies-container">
       {/* Heading */}
-      <div className="flex items-center gap-3 w-[150px] h-[21px]">
-        <h3 className="font-bold text-[14px] leading-[21px] text-[#343434]">Case Strategy Points</h3>
+      <div className="case-strategies-heading">
+        <h3 className="case-strategies-heading-text">Case Strategy Points</h3>
       </div>
 
       {/* Divider */}
-      <div className="border-b border-[#1D3557]/10 w-full"></div>
+      <div className="case-strategies-divider"></div>
 
       {/* Strategy Content */}
-      <div className="flex flex-col gap-4 w-full h-[252px]">
-        <p className="font-normal text-[12px] leading-[18px] text-[#343434]">
-          LegalAssist is a case management system designed for law firms to efficiently handle client cases, organize
-          documents, and manage workflows. The goal is to simplify the management process, reduce administrative
-          overhead, and improve case tracking for lawyers. <br />
-          <br />
-          <strong>Law Points:</strong> <br />
-          Law firms often struggle with disorganized case files, inefficient client communication, and difficulty
-          tracking case progress. Lawyers need a system that centralizes case information, manages deadlines, and
-          automates document handling. <br />
-          <br />
-          <strong>Strategy Points:</strong> <br />
-          Law firms often struggle with disorganized case files, inefficient client communication, and difficulty
-          tracking case progress. Lawyers need a system that centralizes case information, manages deadlines, and
-          automates processes. <br />
-          <br />
-          <strong>Argument Notch:</strong> <br />
-          Law firms often struggle with disorganized case files, inefficient client communication, and difficulty
-          tracking case progress. Lawyers need a system that centralizes case information, manages deadlines, and
-          automates document handling.
-        </p>
+      <div className="case-strategies-content-scrollable">
+        {error ? (
+          <p className="case-strategies-error">{error}</p>
+        ) : caseArguments.length > 0 ? (
+          <div className="case-strategies-markdown">
+            {caseArguments.map((argument, index) => (
+              <div key={index} className="case-strategies-argument">
+                <p>{argument.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="case-strategies-loading">Loading case arguments...</p>
+        )}
       </div>
     </div>
   );
