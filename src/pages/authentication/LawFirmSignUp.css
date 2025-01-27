@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* Container */
+.signup-container {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    background: #F2F5FA;
+    overflow: hidden;
+}
+
+/* Left Box */
+.left-box {
+    width: 50%;
+    padding: 0 3rem; /* Further reduced from 5rem */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem; /* Further reduced from 0.75rem */
+}
+
+/* Right Box */
+.right-box {
+    position: relative;
+    width: 50%;
+    background: linear-gradient(156.58deg, #0F67FD 0%, #093D97 103.59%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 220px;
+    height: 220px;
+    background: #041131;
+    border-radius: 50%;
+}
+
+/* Title and Subtitle */
+.signup-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #120D26;
+    margin-bottom: 0.6rem; /* Increased from 0.2rem */
+    padding-top: 0.4rem; /* Added padding top */
+}
+
+.welcome-back {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    color: #120D26;
+    margin-top: -20px;
+}
+
+/* Input Fields */
+.signup-input-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Further reduced from 0.75rem */
+}
+
+
+
+.signup-input-field {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.7rem; /* Further reduced from 0.875rem */
+    color: #120D26;
+}
+
+/* Remember Me and Forgot Password */
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Poppins', sans-serif;
+    color: #7A7A7A;
+}
+
+.forgot-password {
+    color: #7A7A7A;
+    text-decoration: none;
+}
+
+/* Sign Up Button */
+.sign-up-button {
+    background: #0F67FD;
+    color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 0.7rem; /* Further reduced from 0.875rem */
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0.5rem; /* Further reduced from 0.5rem */
+    padding: 0.5rem; /* Further reduced from 0.75rem */
+    cursor: pointer;
+    margin-top: 0.5rem; /* Further reduced from 0.75rem */
+    transition: background-color 0.3s ease;
+}
+
+/* Divider */
+.signup-divider {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.7rem; /* Further reduced from 0.875rem */
+    color: #7A7A7A;
+    margin: 0.3rem 0; /* Further reduced from 0.75rem */
+}
+
+/* Social Login Buttons */
+.google-login{
+    background: #FFFFFF;
+    color: #120D26;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 0.7rem; /* Further reduced from 0.875rem */
+    border: none;
+    border-radius: 0.5rem; /* Further reduced from 0.5rem */
+    padding: 0.2rem; /* Further reduced from 0.75rem */
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem; /* Further reduced from 0.4rem */
+    margin-bottom: 0.5rem; /* Further reduced from 0.75rem */
+    box-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.1);
+}
+
+
+/* Sign Up Text */
+.sign-up-text {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.7rem; /* Further reduced from 0.875rem */
+    color: #7A7A7A;
+    margin-top: 0.5rem; /* Further reduced from 0.75rem */
+}
+
+.sign-up-text a {
+    color: #0F67FD;
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .signup-container {
+        flex-direction: column-reverse; 
+        align-items: center;
+    }
+
+    .left-box, .right-box {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    
+    .right-box {
+        background: #F2F5FA; 
+    }
+
+    .signup-title {
+        font-size: 24px;
+    }
+
+    .welcome-back, .divider, .sign-up-text {
+        font-size: 14px;
+    }
+
+    .sign-up-button, .google-login, .facebook-login {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .logo {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-box, .right-box {
+        padding: 0 10px;
+    }
+
+    .signup-title {
+        font-size: 20px;
+    }
+
+    .welcome-back, .divider, .sign-up-text {
+        font-size: 12px;
+    }
+
+    .sign-in-button, .google-login, .facebook-login {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .logo {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+.social-icon {
+    width: 40px; 
+    height: 40px; 
+    margin-right: 8px; 
+    vertical-align: middle; 
+}
+
+
+
+.social-icon {
+    width: 40px; 
+    height: 40px; 
+    margin-right: 8px; 
+}
+.input-container {
+    background: #FFFFFF;
+    border-radius: 0.7rem; /* Further reduced from 0.5rem */
+    padding: 0.2rem; /* Further reduced from 0.75rem */
+    display: flex;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.1);
+}
+
+
+  
+  .password-toggle {
+    position: absolute;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999; 
+  }
+
+  .error-message {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    border: 1px solid #f5c6cb; /* Border color matching the background */
+    padding: 10px;
+    margin: 10px 0; /* Space around the message */
+    border-radius: 5px; /* Rounded corners */
+    display: flex; /* Flexbox for aligning icon and text */
+    align-items: center; /* Center the items vertically */
+  }
+  
+  .error-icon {
+    margin-right: 8px; /* Space between icon and text */
+  }
+  
+  .sign-in-link {
+    color: #0f67fd;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .sign-in-link:hover {
+    color: #0844a6;
+  }
+  
