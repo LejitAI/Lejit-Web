@@ -15,7 +15,7 @@ const CaseStrategies = ({ caseId }) => {
           setError("Authentication token is missing.");
           return;
         }
-        const response = await fetch(`http://localhost:5000/api/chat/get-case-arguments?caseId=${caseId}`, {
+        const response = await fetch(`http://backend.lejit.ai/backend/api/chat/get-case-arguments?caseId=${caseId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -31,6 +31,8 @@ const CaseStrategies = ({ caseId }) => {
         }
       } catch (err) {
         setError("Error fetching case arguments. Please try again later.");
+        console.log(err)
+
       }
     };
 
