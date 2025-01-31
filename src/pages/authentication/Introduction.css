@@ -22,7 +22,7 @@
   width: 30%;
   height: 6rem;
   border-radius: 15px;
-  background: #ffffff;
+  background: linear-gradient(135deg, #1e7bff, #4b9fff);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
   cursor: pointer;
@@ -62,6 +62,13 @@
   background: linear-gradient(135deg, #1e7bff, #4b9fff);
 }
 
+.citizen-card.selected {
+    background: linear-gradient(135deg, #1e7bff, #4b9fff);
+    transform: scale(1.2);
+}
+
+
+
 /* Lawyer Button Styling */
 .lawyer-card {
   background: linear-gradient(135deg, #1e7bff, #4b9fff);
@@ -69,6 +76,11 @@
 
 .lawyer-card:hover {
   background: linear-gradient(135deg, #1e7bff, #4b9fff);
+}
+
+.lawyer-card.selected {
+    background: linear-gradient(135deg, #1e7bff, #4b9fff);
+    transform: scale(1.2);
 }
 
 /* Corporate Button Styling */
@@ -80,6 +92,10 @@
   background: linear-gradient(135deg, #1e7bff, #4b9fff);
 }
 
+.corporate-card.selected {
+    background: linear-gradient(135deg, #1e7bff, #4b9fff);
+    transform: scale(1.2);
+}
 
 /* Icon Styling */
 .user-type-icon {

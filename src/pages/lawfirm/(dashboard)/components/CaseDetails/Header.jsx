@@ -1,51 +1,125 @@
-import React from "react";
-import { FiDownload } from "react-icons/fi"; // For Download Icon
-import { AiOutlinePlus } from "react-icons/ai"; // For Plus Icon
+import React, { useEffect, useState } from "react";
+import { FaWhatsapp } from "react-icons/fa";
+import { FiMessageCircle, FiPhone } from "react-icons/fi";
+import { useParams, useLocation } from "react-router-dom";
 
-const Header = () => {
-  return (
-    <div className="flex justify-between items-center w-[1104px] h-[40px] px-0">
-      {/* Left Section - Page Title */}
-      <div className="flex items-center gap-[8px]">
-        {/* Back Button */}
-        <button className="relative w-[20px] h-[20px] flex justify-center items-center">
-          <div className="absolute w-[18px] h-[16px]">
-            <span
-              className="absolute left-[5%] right-[5%] top-[50%] bottom-[50%] border-l-2 border-[#343434] rotate-45"
-              style={{ transformOrigin: "center" }}
-            ></span>
-          </div>
-        </button>
-        {/* Page Title */}
-        <h1 className="text-[#343434] font-medium text-[22px] leading-[33px]">
-          My Case Details
-        </h1>
-      </div>
+const CaseInfo = () => {
+    const { id } = useParams();
+    const location = useLocation();
+    const [caseData, setCaseData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [timer, setTimer] = useState(0); // Timer in seconds
+    const [isRunning, setIsRunning] = useState(true);
 
-      {/* Right Section - Action Buttons */}
-      <div className="flex items-center gap-[25px]">
-        {/* Review Document Button */}
-        <button className="flex items-center gap-[6px] border border-[#0F67FD] rounded-[10px] px-[16px] h-[40px]">
-          <div className="w-[24px] h-[24px] bg-[#0F67FD] flex justify-center items-center rounded-full">
-            <FiDownload className="w-[14px] h-[14px] text-white" />
-          </div>
-          <span className="text-[#0F67FD] font-normal text-[14px] leading-[21px]">
-            Review Document
-          </span>
-        </button>
+    useEffect(() => {
+        const fetchCaseDetails = async () => {
+            try {
+                if (location.state?.caseData) {
+                    setCaseData(location.state.caseData);
+                    setTimer(location.state.caseData.timer || 0);
+                    setIsRunning(location.state.caseData.isRunning ?? true);
+                    setLoading(false);
+                    return;
+                }
 
-        {/* Create Affidavit Button */}
-        <button className="flex items-center gap-[6px] bg-[#0F67FD] text-white rounded-[10px] px-[16px] h-[40px]">
-          <div className="w-[24px] h-[24px] bg-white flex justify-center items-center rounded-full">
-            <AiOutlinePlus className="w-[14px] h-[14px] text-[#0F67FD]" />
-          </div>
-          <span className="font-normal text-[14px] leading-[21px]">
-            Create Affidavit
-          </span>
-        </button>
-      </div>
-    </div>
-  );
+                const token = localStorage.getItem("token");
+        const response = await fetch(`http://backend.lejit.ai/backend/api/admin/get-cases`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+                if (!response.ok) throw new Error("Failed to fetch case details");
+
+                const caseDetail = await response.json();
+                setCaseData(caseDetail);
+                setTimer(caseDetail.timer || 0);
+                setIsRunning(caseDetail.isRunning ?? true);
+            } catch (error) {
+                console.error("Error:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCaseDetails();
+    }, [id, location.state]);
+
+    useEffect(() => {
+        let interval;
+        if (isRunning) {
+            interval = setInterval(() => {
+                setTimer((prev) => prev + 1);
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [isRunning]);
+
+    const handleTimerToggle = async () => {
+        setIsRunning((prev) => !prev);
+        try {
+            const token = localStorage.getItem("token");
+            await fetch(`http://backend.lejit.ai/backend/api/admin/update-case-timer/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ timer, isRunning: !isRunning }),
+            });
+        } catch (error) {
+            console.error("Error updating timer:", error);
+        }
+    };
+
+    const formatTime = (time) => {
+        const hours = Math.floor(time / 3600).toString().padStart(2, "0");
+        const minutes = Math.floor((time % 3600) / 60).toString().padStart(2, "0");
+        const seconds = (time % 60).toString().padStart(2, "0");
+        return `${hours}:${minutes}:${seconds}`;
+    };
+
+    if (loading) return <div>Loading...</div>;
+    if (!caseData) return <div>Case not found</div>;
+
+    return (
+        <div className="flex items-center justify-between w-[1104px] h-[40px]">
+            {/* Page Name */}
+            <div className="flex items-center gap-8">
+                <button onClick={() => window.history.back()} className="text-[#343434]">
+                    ←
+                </button>
+                <h1 className="text-[#343434] font-medium text-[22px] leading-[33px]">
+                    My Case Details
+                </h1>
+            </div>
+
+            {/* Timer */}
+            <div className="flex items-center gap-4">
+                <div className="flex items-center px-4 py-2 bg-[#34C7591A] border border-[#34C759] rounded-[13px]">
+                    <span className="text-[#34C759] font-medium text-[18px]">
+                        {formatTime(timer)}
+                    </span>
+                </div>
+                <button
+                    onClick={handleTimerToggle}
+                    className="text-[#0F67FD] font-medium text-[14px]"
+                >
+                    {isRunning ? "STOP TIMER" : "RESUME TIMER"}
+                </button>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex items-center gap-6">
+                <button className="flex items-center gap-2 px-4 py-2 border border-[#0F67FD] rounded-[10px]">
+                    <span className="text-[#0F67FD] text-[14px]">Review Document</span>
+                </button>
+                <button className="flex items-center gap-2 px-4 py-2 bg-[#0F67FD] text-white rounded-[10px]">
+                    <span className="text-[14px]">Create Affidavit</span>
+                </button>
+            </div>
+        </div>
+    );
 };
 
-export default Header;
+export default CaseInfo;
