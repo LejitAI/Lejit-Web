@@ -4,14 +4,6 @@ import { FiDownload } from "react-icons/fi";
 import { AiOutlinePlus } from "react-icons/ai";
 import "./DocumentFolders.css";
 
-const FolderIcon = () => (
-  <div className="folder-icon">
-    <div className="folder-top" />
-    <div className="folder-stripe" />
-    <div className="folder-body" />
-  </div>
-);
-
 const correctDocumentUrl = (url) => {
   const requiredPath = "/backend/uploads/";
   if (!url.includes(requiredPath)) {
@@ -25,7 +17,6 @@ const correctDocumentUrl = (url) => {
 
 const DocumentFolders = ({ caseId }) => {
   const [documents, setDocuments] = useState([]);
-  // const [caseId, setCaseId] = useState("");
   const [tags, setTags] = useState([]);
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
@@ -122,40 +113,16 @@ const DocumentFolders = ({ caseId }) => {
     fetchDocuments();
   }, []);
 
-  const folders = [
-    { name: "Court" },
-    { name: "Invoice" },
-    { name: "Evidence" },
-    { name: "Others" },
-    { name: "Opposition" },
-    { name: "Quotations" },
-  ];
-
   return (
     <div className="document-folders-container">
       <div className="header">
-        <h2>Case documents</h2>
-        <button className="toggle-button" />
-      </div>
-
-      <div className="divider" />
-
-      <div className="folders">
-        {folders.map((folder, index) => (
-          <div key={index} className="folder-item">
-            <div className="folder-icon-container">
-              <FolderIcon />
-            </div>
-            <span>{folder.name}</span>
-          </div>
-        ))}
+        <h2>Case Documents</h2>
       </div>
 
       <div className="divider" />
 
       <div className="case-info">
         <p><strong>Case ID:</strong> {caseId || "N/A"}</p>
-        {/* <p><strong>Tags:</strong> {tags.length > 0 ? tags.join(", ") : "None"}</p> */}
       </div>
 
       {documents.map((doc, index) => (
