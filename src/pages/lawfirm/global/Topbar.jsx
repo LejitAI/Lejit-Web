@@ -9,6 +9,7 @@ import MagicIcon from '@mui/icons-material/AutoAwesome'; // Magic icon
 import profilePic from './Avatar.png'; // Replace with actual profile picture path
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { deepPurple } from '@mui/material/colors'; // Import color for avatar background
 
 const Topbar = () => {
   const [searchFocused, setSearchFocused] = useState(false);
@@ -63,6 +64,10 @@ const Topbar = () => {
       name: userDetails?.username || 'Guest',
       role: userDetails?.role || 'Unknown',
     };
+  };
+
+  const getUserInitial = (name) => {
+    return name ? name.charAt(0).toUpperCase() : 'G'; // Default to 'G' for Guest
   };
 
   const { name, role } = getUserDisplayInfo();
@@ -179,13 +184,18 @@ const Topbar = () => {
 
           <Box display="flex" alignItems="center" gap="6px">
             <Avatar
-              src={userDetails?.profilePicture || profilePic}
               sx={{
                 width: 33,
                 height: 33,
                 boxShadow: '0px 3px 7px rgba(0, 0, 0, 0.1)',
+                backgroundColor: deepPurple[500], // Set background color
+                color: '#FFFFFF', // Set text color
+                fontSize: '14px', // Set font size
+                fontWeight: 'bold', // Set font weight
               }}
-            />
+            >
+              {getUserInitial(name)}
+            </Avatar>
             <Box>
               <Typography
                 sx={{

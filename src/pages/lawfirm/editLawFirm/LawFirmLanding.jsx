@@ -21,36 +21,41 @@ const LawFirmDetailsPage = () => {
         setLoading(true);
         const token = localStorage.getItem('token');
         console.log("Token being used:", token);
-
+  
         if (!token) throw new Error("No authentication token found");
-
+  
         const response = await fetch('http://backend.lejit.ai/backend/api/admin/get-law-firm-details', {
           headers: { Authorization: `Bearer ${token}` },
         });
-
+  
         console.log("Response status:", response.status);
-
+  
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
+  
         const data = await response.json();
-        console.log("Response Data:", data);
-
-        if (!data || !data.lawFirmDetails || !data.lawFirmDetails.lawFirmName) {
+        console.log("API Response:", data); // Log the actual response
+  
+        // Adjust this based on the correct location of lawFirmName
+        const extractedLawFirmName = data?.lawFirmName || data?.lawFirmDetails?.lawFirmName || "Your Law Firm";
+  
+        if (!extractedLawFirmName) {
           throw new Error("Law firm name not found in response");
         }
-
-        setLawFirmName(data.lawFirmDetails.lawFirmName);
+  
+        setLawFirmName(extractedLawFirmName);
       } catch (error) {
-        console.error('Error fetching law firm name:', error.message);
-        setLawFirmName('Your Law Firm');
+        console.error("Error fetching law firm name:", error.message);
+        setLawFirmName("Your Law Firm");
       } finally {
         setLoading(false);
       }
     };
+  
     fetchLawFirmName();
   }, []);
+  
 
   const handleAddTeamMember = () => setShowAddUserPopup(true);
   const handleAddCase = () => setShowAddCasePopup(true);
