@@ -77,21 +77,25 @@ export default function ClaimPredictor() {
           <div className="p-8 bg-white shadow-lg rounded-2xl">
             <h2 className="text-2xl font-bold text-gray-700">Similar Cases</h2>
             <ul className="mt-4 space-y-3">
-              {result.similar_cases.map((caseItem, index) => (
-                <li key={index} className="border-b pb-2 text-gray-700 relative group">
-                  <p className="font-semibold">
-                    ₹{caseItem.claim_amount.toLocaleString()}
-                  </p>
-                  <p className="text-sm truncate cursor-pointer hover:underline">
-                    {caseItem.summary.substring(0, 100)}...
-                  </p>
+              {result.similar_cases.map((caseItem, index) => {
+                // Extract the case name (first line before the newline)
+                const caseName = caseItem.split("\n")[0];
+                const caseDetails = caseItem.substring(caseName.length).trim();
 
-                  {/* Tooltip - Only appears on hover */}
-                  <div className="absolute left-0 mt-2 w-80 p-4 bg-white text-gray-800 text-xs rounded-lg shadow-lg border border-gray-300 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <p className="font-medium">{caseItem.summary}</p>
-                  </div>
-                </li>
-              ))}
+                return (
+                  <li key={index} className="border-b pb-2 text-gray-700 relative group">
+                    <p className="font-semibold">{caseName}</p>
+                    <p className="text-sm truncate cursor-pointer hover:underline mt-2">
+                      {caseDetails.substring(0, 100)}...
+                    </p>
+
+                    {/* Tooltip - Only appears on hover with a horizontal scrollbar */}
+                    <div className="absolute left-0 mt-2 w-[170%] p-4 bg-white text-gray-800 text-xs rounded-lg shadow-lg border border-gray-300 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 overflow-x-auto">
+                      <p className="font-medium">{caseDetails}</p>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </motion.div>
