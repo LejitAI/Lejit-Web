@@ -111,6 +111,10 @@ const Sidebar = () => {
                 boxShadow: isActive(item.path)
                   ? '0px 3px 7px rgba(15, 103, 253, 0.3)'
                   : '1.4px 1.4px 4.2px rgba(0, 0, 0, 0.05)',
+                cursor: 'pointer',
+                '&:hover': {
+                  backgroundColor: isActive(item.path) ? '#0F67FD' : '#F0F0F0',
+                },
                 '& .MuiListItemIcon-root': {
                   color: isActive(item.path) ? '#FFFFFF' : '#7A7A7A',
                   minWidth: '11px',
