@@ -49,6 +49,7 @@ import CaseDocuments from './pages/lawfirm/(dashboard)/CaseDocuments/CaseDocumen
 import SignOut from './pages/authentication/SignOut';
 import HearingSchedulesPage from './pages/lawfirm/(dashboard)/HearingSchedules/HearingSchedulesPage';
 import Ocr from './pages/AI/components/Chat/Ocr';
+import ClaimPredictor from './ClaimPredictor';
 function App() {
   const [theme, colorMode] = useMode();
 
@@ -114,6 +115,7 @@ function App() {
             <Route path="/casedocuments" element={<CaseDocuments />} />
             <Route path="/signout" element={<SignOut />} />
             <Route path="/ocr" element={<Ocr />} />
+            <Route path="/claim" element={<ClaimPredictor />} />
 
 
           </Routes>
