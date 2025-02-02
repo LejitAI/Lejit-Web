@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Document, Packer, Paragraph, TextRun } from "docx";
+import { FaMagic } from "react-icons/fa"; // Magic Wand Icon
 import "./CaseStrategy.css";
 
 const CaseStrategies = ({ caseId }) => {
   const [caseArguments, setCaseArguments] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch case arguments from the API
     const fetchCaseArguments = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -19,7 +20,7 @@ const CaseStrategies = ({ caseId }) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -31,7 +32,9 @@ const CaseStrategies = ({ caseId }) => {
         }
       } catch (err) {
         setError("Error fetching case arguments. Please try again later.");
-        console.log(err)
+        console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -63,29 +66,46 @@ const CaseStrategies = ({ caseId }) => {
 
   return (
     <div className="case-strategies-container">
-      {/* Heading */}
+      {/* Header */}
       <div className="case-strategies-heading">
-        <h3 className="case-strategies-heading-text">Case Strategy Points</h3>
-        <button onClick={saveAsDocx} className="case-strategies-download-button">Download as DOCX</button>
+        <h3 className="case-strategies-heading-text">
+          Case Strategies
+        </h3>
+        <button onClick={saveAsDocx} className="case-strategies-download-button">
+          Download as DOCX
+        </button>
+      </div>
+
+      {/* AI-generated badge */}
+      <div className="ai-powered-container">
+        <FaMagic className="ai-icon" />
+        <span className="ai-generated-label">Powered by AI</span>
       </div>
 
       {/* Divider */}
       <div className="case-strategies-divider"></div>
 
       {/* Strategy Content */}
-      <div className="case-strategies-content-scrollable" style={{ height: "500px" }}>
-        {error ? (
+      <div className="case-strategies-content-scrollable">
+        {loading ? (
+          <p className="case-strategies-loading">⏳ Generating AI Case Strategies...</p>
+        ) : error ? (
           <p className="case-strategies-error">{error}</p>
         ) : caseArguments.length > 0 ? (
           <div className="case-strategies-markdown">
             {caseArguments.map((argument, index) => (
               <div key={index} className="case-strategies-argument">
-                <p>{argument.split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}</p>
+                <p>
+                  <span className="ai-blinking-cursor"> </span>
+                  {argument.split("\n").map((line, i) => (
+                    <span key={i} className="ai-text">{line}<br /></span>
+                  ))}
+                </p>
               </div>
             ))}
           </div>
         ) : (
-          <p className="case-strategies-loading">Loading case arguments...</p>
+          <p className="case-strategies-loading">No strategies available.</p>
         )}
       </div>
     </div>

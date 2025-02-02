@@ -47,6 +47,8 @@ const Sidebar = () => {
   const toolsSubmenu = [
     { text: 'Q&A Processor', path: '/qnascreen' },
     { text: 'OCR', path: '/ocr' },
+    { text: 'Claim Estimator', path: '/claim' },
+
   ];
 
   const handleDrawerToggle = () => {

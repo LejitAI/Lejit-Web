@@ -49,7 +49,7 @@ import CaseDocuments from './pages/lawfirm/(dashboard)/CaseDocuments/CaseDocumen
 import SignOut from './pages/authentication/SignOut';
 import HearingSchedulesPage from './pages/lawfirm/(dashboard)/HearingSchedules/HearingSchedulesPage';
 import Ocr from './pages/AI/components/Chat/Ocr';
-import ClaimPredictor from './ClaimPredictor';
+import ClaimPredictor from './pages/lawfirm/(dashboard)/ClaimPredictor';
 function App() {
   const [theme, colorMode] = useMode();
 

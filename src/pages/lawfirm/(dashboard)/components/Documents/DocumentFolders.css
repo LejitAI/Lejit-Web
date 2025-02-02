@@ -238,6 +238,50 @@
   }
   
   .upload-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .upload-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid #0f67fd;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #0f67fd;
+    background: transparent;
+    transition: background 0.2s, color 0.2s;
+    width: 200px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+  }
+  
+  .upload-button:hover {
+    background: #0f67fd;
+    color: white;
+  }
+  
+  .upload-icon {
+    width: 16px; /* Smaller width */
+    height: 16px; /* Smaller height */
+    background: #0f67fd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+  
+  .upload-plus-icon {
+    color: white;
+    width: 8px; /* Smaller width */
+    height: 7px; /* Smaller height */
+  }
+  
+  .upload-button-container {
     text-align: center;
     margin-top: 10px;
   }
@@ -262,5 +306,4 @@
     text-align: center;
     margin-top: 10px;
   }
-  
-  
+

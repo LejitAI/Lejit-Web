@@ -169,7 +169,10 @@ const DocumentFolders = ({ caseId }) => {
         <div className="upload-button-container">
           <p>Selected File: {file.name}</p>
           <button className="upload-button" onClick={handleUpload}>
-            Upload
+            <div className="upload-icon">
+              <div className="upload-plus-icon" />
+            </div>
+            UPLOAD
           </button>
         </div>
       )}
