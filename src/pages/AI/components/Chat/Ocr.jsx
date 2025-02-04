@@ -1,45 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { EditorState, ContentState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import "../../styles/Ocr.css"; // Import custom styles
+import "../../styles/Ocr.css";
 import { ColorModeContext, useMode } from "../../../../theme";
 import { CssBaseline, ThemeProvider, Box } from "@mui/material";
 import Topbar from "../../../lawfirm/global/Topbar";
 import Sidebar from "../../../lawfirm/global/Sidebar";
+import { useLocation } from 'react-router-dom';
 
-const Ocr = () => {
+const Ocr = ({ initialFile }) => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
-    const [image, setImage] = useState(null);
+    const [file, setFile] = useState(initialFile || null);
     const [isLoading, setIsLoading] = useState(false);
     const [extractedText, setExtractedText] = useState('');
     const [showFormatButton, setShowFormatButton] = useState(false);
     const [theme, colorMode] = useMode();
+    const location = useLocation();
+    const fileUrl = location.state?.fileUrl;
 
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        setImage(file);
-        setShowFormatButton(false); // Hide format button when a new image is uploaded
+    useEffect(() => {
+        if (fileUrl) {
+            fetchDocument(fileUrl);
+        } else if (initialFile) {
+            setFile(initialFile);
+            handleExtractText(initialFile);
+        }
+    }, [fileUrl, initialFile]);
+
+    const fetchDocument = async (url) => {
+        try {
+            const response = await axios.get(url, { responseType: 'blob' });
+            const file = new File([response.data], 'document');
+            setFile(file);
+            handleExtractText(file);
+        } catch (error) {
+            console.error('Failed to fetch document:', error);
+            alert('Failed to fetch document. Please try again.');
+        }
     };
 
-    const handleExtractText = async () => {
-        if (!image) {
-            alert('Please upload an image first.');
+    const handleFileUpload = (e) => {
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
+        setShowFormatButton(false);
+    };
+
+    const handleExtractText = async (fileToProcess = file) => {
+        if (!fileToProcess) {
+            alert('Please upload an image or document first.');
             return;
         }
 
         setIsLoading(true);
         const formData = new FormData();
-        formData.append('image', image);
+        formData.append('file', fileToProcess);
 
         try {
             const { data: { text } } = await axios.post('backend/api/vision', formData);
             setExtractedText(text);
             setEditorState(EditorState.createWithContent(ContentState.createFromText(text)));
-            setShowFormatButton(true); // Show format button after text is extracted
+            setShowFormatButton(true);
         } catch (error) {
-            console.error('OpenAI Vision failed:', error);
+            console.error('OCR extraction failed:', error);
             alert('Failed to extract text. Please try again.');
         } finally {
             setIsLoading(false);
@@ -73,7 +97,7 @@ const Ocr = () => {
                             <div className="ocr-container">
                                 <h1 className="ocr-title">OCR Text Extraction</h1>
                                 <div className="ocr-controls">
-                                    <input type="file" accept="image/*" onChange={handleImageUpload} className="ocr-file-input" />
+                                    <input type="file" accept="image/*, .pdf, .docx" onChange={handleFileUpload} className="ocr-file-input" />
                                     <button
                                         onClick={handleExtractText}
                                         disabled={isLoading}
