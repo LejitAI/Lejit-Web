@@ -5,7 +5,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import "../../styles/Ocr.css";
 import { ColorModeContext, useMode } from "../../../../theme";
-import { CssBaseline, ThemeProvider, Box } from "@mui/material";
+import { CssBaseline, ThemeProvider, Box, CircularProgress } from "@mui/material";
 import Topbar from "../../../lawfirm/global/Topbar";
 import Sidebar from "../../../lawfirm/global/Sidebar";
 import { useLocation } from 'react-router-dom';
@@ -32,9 +32,8 @@ const Ocr = ({ initialFile }) => {
     const fetchDocument = async (url) => {
         try {
             const response = await axios.get(url, { responseType: 'blob' });
-            const file = new File([response.data], 'document');
-            setFile(file);
-            handleExtractText(file);
+            setFile(response.data);
+            handleExtractText(response.data);
         } catch (error) {
             console.error('Failed to fetch document:', error);
             alert('Failed to fetch document. Please try again.');
@@ -58,7 +57,7 @@ const Ocr = ({ initialFile }) => {
         formData.append('file', fileToProcess);
 
         try {
-            const { data: { text } } = await axios.post('backend/api/vision', formData);
+            const { data: { text } } = await axios.post('http://backend.lejit.ai/backend/api/vision', formData);
             setExtractedText(text);
             setEditorState(EditorState.createWithContent(ContentState.createFromText(text)));
             setShowFormatButton(true);
@@ -103,7 +102,7 @@ const Ocr = ({ initialFile }) => {
                                         disabled={isLoading}
                                         className="ocr-button extract-button"
                                     >
-                                        {isLoading ? 'Extracting...' : 'Extract Text'}
+                                        {isLoading ? <CircularProgress size={24} /> : 'Extract Text'}
                                     </button>
                                     {showFormatButton && (
                                         <button
@@ -114,6 +113,7 @@ const Ocr = ({ initialFile }) => {
                                         </button>
                                     )}
                                 </div>
+                                {isLoading && <div className="loading-overlay"><CircularProgress /></div>}
                                 <div className="ocr-editor-container">
                                     <Editor
                                         editorState={editorState}
