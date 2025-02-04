@@ -118,9 +118,12 @@ const DocumentFolders = ({ caseId }) => {
 
 
   const handleOCR = (caseId, documentId) => {
+
     
-    const backendUrl = 'http://backend.lejit.ai'; // Replace with actual backend URL
+    const backendUrl = 'http://backend.lejit.ai/backend'; // Replace with actual backend URL
     const fileUrl = `${backendUrl}/uploads/${caseId}/${documentId}`;
+
+    console.log('fileUrl', fileUrl);
 
     navigate(`/ocr`, { state: { fileUrl } });
   };
@@ -189,14 +192,14 @@ const DocumentFolders = ({ caseId }) => {
             </a>
             <button
               className="ocr-button"
-              onClick={() => handleOCR(doc.id)}
+              onClick={() => handleOCR(caseId,doc.name)}
               title="Extract Text (OCR)"
             >
               <AiOutlineScan className="icon" />
             </button>
             <button
               className="delete-button"
-              onClick={() => handleDelete(doc.id, doc.name)}
+              onClick={() => handleDelete(caseId, doc.name)}
               title="Delete Document"
             >
               <FiTrash2 className="icon" />
