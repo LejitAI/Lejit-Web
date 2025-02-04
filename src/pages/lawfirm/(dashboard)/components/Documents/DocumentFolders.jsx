@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FiDownload } from "react-icons/fi";
-import { AiOutlinePlus } from "react-icons/ai";
+import { FiDownload, FiTrash2 } from "react-icons/fi";
+import { AiOutlinePlus, AiOutlineScan } from "react-icons/ai";
 import "./DocumentFolders.css";
+import { useNavigate } from 'react-router-dom';
+
 
 const correctDocumentUrl = (url) => {
   const requiredPath = "/backend/uploads/";
@@ -20,12 +22,13 @@ const DocumentFolders = ({ caseId }) => {
   const [tags, setTags] = useState([]);
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (caseId) {
       fetchDocuments();
     }
-  }, [caseId]); // Fetch documents when caseId changes
+  }, [caseId]);
 
   const fetchDocuments = async () => {
     const token = localStorage.getItem("token");
@@ -33,14 +36,17 @@ const DocumentFolders = ({ caseId }) => {
       setError("Authentication token is missing.");
       return;
     }
-  
+
     try {
-      const response = await axios.get(`http://backend.lejit.ai/backend/api/chat/documents?caseId=${caseId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
+      const response = await axios.get(
+        `http://backend.lejit.ai/backend/api/chat/documents?caseId=${caseId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       if (response.status === 200) {
         const updatedDocuments = response.data.documents.map((doc) => ({
           ...doc,
@@ -51,7 +57,7 @@ const DocumentFolders = ({ caseId }) => {
       }
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        setDocuments([]); // Set empty documents array
+        setDocuments([]);
         setError("No documents have been uploaded for this case.");
       } else {
         console.error(err);
@@ -66,38 +72,39 @@ const DocumentFolders = ({ caseId }) => {
   };
 
   const handleUpload = async () => {
-    console.log("Uploading file...");
     if (!caseId) {
       setError("Case ID is required. Please select or create a case first.");
       return;
     }
-  
+
     if (!file) {
       setError("Please select a file to upload.");
       return;
     }
-  
+
     const token = localStorage.getItem("token");
     if (!token) {
       setError("Authentication token is missing.");
       return;
     }
-  
+
     const formData = new FormData();
     formData.append("caseId", caseId);
     formData.append("document", file);
     formData.append("tags", JSON.stringify(tags));
 
-    console.log("formData:", formData);
-  
     try {
-      const response = await axios.post("http://backend.lejit.ai/backend/api/chat/upload", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-  
+      const response = await axios.post(
+        "http://backend.lejit.ai/backend/api/chat/upload",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       if (response.status === 200) {
         await fetchDocuments();
         setFile(null);
@@ -106,6 +113,42 @@ const DocumentFolders = ({ caseId }) => {
     } catch (err) {
       console.log(err);
       setError("Failed to upload the document. Please try again.");
+    }
+  };
+
+
+  const handleOCR = (caseId, documentId) => {
+    
+    const backendUrl = 'http://backend.lejit.ai'; // Replace with actual backend URL
+    const fileUrl = `${backendUrl}/uploads/${caseId}/${documentId}`;
+
+    navigate(`/ocr`, { state: { fileUrl } });
+  };
+
+  const handleDelete = async (documentId, documentName) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("Authentication token is missing.");
+      return;
+    }
+
+    try {
+      const response = await axios.delete(
+        `http://backend.lejit.ai/backend/api/upload?documentId=${documentId}&fileName=${documentName}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        await fetchDocuments();
+        alert("Document deleted successfully.");
+      }
+    } catch (err) {
+      console.log(err);
+      setError("Failed to delete document. Please try again.");
     }
   };
 
@@ -122,7 +165,9 @@ const DocumentFolders = ({ caseId }) => {
       <div className="divider" />
 
       <div className="case-info">
-        <p><strong>Case ID:</strong> {caseId || "N/A"}</p>
+        <p>
+          <strong>Case ID:</strong> {caseId || "N/A"}
+        </p>
       </div>
 
       {documents.map((doc, index) => (
@@ -142,6 +187,20 @@ const DocumentFolders = ({ caseId }) => {
             <a href={doc.url} download>
               <FiDownload className="icon" />
             </a>
+            <button
+              className="ocr-button"
+              onClick={() => handleOCR(doc.id)}
+              title="Extract Text (OCR)"
+            >
+              <AiOutlineScan className="icon" />
+            </button>
+            <button
+              className="delete-button"
+              onClick={() => handleDelete(doc.id, doc.name)}
+              title="Delete Document"
+            >
+              <FiTrash2 className="icon" />
+            </button>
           </div>
         </div>
       ))}
@@ -169,9 +228,6 @@ const DocumentFolders = ({ caseId }) => {
         <div className="upload-button-container">
           <p>Selected File: {file.name}</p>
           <button className="upload-button" onClick={handleUpload}>
-            <div className="upload-icon">
-              <div className="upload-plus-icon" />
-            </div>
             UPLOAD
           </button>
         </div>
