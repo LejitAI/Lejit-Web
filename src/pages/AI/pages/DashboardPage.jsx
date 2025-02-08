@@ -93,7 +93,7 @@ const Dashboard = () => {
                 : "hover:bg-gray-200 dark:hover:bg-gray-700"
             }`}
           >
-            <Article className="mr-2" /> Documents
+            <Article className="mr-2" /> Citations
           </button>
           <button
             onClick={toggleDarkMode}
@@ -127,7 +127,7 @@ const Dashboard = () => {
       <main className="flex pt-16">
         {isHistoryVisible && (
           <aside
-            className={`w-64  p-4 transition-all ${
+            className={`w-64   transition-all ${
               isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
             }`}
           >

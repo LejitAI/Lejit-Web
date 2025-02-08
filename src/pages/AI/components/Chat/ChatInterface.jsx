@@ -118,7 +118,7 @@ const ChatInterface = ({ isDarkMode }) => {
   const handleKeyPress = (e) => e.key === "Enter" && handleSend();
 
   return (
-    <div className="flex flex-col h-[89vh] bg-gray-100">
+    <div className="flex flex-col h-[88vh] bg-gray-100">
       <div className="flex-1 w-full mx-auto">
         <div className="h-full bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
           <div
