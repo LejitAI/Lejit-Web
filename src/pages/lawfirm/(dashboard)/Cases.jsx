@@ -74,7 +74,7 @@ const handleDownload = () => {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Token not found. Please log in again.");
 
-        const response = await fetch("http://backend.lejit.ai/backend/api/admin/get-cases", {
+        const response = await fetch("http://backend.lejit.ai/backend/api/case/get-cases", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -171,7 +171,7 @@ const handleDownload = () => {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Token not found. Please log in again.");
 
-      const response = await fetch(`backend/api/admin/delete-case/${caseId}`, {
+      const response = await fetch(`backend/api/case/delete-case/${caseId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -26,7 +26,7 @@ const ViewClients = () => {
   const fetchClients = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("backend/api/admin/get-client", {
+      const response = await fetch("backend/api/client/get-client", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

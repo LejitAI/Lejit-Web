@@ -98,13 +98,13 @@ const Analytics = () => {
         'Content-Type': 'application/json',
       };
 
-      const casesRes = await fetch('backend/api/admin/get-cases', { headers });
+      const casesRes = await fetch('backend/api/case/get-cases', { headers });
       const cases = await casesRes.json();
 
-      const teamMembersRes = await fetch('backend/api/admin/get-team-members', { headers });
+      const teamMembersRes = await fetch('backend/api/team-member/get-team-members', { headers });
       const teamMembers = await teamMembersRes.json();
 
-      const clientsRes = await fetch('backend/api/admin/get-client', { headers });
+      const clientsRes = await fetch('backend/api/client/get-client', { headers });
       const clients = await clientsRes.json();
 
       setAnalytics({

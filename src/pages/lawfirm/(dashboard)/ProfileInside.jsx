@@ -23,7 +23,7 @@ const ProfileInside = () => {
   const fetchLawFirmDetails = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("backend/api/admin/get-law-firm-details", {
+      const response = await axios.get("backend/api/law-firm/get-law-firm-details", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setLawFirmDetails(response.data);

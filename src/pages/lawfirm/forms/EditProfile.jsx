@@ -103,7 +103,7 @@ const EditProfile = () => {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('backend/api/admin/add-law-firm-details', formData, {
+      await axios.post('backend/api/law-firm/add-law-firm-details', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

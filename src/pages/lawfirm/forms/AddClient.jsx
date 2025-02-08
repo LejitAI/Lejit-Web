@@ -77,7 +77,7 @@ const AddClient = ({ onClose }) => {
 
             const token = localStorage.getItem("token");
 
-            const response = await fetch("/backend/api/admin/add-client", {
+            const response = await fetch("/backend/api/client/add-client", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

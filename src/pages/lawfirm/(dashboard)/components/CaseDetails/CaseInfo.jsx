@@ -22,7 +22,7 @@ const CaseInfo = () => {
 
         // If no data in navigation state, fetch from API
         const token = localStorage.getItem("token");
-        const response = await fetch(`http://backend.lejit.ai/backend/api/admin/get-cases`, {
+        const response = await fetch(`http://backend.lejit.ai/backend/api/case/get-cases`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

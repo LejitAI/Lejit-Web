@@ -24,7 +24,7 @@ const LawFirmDetailsPage = () => {
   
         if (!token) throw new Error("No authentication token found");
   
-        const response = await fetch('http://backend.lejit.ai/backend/api/admin/get-law-firm-details', {
+        const response = await fetch('http://backend.lejit.ai/backend/api/law-firm/get-law-firm-details', {
           headers: { Authorization: `Bearer ${token}` },
         });
   

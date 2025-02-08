@@ -188,7 +188,7 @@ const LDashboard = () => {
       try {
         const token = localStorage.getItem('token');
         console.log('Fetching team members...'); // Debug log
-        const response = await fetch('http://backend.lejit.ai/backend/api/admin/get-team-members', {
+        const response = await fetch('http://backend.lejit.ai/backend/api/team-member/get-team-members', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -232,7 +232,7 @@ const LDashboard = () => {
         'Content-Type': 'application/json'
       };
 
-      const response = await fetch('http://backend.lejit.ai/backend/api/admin/get-cases', { headers });
+      const response = await fetch('http://backend.lejit.ai/backend/api/case/get-cases', { headers });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

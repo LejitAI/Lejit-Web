@@ -23,7 +23,7 @@ const ViewTeam = () => {
   const fetchTeamMembers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('backend/api/admin/get-team-members', {
+      const response = await fetch('backend/api/team-member/get-team-members', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ const ViewTeam = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`backend/api/admin/delete-team-member/${memberId}`, {
+      const response = await fetch(`backend/api/team-member/delete-team-member/${memberId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

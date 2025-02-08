@@ -62,7 +62,7 @@ const AddCase = ({ isOpen, onClose }) => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('backend/api/admin/add-case', {
+            const response = await fetch('backend/api/case/add-case', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
