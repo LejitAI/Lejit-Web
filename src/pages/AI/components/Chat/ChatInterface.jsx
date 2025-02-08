@@ -1,274 +1,181 @@
 import React, { useState, useRef, useEffect } from "react";
-import ChatBubble from "./ChatBubble";
-import TypingIndicator from "./TypingIndicator";
-import "../../styles/Chat.css";
+import {
+  Send,
+  Mic,
+  UploadCloud,
+  MessageSquare,
+  MessageCircle,
+} from "lucide-react";
 import axios from "axios";
-import SendIcon from "@mui/icons-material/Send";
-import MicIcon from "@mui/icons-material/Mic";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-const ChatInterface = ({ selectedHistory, isDarkMode }) => {
+const ChatBubble = ({ message }) => {
+  const isUser = message.role === "user";
+  return (
+    <div
+      className={`flex w-full ${isUser ? "justify-end" : "justify-start"} mb-4`}
+    >
+      <div
+        className={`flex max-w-[80%] ${
+          isUser ? "flex-row-reverse" : "flex-row"
+        }`}
+      >
+        <div
+          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center 
+          ${isUser ? "bg-blue-500 ml-2" : "bg-gray-500 mr-2"}`}
+        >
+          <MessageCircle className="w-4 h-4 text-white" />
+        </div>
+        <div
+          className={`flex flex-col ${isUser ? "items-end" : "items-start"}`}
+        >
+          <div
+            className={`rounded-2xl px-4 py-2 ${
+              isUser ? "bg-blue-500 text-white" : "bg-gray-100 text-gray-800"
+            }`}
+          >
+            <p className="text-sm">{message.content}</p>
+          </div>
+          {message.sourceDocuments && message.sourceDocuments.length > 0 && (
+            <div className="mt-2 text-xs text-gray-500">
+              {message.sourceDocuments.map((doc, idx) => (
+                <div key={idx} className="italic">
+                  Source: {doc.title || "Document " + (idx + 1)}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+const TypingIndicator = () => (
+  <div className="flex items-center space-x-2 p-2">
+    <div className="flex space-x-1">
+      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
+      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200"></div>
+    </div>
+  </div>
+);
+
+const EmptyState = () => (
+  <div className="flex flex-col items-center justify-center h-full text-gray-500">
+    <MessageSquare size={48} className="mb-4 opacity-50" />
+    <h3 className="text-xl font-medium mb-2">No messages yet</h3>
+    <p className="text-sm text-center">
+      Start a conversation by typing a message below
+    </p>
+  </div>
+);
+
+const ChatInterface = ({ isDarkMode }) => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
-  const [uploadMessage, setUploadMessage] = useState("");
-  const [isUploading, setIsUploading] = useState(false);
+  const chatRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const audioChunks = useRef([]);
-  const chatRef = useRef(null);
-  const sessionKey = "lejit_ai_session_id";
-  const MAX_MESSAGES = 50;
 
   useEffect(() => {
-    const existingSession = localStorage.getItem(sessionKey);
-    if (!existingSession) {
-      const newSessionId = `session_${Date.now()}`;
-      localStorage.setItem(sessionKey, newSessionId);
-    }
-    fetchChatHistory();
-  }, []);
-
-  const getSessionId = () => localStorage.getItem(sessionKey);
-  const fetchChatHistory = async () => {
-    try {
-      const sessionId = getSessionId();
-      const response = await axios.get(`api/api/chat/history/${sessionId}`);
-
-      if (response.status === 200) {
-        const fetchedMessages = response.data.chat_history
-          .map((chat) => [
-            { role: "assistant", content: chat.response },
-            { role: "user", content: chat.query },
-          ])
-          .flat();
-
-        setMessages(fetchedMessages.reverse());
-      } else {
-        console.error("Failed to fetch chat history:", response);
-      }
-    } catch (error) {
-      console.error("Error fetching chat history:", error);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
+    chatRef.current?.scrollTo({
+      top: chatRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages, isLoading]);
 
   const handleSend = async () => {
     if (!inputValue.trim()) return;
-
-    const userMessage = { role: "user", content: inputValue };
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [...prev, { role: "user", content: inputValue }]);
     setInputValue("");
 
     try {
       setIsLoading(true);
-
-      const response = await fetch("/api/api/query/general", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          session_id: getSessionId(),
-          query: inputValue,
-        }),
+      const response = await axios.post("/api/api/query/general", {
+        query: inputValue,
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const aiMessage = {
-        role: "assistant",
-        content: data.response || "No response from AI",
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-    } catch (error) {
-      console.error("Error fetching AI response:", error);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Oops! Something went wrong. Please try again." },
+        {
+          role: "assistant",
+          content: response.data.response || "No response from AI",
+        },
+      ]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "Something went wrong. Please try again.",
+        },
       ]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSend();
-    }
-  };
-
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorderRef.current = new MediaRecorder(stream);
-      audioChunks.current = [];
-
-      mediaRecorderRef.current.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          audioChunks.current.push(event.data);
-        }
-      };
-
-      mediaRecorderRef.current.onstop = async () => {
-        const audioBlob = new Blob(audioChunks.current, { type: "audio/webm" });
-        await sendAudioToBackend(audioBlob);
-      };
-
-      mediaRecorderRef.current.start();
-      setIsRecording(true);
-    } catch (error) {
-      console.error("Error accessing microphone:", error);
-      alert("Failed to access microphone. Please check your permissions.");
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-    }
-  };
-
-  const sendAudioToBackend = async (audioBlob) => {
-    try {
-      const formData = new FormData();
-      formData.append("audio", audioBlob, "audio/webm");
-
-      const response = await fetch("/backend/api/speech-to-text", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Error processing audio");
-      }
-
-      const result = await response.json();
-      const transcription = result.transcription || "No transcription available";
-      const audioMessage = { role: "user", content: transcription };
-
-      setMessages((prev) => [...prev, audioMessage]);
-      setInputValue("");
-      try {
-        setIsLoading(true);
-
-        const response = await fetch("/api/api/query/general", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            session_id: getSessionId(),
-            query: transcription,
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const aiMessage = {
-          role: "assistant",
-          content: data.response || "No response from AI",
-        };
-        setMessages((prev) => [...prev, aiMessage]);
-      } catch (error) {
-        console.error("Error fetching AI response:", error);
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", content: "Oops! Something went wrong. Please try again." },
-        ]);
-      } finally {
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.error("Error transcribing audio:", error);
-      alert("Failed to transcribe audio. Please try again.");
-    }
-  };
-
-  const handleUploadDoc = async () => {
-    setIsUploading(true);
-    setUploadMessage("");
-
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-
-    fileInput.onchange = async (event) => {
-      const file = event.target.files[0];
-      if (!file) {
-        setIsUploading(false);
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const sessionId = getSessionId();
-      const documentType = "Contract";
-      const apiUrl = `api/api/documents/upload?session_id=${sessionId}&document_type=${documentType}`;
-
-      try {
-        const response = await axios.post(apiUrl, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-
-        console.log("Upload successful:", response.data);
-        setUploadMessage("Document uploaded successfully!");
-      } catch (error) {
-        console.error("Error uploading document:", error);
-        setUploadMessage("Failed to upload the document. Please try again.");
-      } finally {
-        setIsUploading(false);
-      }
-    };
-
-    fileInput.click();
-  };
-
-  useEffect(() => {
-    if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
-    }
-  }, [messages, isLoading]);
+  const handleKeyPress = (e) => e.key === "Enter" && handleSend();
 
   return (
-    <div className={`chat-container ${isDarkMode ? 'dark-mode' : ''}`} style={{ height: 'calc(100vh - 48px)' }}>
-      <div className="chat-messages" ref={chatRef}>
-        {messages.map((msg, index) => (
-          <ChatBubble key={index} message={msg} />
-        ))}
-        {isLoading && <TypingIndicator />}
-      </div>
-      <div className="chat-input-container">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
-          className="chat-input"
-          placeholder="Type your message..."
-        />
-        <div className="chat-buttons">
-          <button
-            onClick={isRecording ? stopRecording : startRecording}
-            className="record-button"
+    <div className="flex flex-col h-[89vh] bg-gray-100">
+      <div className="flex-1 w-full mx-auto">
+        <div className="h-full bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
+          <div
+            ref={chatRef}
+            className="flex-1 overflow-y-auto p-6"
+            style={{ height: messages.length === 0 ? "100%" : "auto" }}
           >
-            <MicIcon />
-          </button>
-          <button onClick={handleSend} className="send-button">
-            <SendIcon />
-          </button>
-          <button onClick={handleUploadDoc} className="upload-button">
-            <CloudUploadIcon />
-          </button>
+            {messages.length === 0 ? (
+              <EmptyState />
+            ) : (
+              <div className="space-y-4">
+                {messages.map((msg, index) => (
+                  <ChatBubble key={index} message={msg} />
+                ))}
+                {isLoading && <TypingIndicator />}
+              </div>
+            )}
+          </div>
+
+          <div className="border-t border-gray-200 px-6 py-4 bg-white">
+            <div className="flex items-center gap-3">
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={handleKeyPress}
+                className="flex-1 rounded-lg border border-gray-300 px-4 py-2 
+                         focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+                         transition-colors"
+                placeholder="Type your message..."
+              />
+              <button
+                onClick={handleSend}
+                disabled={!inputValue.trim()}
+                className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 
+                         disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <Send size={20} />
+              </button>
+              <button
+                onClick={() => alert("Recording feature pending...")}
+                className="p-2 bg-gray-100 rounded-full hover:bg-gray-200
+                         text-gray-600 transition-colors"
+              >
+                <Mic size={20} />
+              </button>
+              <button
+                onClick={() => alert("File upload pending...")}
+                className="p-2 bg-gray-100 rounded-full hover:bg-gray-200
+                         text-gray-600 transition-colors"
+              >
+                <UploadCloud size={20} />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-      {uploadMessage && <div className="upload-message">{uploadMessage}</div>}
     </div>
   );
 };
