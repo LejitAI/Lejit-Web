@@ -1,0 +1,4 @@
+<!-- General Icon -->
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.5 4.5m0 0L18 8m-7.5 4.5v9m8.5-14.5v11.25a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18.75V7.5A2.25 2.25 0 015.25 5.25H17.25A2.25 2.25 0 0119.5 7.5z" />
+</svg>

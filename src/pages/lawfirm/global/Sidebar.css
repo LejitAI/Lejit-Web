@@ -1,0 +1,157 @@
+.sidebar {
+  transition: width 0.3s ease;
+}
+
+/* Logo Container */
+.logo-container {
+  padding: 18px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.logo-container img {
+  transition: all 0.3s ease;
+}
+
+/* Menu Section */
+.menu-section {
+  margin: 6px 0;
+  padding: 0 9px;
+}
+
+.section-title {
+  font-size: 9px;
+  color: #64748b;
+  padding: 6px 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.375px;
+  font-weight: 600;
+}
+
+/* Menu Item */
+.menu-item {
+  position: relative;
+  margin: 3px 0;
+  transition: all 0.3s ease;
+}
+
+.menu-item-content {
+  display: flex;
+  align-items: center;
+  padding: 7.5px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #64748b;
+}
+
+.menu-item-content:hover {
+  background-color: rgba(15, 103, 253, 0.08);
+  color: #0F67FD;
+  transform: translateX(3px);
+}
+
+.menu-item.active .menu-item-content {
+  background-color: #0F67FD;
+  color: white;
+  box-shadow: 0 3px 9px rgba(15, 103, 253, 0.2);
+}
+
+/* Icon */
+.menu-icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 9px;
+  transition: all 0.3s ease;
+}
+
+/* Submenu */
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  margin-left: 27px;
+}
+
+.submenu.open {
+  max-height: 500px;
+}
+
+.submenu-item {
+  padding: 6px 12px;
+  margin: 3px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 10.5px;
+  color: #64748b;
+}
+
+.submenu-item:hover {
+  background-color: rgba(15, 103, 253, 0.08);
+  color: #0F67FD;
+  transform: translateX(3px);
+}
+
+.submenu-item.active {
+  background-color: rgba(15, 103, 253, 0.1);
+  color: #0F67FD;
+  font-weight: 500;
+}
+
+/* Expand Icon */
+.expand-icon {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.expand-icon.open {
+  transform: rotate(180deg);
+}
+
+/* Mobile Drawer */
+.mobile-drawer {
+  width: 85vw;
+  max-width: 225px;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-7.5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.menu-item {
+  animation: slideIn 0.3s ease forwards;
+  animation-delay: calc(var(--index) * 0.05s);
+}
+
+/* Hover Effects */
+.menu-item-content:hover .menu-icon {
+  transform: scale(1.1);
+}
+
+/* Active Indicator */
+.active-indicator {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25px;
+  height: 0;
+  background-color: #0F67FD;
+  border-radius: 2.25px;
+  transition: height 0.3s ease;
+}
+
+.menu-item.active .active-indicator {
+  height: 18px;
+}

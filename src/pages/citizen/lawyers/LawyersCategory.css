@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+.view-team-container {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    width: 99%; /* Adjusted to take 90% of the available width */
+    max-width: 1400px; /* Set a max width if needed */
+    margin: 0 auto;
+}
+
+.team-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.team-card {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: calc(48% - 12px); /* Adjusted to fit two cards per row on larger screens */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #343434;
+}
+
+.header-right {
+    display: flex;
+    gap: 25px;
+}
+
+.action-button {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 6px;
+    border: 1px solid #7A7A7A;
+    border-radius: 10px;
+    color: #7A7A7A;
+}
+
+.team-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.team-card {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 16px;
+    width: 100%;
+    height: 110px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.team-avatar {
+    width: 120px;
+    height: 110px;
+    border-radius: 10px 0 0 10px;
+}
+
+.team-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.member-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #343434;
+}
+
+.member-details {
+    display: flex;
+    gap: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    color: #7A7A7A;
+}
+
+.added-date {
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    color: #7A7A7A;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.rating-stars {
+    display: flex;
+    gap: 2px;
+    background: #EEF4FF;
+    padding: 1px 6px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.02);
+}
+
+.star {
+    font-size: 8px;
+}
+
+.rating-score {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    color: #0F67FD;
+}
+
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    color: #343434;
+    margin-left: 10px;
+}
+
+.header-right {
+    display: flex;
+    gap: 16px;
+}
+
+.action-button {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border: 1px solid #7A7A7A;
+    border-radius: 10px;
+    gap: 6px;
+    color: #7A7A7A;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-button:hover {
+    background: rgba(15, 103, 253, 0.08);
+}
+
+.team-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.team-card {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: calc(50% - 12px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.team-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    margin-right: 16px;
+}
+
+.team-info {
+    flex-grow: 1;
+}
+
+.member-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #343434;
+}
+
+.member-details {
+    display: flex;
+    gap: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    color: #7A7A7A;
+}
+
+.added-date {
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    color: #7A7A7A;
+    margin-top: 4px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #EEF4FF;
+    padding: 4px 8px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.02);
+}
+
+.rating-stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.star {
+    width: 16px;
+    height: 16px;
+}
+
+.rating-score {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    color: #0F67FD;
+}
+
+.add-team-member-button .MuiButton-root {
+    background-color: #0f67fd;
+    color: #ffffff;
+    padding: 12px 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-team-member-button .MuiButton-root:hover {
+    background-color: #0d5edb;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.sorting-options {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .sort-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b6b6b;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .sort-button.active {
+    background-color: #0f67fd;
+    color: white;
+  }
+  
+  .sort-button:hover {
+    background-color: #e8f4ff;
+  }
+  
+  .sort-icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+  }
+  
