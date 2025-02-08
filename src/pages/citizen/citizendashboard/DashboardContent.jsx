@@ -12,6 +12,7 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import BusinessIcon from "@mui/icons-material/Business";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
+import { Search, Sparkles, Command } from "lucide-react";
 import Card from "../../lawfirm/(dashboard)/components/MetricCard";
 import {
   MessageCircle,
@@ -43,6 +44,7 @@ const categories = [
 ];
 
 const CDashboard = () => {
+  const [isFocused, setIsFocused] = useState(false);
   // Use useState to manage dynamic data
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -152,9 +154,12 @@ const CDashboard = () => {
           </span>
           <CaseDocumentsCard />
         </div>
-        <div className="flex flex-col gap-4 rounded-lg shadow-md p-4">
-          <SectionHeader title="Lawyers By Categories" viewAll />
-          <Tabs value={selectedTab} onChange={handleTabChange} className="mb-6">
+        <div className="flex flex-col  rounded-lg shadow-md p-4 border gap-4">
+          <SectionHeader
+            title="Lawyers By Categories"
+            viewAll="View All Lawyers"
+          />
+          <Tabs value={selectedTab} onChange={handleTabChange}>
             {categories.map((category, index) => (
               <Tab
                 key={index}
@@ -190,8 +195,8 @@ const CDashboard = () => {
 
           {/* Nearby Lawyers */}
           <SectionHeader title="Nearby Lawyers" viewAll />
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <ProfileCard
+          <div className="grid grid-cols-2 gap-5 overflow-auto ">
+            <ProfileCard2
               name="Smith Davis"
               location="Austin"
               category="Corporate"
@@ -200,7 +205,7 @@ const CDashboard = () => {
               imageUrl={randomAvatar}
             />
 
-            <ProfileCard
+            <ProfileCard2
               name="Steve Worth"
               rating={4.2}
               experience="8"
@@ -209,7 +214,25 @@ const CDashboard = () => {
               isFamily={true}
               imageUrl={randomAvatar}
             />
-          </div> */}
+            <ProfileCard2
+              name="Steve Worth"
+              rating={4.2}
+              experience="8"
+              distance="0.2"
+              casesCount="120+"
+              isFamily={true}
+              imageUrl={randomAvatar}
+            />
+            <ProfileCard2
+              name="Steve Worth"
+              rating={4.2}
+              experience="8"
+              distance="0.2"
+              casesCount="120+"
+              isFamily={true}
+              imageUrl={randomAvatar}
+            />
+          </div>
         </div>
       </div>
       <div className="flex flex-col gap-4 ">
@@ -245,7 +268,67 @@ const CDashboard = () => {
           </div>
         </GenericCard>
         <div className="flex-1">
-          <AskAI />
+          {/* <AskAI /> */}
+          <div className="z-50">
+            <div
+              className={`
+          flex items-center gap-2 
+          bg-white border-2 rounded-full
+          shadow-lg hover:shadow-xl
+          w-full  
+          transition-all duration-300 ease-in-out
+          ${
+            isFocused
+              ? " border-blue-600 shadow-blue-100"
+              : " border-blue-300 hover:border-gray-300"
+          }
+        `}
+            >
+              {/* Search Icon with Sparkle Effect */}
+              <div className="relative p-2">
+                <Search
+                  size={20}
+                  className={`
+              transition-colors duration-300
+              ${isFocused ? "text-blue-500" : "text-gray-400"}
+            `}
+                />
+                <Sparkles
+                  size={12}
+                  className={`
+              absolute -top-1 -right-1
+              text-yellow-400
+              animate-pulse
+            `}
+                />
+              </div>
+
+              {/* Input Field */}
+              <input
+                type="text"
+                placeholder="Ask AI for help..."
+                className="flex-1 py-2 pr-4 bg-transparent outline-none text-gray-700 placeholder-gray-400"
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+              />
+
+              {/* Keyboard Shortcut */}
+              <div className="mr-3 flex items-center gap-1 text-xs text-gray-400">
+                <Command size={14} />
+                <span>K</span>
+              </div>
+            </div>
+
+            {/* Pulsing Background Effect */}
+            <div
+              className={`
+        absolute inset-0 -z-10
+        bg-blue-100 rounded-full
+        transition-transform duration-700
+        ${isFocused ? "scale-110 animate-pulse" : "scale-0"}
+      `}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -309,27 +392,24 @@ const RecentUpdatesList = ({ updates, pending: False }) => (
 // Team Members List Component
 const TeamMembersList = ({ members, onAddMember }) => (
   <div className="space-y-3">
-    {members.map((member, index) => (
-      <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg">
-        <img
-          src={member.avatar}
-          alt={member.name}
-          className="w-10 h-10 rounded-full mr-4"
-        />
-        <div className="flex-1">
-          <h3 className="text-sm font-medium">{member.name}</h3>
-          <p className="text-sm text-gray-500">{member.role}</p>
-        </div>
-        <ChevronRight className="text-gray-400" />
-      </div>
-    ))}
-    <button
-      onClick={onAddMember}
-      className="w-full flex items-center justify-center p-3 border-2 border-blue-500 rounded-lg text-blue-600 hover:border-blue-500"
-    >
-      <Plus className="w-6 h-6 mr-2  rounded-full  bg-blue-600 text-white" />
-      Add New Member
-    </button>
+    <CaseCard
+      date="14"
+      month="TUE"
+      title="High court divorce case"
+      lawyerName="Steve Haworth"
+      lawyerFirm="AIB Professional Firm"
+      status="Upcoming"
+    />
+
+    <CaseCard
+      date="14"
+      month="TUE"
+      title="High court divorce case"
+      lawyerName="Steve Haworth"
+      lawyerFirm="AIB Professional Firm"
+      status="Missed"
+      attachments={["Property Document.pdf", "Proof.pdf", "Licence.pdf"]}
+    />
   </div>
 );
 
@@ -515,12 +595,36 @@ const ExperienceBadge = ({ years, label }) => {
 
 const SectionHeader = ({ title, viewAll }) => {
   return (
-    <div className="flex justify-between items-center my-4">
+    <div className="flex justify-between items-center">
       <h2 className="text-lg font-semibold">{title}</h2>
-      {viewAll && <button className="text-blue-500 text-sm">View All</button>}
+      {viewAll && (
+        <a className="text-blue-500 text-sm" href={viewAll}>
+          View All
+        </a>
+      )}
     </div>
   );
 };
+
+const StarRating = ({ rating }) => {
+  return (
+    <div className="flex items-center px-1 bg-gray-100 w-fit rounded-md">
+      {[...Array(5)].map((_, index) => (
+        <Star
+          key={index}
+          size={16}
+          className={`${
+            index < Math.floor(rating)
+              ? "fill-yellow-400 text-yellow-400"
+              : "fill-gray-200 text-gray-200"
+          }`}
+        />
+      ))}
+      <span className="ml-1 text-blue-600">{rating}</span>
+    </div>
+  );
+};
+
 const ProfileCard = ({
   name,
   location,
@@ -532,27 +636,8 @@ const ProfileCard = ({
   casesCount,
   isFamily,
 }) => {
-  const renderStars = (rating) => {
-    return (
-      <div className="flex items-center px-1 bg-gray-100 w-fit rounded-md ">
-        {[...Array(5)].map((_, index) => (
-          <Star
-            key={index}
-            size={16}
-            className={`${
-              index < Math.floor(rating)
-                ? "fill-yellow-400 text-yellow-400"
-                : "fill-gray-200 text-gray-200"
-            }`}
-          />
-        ))}
-        <span className="ml-1 text-blue-600">{rating}</span>
-      </div>
-    );
-  };
-
   return (
-    <div className="w-full grid grid-cols-[15%_85%] bg-lrounded-lg border p-4 shadow-sm">
+    <div className="w-full grid grid-cols-[15%_85%] rounded-lg border p-4 shadow-sm">
       <img
         src={imageUrl || "/api/placeholder/64/64"}
         alt={name}
@@ -585,7 +670,7 @@ const ProfileCard = ({
               )}
             </div>
           )}
-          <div className="mt-2">{renderStars(rating)}</div>
+          <StarRating rating={rating} />
 
           {(distance || casesCount) && (
             <div className="mt-1 flex items-center gap-4 text-sm text-gray-500">
@@ -607,6 +692,134 @@ const ProfileCard = ({
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const ProfileCard2 = ({
+  name,
+  location,
+  category,
+  rating,
+  experience,
+  imageUrl,
+  distance,
+  casesCount,
+  isFamily,
+}) => {
+  return (
+    <div className=" rounded-lg border border-blue-100 bg-white  h-[120px] ">
+      <div className="flex gap-4 relative">
+        {/* Image container with diagonal pattern overlay */}
+        <div className="relative min-w-[120px] h-[120px]">
+          <img
+            src={randomAvatar}
+            alt="Profile"
+            className="w-[120px] h-[120px] object-cover rounded-l-lg"
+          />
+          <div className=" inset-0 bg-gradient-to-r from-pink-500/20 to-transparent rounded-lg" />
+        </div>
+
+        {/* Content section */}
+        <div className="flex flex-col justify-between ">
+          {/* Rating */}
+          <StarRating rating={rating} />
+          {/* Name and type */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800">
+              {name}
+              <span className="text-gray-500">
+                {category && `(${category})`}
+              </span>
+            </h3>
+          </div>
+          {/* Experience and location */}
+          <div className="flex items-center gap-4 text-sm text-gray-600">
+            <span>Exp. -{experience} yrs</span>
+
+            <span>|</span>
+            <div className="flex items-center gap-1">
+              <MapPin size={14} className="text-blue-500" />
+              <span>{distance} km away</span>
+            </div>
+          </div>
+          {/* Cases */}
+          <div className="text-sm text-gray-600">
+            Cases Solved - {casesCount}+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CaseCard = ({
+  date,
+  month,
+  title,
+  lawyerName,
+  lawyerFirm,
+  status,
+  attachments = [],
+}) => {
+  const isMissed = status === "Missed";
+
+  return (
+    <div className="border rounded-lg p-2 bg-white shadow-sm  flex flex-col gap-2">
+      <div className=" flex gap-4">
+        {/* Date Box */}
+        <div
+          className={`min-w-14 h-14 border-2 rounded-lg flex flex-col items-center justify-center ${
+            isMissed
+              ? "border-red-500 text-red-500"
+              : "border-blue-500 text-blue-500"
+          }`}
+        >
+          <span className="text-3xl font-bold">{date}</span>
+          <span className="text-sm font-semibold uppercase">{month}</span>
+        </div>
+        {/* Content */}
+        <div className="flex flex-col font-normal">
+          <h1 className="text-md">{title}</h1>
+
+          <div className="flex">
+            <span className="w-32 text-gray-500">Lawyer Name:</span>
+            <span className="font-medium text-gray-800">{lawyerName}</span>
+          </div>
+
+          <div className="flex items-center">
+            <span className="w-32 text-gray-500">Lawyer Firm:</span>
+            <span className="font-medium text-gray-800">{lawyerFirm}</span>
+          </div>
+          {status && (
+            <span
+              className={` px-3 py-1 text-sm font-medium rounded-full w-fit ${
+                isMissed ? "text-red-600 bg-red-50" : "text-blue-600 bg-blue-50"
+              }`}
+            >
+              {status}
+            </span>
+          )}
+        </div>{" "}
+      </div>
+
+      {/* Attachments Section - Only rendered if attachments exist */}
+      {attachments.length > 0 && (
+        <>
+          <hr />
+          <div className="flex flex-wrap gap-4">
+            {attachments.map((file, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-2 px-3 py-2 border rounded-lg text-gray-600 hover:bg-gray-50 cursor-pointer"
+              >
+                <FileText size={12} />
+                <span className="truncate text-[10px]">{file}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
