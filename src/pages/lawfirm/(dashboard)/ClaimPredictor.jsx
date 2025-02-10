@@ -15,7 +15,7 @@ export default function ClaimPredictor() {
   const fetchPrediction = async () => {
     setLoading(true);
     try {
-      const response = await fetch("api/api/predict", {
+      const response = await fetch("https://app.lejit.ai/api/api/predict", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -35,17 +35,12 @@ export default function ClaimPredictor() {
         <CssBaseline />
         <Box display="flex" height="100vh" position="relative">
           <Sidebar />
-          <Box
-            display="flex"
-            flexDirection="column"
-            flexGrow={1}
-            overflow="hidden"
-          >
+          <Box display="flex" flexDirection="column" flexGrow={1} overflow="hidden">
             <Topbar />
-            <Box component="main" flexGrow={1} p={2} className="p-6 bg-blue-50 min-h-screen">
-              <div className="p-6 bg-white shadow-lg rounded-2xl mx-auto" style={{ maxWidth: "900px", overflowY: "auto", maxHeight: "calc(100vh - 64px)" }}>
-                <div className="flex justify-between items-center mb-6">
-                  <h1 className="font-bold" style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "24px" }}>
+            <Box component="main" flexGrow={1} p={2} className="p-6 bg-grey min-h-screen overflow-y-auto">
+              <div className="p-6 bg-white shadow-lg rounded-2xl mx-auto" style={{ maxWidth: "90%" }}>
+                <div className="flex justify-center items-center mb-6">
+                  <h1 className="font-bold" style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "24px", textAlign: "center" }}>
                     Claim Estimator
                   </h1>
                 </div>
@@ -53,18 +48,19 @@ export default function ClaimPredictor() {
                   Enter your details to estimate your claim amount
                 </p>
 
-                <div className="mt-6 flex justify-center">
-                  <input
+                <div className="mt-6 flex justify-center items-center gap-3">
+                  <textarea
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Describe your accident..."
-                    className="w-1/2 border border-blue-500 p-2 rounded-lg"
+                    className="w-1/2 border border-blue-500 p-2 rounded-lg resize-none"
+                    rows="3"
                     style={{ fontFamily: "Poppins, sans-serif", fontSize: "90%" }}
                   />
                   <button
-                    className="ml-4 bg-blue-600 text-white px-4 py-2 rounded-lg"
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md text-base"
                     onClick={fetchPrediction}
-                    style={{ fontFamily: "Poppins, sans-serif", fontSize: "90%" }}
+                    style={{ fontFamily: "Poppins, sans-serif" }}
                   >
                     Predict
                   </button>
@@ -90,51 +86,49 @@ export default function ClaimPredictor() {
                       <div className="flex justify-center mt-4">
                         <Gauge className="text-blue-600" size={125} />
                       </div>
-                      <p className="text-4xl font-semibold mt-2" style={{ color: "#0F67FD", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}>
+                      <p className="text-3xl font-bold mt-2" style={{ color: "#0F67FD", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}>
                         ₹{result.predicted_amount ? result.predicted_amount.toLocaleString() : "N/A"}
                       </p>
                     </div>
 
                     {/* Similar Cases */}
-                    <div className="p-8 bg-white shadow-lg rounded-2xl">
-                      <h2 className="text-2xl font-bold" style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}>Similar Cases</h2>
-                      <ul className="mt-4 space-y-3">
-                        {result.similar_cases.map((caseItem, index) => {
-                          // Extract the case name (first line before the newline)
-                          const caseName = caseItem.split("\n")[0];
-                          const caseDetails = caseItem.substring(caseName.length).trim();
-
-                          return (
-                            <li key={index} className="border-b pb-2 relative group" style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}>
-                              <p className="font-semibold">{caseName}</p>
-                              <p className="text-sm truncate cursor-pointer hover:underline mt-2">
-                                {caseDetails.substring(0, 100)}...
-                              </p>
-
-                              {/* Tooltip - Only appears on hover with a horizontal scrollbar */}
-                              <div className="absolute left-0 mt-2 w-[170%] p-4 bg-white text-xs rounded-lg shadow-lg border border-gray-300 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 overflow-x-auto" style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}>
-                                <p className="font-medium">{caseDetails}</p>
-                              </div>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
+                    {result.similar_cases && result.similar_cases.length > 0 ? (
+                      <div className="p-8 bg-white shadow-lg rounded-2xl">
+                        <h2 className="text-2xl font-bold" style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}>
+                          Similar Cases
+                        </h2>
+                        <ul className="mt-4 space-y-3">
+                          {result.similar_cases.map((caseItem, index) => {
+                            const caseName = caseItem.split("\n")[0];
+                            const caseDetails = caseItem.substring(caseName.length).trim();
+                            return (
+                              <li key={index} className="border-b pb-2 relative group" style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}>
+                                <p className="font-semibold">{caseName}</p>
+                                <p className="text-sm truncate cursor-pointer hover:underline mt-2">{caseDetails.substring(0, 100)}...</p>
+                                <div className="absolute left-0 mt-2 w-[170%] p-4 bg-white text-xs rounded-lg shadow-lg border border-gray-300 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 overflow-x-auto" style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}>
+                                  <p className="font-medium">{caseDetails}</p>
+                                </div>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    ) : (
+                      <div className="mt-6 text-center text-gray-500">
+                        No similar cases found.
+                      </div>
+                    )}
                   </motion.div>
                 )}
 
                 {result?.case_advice && (
                   <div className="mt-6 p-8 bg-white shadow-lg rounded-2xl">
                     <h2 className="text-2xl font-bold" style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}>Case Advice</h2>
-                    <p
-                      className="mt-2 text-lg leading-relaxed whitespace-pre-line"
-                      dangerouslySetInnerHTML={{
-                        __html: result.case_advice.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"),
-                      }}
-                      style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}
-                    ></p>
+                    <p className="mt-2 text-lg leading-relaxed whitespace-pre-line" dangerouslySetInnerHTML={{ __html: result.case_advice.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") }} style={{ color: "#343434", fontFamily: "Poppins, sans-serif", fontSize: "90%" }}></p>
                   </div>
                 )}
+
+                <div style={{ height: "100px" }}></div>
               </div>
             </Box>
           </Box>
