@@ -30,7 +30,7 @@ const DocumentGenerator = ({ documentType, questions }) => {
   const generateDocument = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://backend.lejit.ai/api/api/docgen/generate', {
+      const response = await fetch('/api/api/docgen/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -79,7 +79,7 @@ const DocumentGenerator = ({ documentType, questions }) => {
   const sendSuggestions = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://backend.lejit.ai/api/api/docgen/suggest', {
+      const response = await fetch('api/api/docgen/suggest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

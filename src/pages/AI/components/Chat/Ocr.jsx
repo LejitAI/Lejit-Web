@@ -57,7 +57,7 @@ const Ocr = ({ initialFile }) => {
         formData.append('file', fileToProcess);
 
         try {
-            const { data: { text } } = await axios.post('http://backend.lejit.ai/backend/api/vision', formData);
+            const { data: { text } } = await axios.post('backend/api/vision', formData);
             setExtractedText(text);
             setEditorState(EditorState.createWithContent(ContentState.createFromText(text)));
             setShowFormatButton(true);

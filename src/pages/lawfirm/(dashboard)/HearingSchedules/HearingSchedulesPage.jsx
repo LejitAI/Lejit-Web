@@ -11,7 +11,7 @@ const HearingSchedulesPage = () => {
   useEffect(() => {
     const fetchHearings = async () => {
       try {
-        const response = await fetch(`http://backend.lejit.ai/backend/api/hearing-schedule/${userId}`);
+        const response = await fetch(`backend/api/hearing-schedule/${userId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch hearing schedules");
         }

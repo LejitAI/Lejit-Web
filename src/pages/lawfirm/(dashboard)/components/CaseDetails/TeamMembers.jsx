@@ -15,7 +15,7 @@ const TeamMembers = () => {
       try {
         const token = localStorage.getItem('token');
         console.log('Fetching team members...'); // Debug log
-        const response = await axios.get('http://backend.lejit.ai/backend/api/admin/get-team-members', {
+        const response = await axios.get('backend/api/admin/get-team-members', {
           headers: {
             Authorization: `Bearer ${token}`
           }
