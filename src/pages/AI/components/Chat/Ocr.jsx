@@ -32,8 +32,9 @@ const Ocr = ({ initialFile }) => {
     const fetchDocument = async (url) => {
         try {
             const response = await axios.get(url, { responseType: 'blob' });
-            setFile(response.data);
-            handleExtractText(response.data);
+            const fetchedFile = new File([response.data], "document.pdf", { type: response.data.type });
+            setFile(fetchedFile);
+            handleExtractText(fetchedFile);
         } catch (error) {
             console.error('Failed to fetch document:', error);
             alert('Failed to fetch document. Please try again.');
@@ -42,8 +43,22 @@ const Ocr = ({ initialFile }) => {
 
     const handleFileUpload = (e) => {
         const selectedFile = e.target.files[0];
+
+        if (!selectedFile) {
+            alert('Please select a valid file.');
+            return;
+        }
+
+        // Only allow images and PDFs
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+        if (!allowedTypes.includes(selectedFile.type)) {
+            alert('Invalid file type. Please upload an image (JPG, PNG) or a PDF.');
+            return;
+        }
+
         setFile(selectedFile);
         setShowFormatButton(false);
+        handleExtractText(selectedFile);
     };
 
     const handleExtractText = async (fileToProcess = file) => {
@@ -54,10 +69,13 @@ const Ocr = ({ initialFile }) => {
 
         setIsLoading(true);
         const formData = new FormData();
-        formData.append('file', fileToProcess);
+        formData.append('file', fileToProcess, fileToProcess.name); // Ensures filename is included
 
         try {
-            const { data: { text } } = await axios.post('http://backend.lejit.ai/backend/api/vision', formData);
+            const { data: { text } } = await axios.post('/backend/api/vision', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+
             setExtractedText(text);
             setEditorState(EditorState.createWithContent(ContentState.createFromText(text)));
             setShowFormatButton(true);
@@ -76,7 +94,7 @@ const Ocr = ({ initialFile }) => {
         }
 
         try {
-            const { data: { formattedText } } = await axios.post('backend/api/format', { text: extractedText });
+            const { data: { formattedText } } = await axios.post('/backend/api/format', { text: extractedText });
             setEditorState(EditorState.createWithContent(ContentState.createFromText(formattedText)));
         } catch (error) {
             console.error('Formatting failed:', error);
@@ -96,10 +114,16 @@ const Ocr = ({ initialFile }) => {
                             <div className="ocr-container">
                                 <h1 className="ocr-title">OCR Text Extraction</h1>
                                 <div className="ocr-controls">
-                                    <input type="file" accept="image/*, .pdf, .docx" onChange={handleFileUpload} className="ocr-file-input" />
-                                    <button
-                                        onClick={handleExtractText}
+                                    <input
+                                        type="file"
+                                        accept="image/*, .pdf"
+                                        onChange={handleFileUpload}
+                                        className="ocr-file-input"
                                         disabled={isLoading}
+                                    />
+                                    <button
+                                        onClick={() => handleExtractText(file)}
+                                        disabled={isLoading || !file}
                                         className="ocr-button extract-button"
                                     >
                                         {isLoading ? <CircularProgress size={24} /> : 'Extract Text'}
@@ -107,6 +131,7 @@ const Ocr = ({ initialFile }) => {
                                     {showFormatButton && (
                                         <button
                                             onClick={handleFormat}
+                                            disabled={isLoading}
                                             className="ocr-button format-button"
                                         >
                                             Format Text
