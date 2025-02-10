@@ -4,37 +4,33 @@ import TypingIndicator from "./TypingIndicator";
 import "../../styles/Chat.css";
 import axios from "axios";
 
-const CitationsInterface = () => {
+const CitationsInterface = ({ sessionId, isDarkMode }) => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);;
   const chatRef = useRef(null);
-  const sessionKey = "lejit_ai_session_id";
+  
   const mediaRecorderRef = useRef(null);
   const audioChunks = useRef([]);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState("");
 
   useEffect(() => {
-    const existingSession = localStorage.getItem(sessionKey);
-    if (!existingSession) {
-      const newSessionId = `session_${Date.now()}`;
-      localStorage.setItem(sessionKey, newSessionId);
-    }
+    
     fetchChatHistory();
   }, []);
 
-  const getSessionId = () => localStorage.getItem(sessionKey);
+  
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
   const fetchChatHistory = async () => {
     try {
-      const sessionId = "unique_session_identifier_12345";
+      
       const response = await axios.get(
-        `/api/api/chat/history/${sessionId}`
+        `api/api/chat/history/${sessionId}`
       );
   
       if (response.status === 200) {
@@ -72,7 +68,7 @@ const CitationsInterface = () => {
     try {
       setIsLoading(true);
 
-      const apiUrl = "api/api/citation/query";
+      const apiUrl = "/api/api/citation/query";
       const payload = {
         session_id: "unique_session_identifier_12345",
         question: inputValue,
@@ -166,9 +162,9 @@ const CitationsInterface = () => {
     try {
       setIsLoading(true);
 
-      const apiUrl = "api/api/citation/query";
+      const apiUrl = "/api/api/citation/query";
       const payload = {
-        session_id: "unique_session_identifier_12345",
+        session_id: sessionId,
         question: transcription,
       };
 
@@ -229,8 +225,8 @@ const CitationsInterface = () => {
         formData.append("files", file);
       }
 
-      const sessionId = "unique_session_identifier_12345";
-      const apiUrl = `api/api/citation/feed-documents/?session_id=${sessionId}`;
+      const sessionId = sessionId;
+      const apiUrl = `/api/api/citation/feed-documents/?session_id=${sessionId}`;
 
       try {
         const response = await axios.post(apiUrl, formData, {

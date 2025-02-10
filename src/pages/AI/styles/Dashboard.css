@@ -2,86 +2,68 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Fixed height */
+  height: 100vh;
   font-family: "Poppins", sans-serif;
-  background-color: #f2f5fa; /* Lejit light background */
-  gap: 13.68px; /* Reduced by 5% */
+  background-color: #f2f5fa;
+  gap: 13.68px;
 }
 
 .dashboard.dark-mode {
-  background-color: #1e1e1e; /* Dark background */
-  color: #ffffff; /* Light text */
+  background-color: #1e1e1e;
+  color: #ffffff;
 }
 
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.dashboard.dark-mode .topbar {
-  background-color: #333333; /* Dark background */
-}
-
-.lejit-logo {
-  width: 90px;
-  height: auto;
+/* New Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 20% 80%; /* History (20%) | Main (80%) */
+  height: calc(100vh - 63.2px); /* Adjust for AppBar height */
 }
 
 /* Sidebar Styles (History Panel) */
 .dashboard-sidebar {
-  width: 213.75px; /* Reduced by 5% */
-  background-color: #ffffff; /* Neutral Background */
-  color: #7a7a7a; /* Neutral Text Color */
-  padding: 17.1px; /* Reduced by 5% */
-  border-right: 1px solid rgba(0, 0, 0, 0.1); /* Light Divider */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle Shadow */
-  border-radius: 12px; /* Smooth Rounded Corners */
-  transition: all 0.3s ease; /* Smooth Transition */
+  background-color: #ffffff;
+  color: #7a7a7a;
+  padding: 17.1px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  overflow-y: auto; /* Add scroll if content overflows */
 }
 
 .dashboard.dark-mode .dashboard-sidebar {
-  background-color: #333333; /* Dark background */
-  color: #ffffff; /* Light text */
+  background-color: #333333;
+  color: #ffffff;
 }
 
 /* Main Content Area */
 .dashboard-main {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  border-radius: 12px; /* Smooth Rounded Corners */
-  background-color: #ffffff; /* Content Background */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle Shadow */
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   overflow: hidden; /* Prevent overflow */
-}
-
-.dashboard-main.with-sidebar {
-  margin-left: 213.75px; /* Adjust based on sidebar width */
+  border-radius: 12px;
 }
 
 .dashboard.dark-mode .dashboard-main {
-  background-color: #1e1e1e; /* Dark background */
+  background-color: #1e1e1e;
 }
 
 /* Sidebar Title */
 .history-title {
-  font-size: 15.39px; /* Reduced by 5% */
-  margin-bottom: 17.1px; /* Reduced by 5% */
+  font-size: 15.39px;
+  margin-bottom: 17.1px;
   font-weight: 600;
-  color: #1d3557; /* Dark Text */
+  color: #1d3557;
   text-align: center;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Divider */
-  padding-bottom: 8.55px; /* Reduced by 5% */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 8.55px;
 }
 
 .dashboard.dark-mode .history-title {
-  color: #ffffff; /* Light text */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Light divider */
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* History List */
@@ -95,179 +77,98 @@
 .history-item {
   display: flex;
   align-items: center;
-  padding: 10.26px 13.68px; /* Reduced by 5% */
-  gap: 10.26px; /* Reduced by 5% */
-  margin-bottom: 10.26px; /* Reduced by 5% */
-  border-radius: 6.84px; /* Reduced by 5% */
-  background-color: #ffffff; /* Neutral Background */
+  padding: 10.26px 13.68px;
+  gap: 10.26px;
+  margin-bottom: 10.26px;
+  border-radius: 6.84px;
+  background-color: #ffffff;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); /* Subtle Shadow */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .dashboard.dark-mode .history-item {
-  background-color: #333333; /* Dark background */
-  color: #ffffff; /* Light text */
-  box-shadow: 0 1px 4px rgba(255, 255, 255, 0.1); /* Light shadow */
+  background-color: #333333;
+  color: #ffffff;
+  box-shadow: 0 1px 4px rgba(255, 255, 255, 0.1);
 }
 
 .history-item:hover {
-  background-color: rgba(15, 103, 253, 0.1); /* Light Blue Hover */
-  transform: scale(1.03); /* Slight Scale Effect */
-  box-shadow: 0 4px 8px rgba(15, 103, 253, 0.15); /* Elevated Hover Shadow */
+  background-color: rgba(15, 103, 253, 0.1);
+  transform: scale(1.03);
+  box-shadow: 0 4px 8px rgba(15, 103, 253, 0.15);
 }
 
 .dashboard.dark-mode .history-item:hover {
-  background-color: rgba(15, 103, 253, 0.2); /* Darker Blue Hover */
-  box-shadow: 0 4px 8px rgba(15, 103, 253, 0.3); /* Stronger Hover Shadow */
+  background-color: rgba(15, 103, 253, 0.2);
+  box-shadow: 0 4px 8px rgba(15, 103, 253, 0.3);
 }
 
 .history-item.active {
-  background-color: #0f67fd; /* Lejit Primary Blue */
-  color: #ffffff; /* White Text for Active */
-  box-shadow: 0 4px 10px rgba(15, 103, 253, 0.3); /* Stronger Shadow for Active */
+  background-color: #0f67fd;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(15, 103, 253, 0.3);
 }
 
 .history-item.active .history-icon,
 .history-item.active .history-info {
-  color: #ffffff; /* White Icons and Text for Active */
+  color: #ffffff;
 }
 
 /* History Icon */
 .history-icon {
-  font-size: 17.1px; /* Reduced by 5% */
-  color: #7a7a7a; /* Neutral Icon Color */
-  transition: color 0.3s ease; /* Smooth Transition */
+  font-size: 17.1px;
+  color: #7a7a7a;
+  transition: color 0.3s ease;
 }
 
 .dashboard.dark-mode .history-icon {
-  color: #ffffff; /* Light Icon Color */
+  color: #ffffff;
 }
 
 .history-info {
   flex: 1;
-  font-size: 11.97px; /* Reduced by 5% */
+  font-size: 11.97px;
   font-weight: 500;
-  color: #1d3557; /* Neutral Text Color */
-  transition: color 0.3s ease; /* Smooth Transition */
+  color: #1d3557;
+  transition: color 0.3s ease;
 }
 
 .dashboard.dark-mode .history-info {
-  color: #ffffff; /* Light Text Color */
+  color: #ffffff;
 }
 
 /* History Date */
 .history-date {
-  font-size: 10.26px; /* Reduced by 5% */
-  color: #a0a0a0; /* Subtle Gray Text */
+  font-size: 10.26px;
+  color: #a0a0a0;
 }
 
 .dashboard.dark-mode .history-date {
-  color: #cccccc; /* Light Gray Text */
+  color: #cccccc;
 }
 
-/* Top Tabs */
-.dashboard-tabs {
-  display: flex;
-  gap: 6.84px; /* Reduced by 5% */
-}
 
-.dashboard-tab {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  flex: 1;
-  text-align: center;
-  padding: 10.26px; /* Reduced by 5% */
-  font-size: 11.97px; /* Reduced by 5% */
-  font-weight: 500;
-  color: #1d3557; /* Neutral Text */
-  background-color: #ffffff; /* Neutral Tab */
-  border-radius: 6.84px; /* Reduced by 5% */
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: 1px solid #e3e5e5; /* Border for Clarity */
-}
 
-.dashboard.dark-mode .dashboard-tab {
-  background-color: #333333; /* Dark background */
-  color: #ffffff; /* Light text */
-  border: 1px solid #555555; /* Dark border */
-}
-
-.dashboard-tab:hover {
-  background-color: #0f67fd;
-  color: #ffffff;
-  border-color: #0f67fd;
-  box-shadow: 0px 4px 12px rgba(15, 103, 253, 0.2); /* Hover Shadow */
-}
-
-.dashboard-tab.active {
-  background-color: #0f67fd; /* Active Tab Background */
-  color: #ffffff; /* Contrast Text */
-  font-weight: bold;
-  border-color: #0f67fd;
-  box-shadow: 0 2px 8px rgba(15, 103, 253, 0.3); /* Add Depth */
-}
-
-/* Tab Icons */
-.tab-icon {
-  width: 17.1px; /* Reduced by 5% */
-  height: 17.1px; /* Reduced by 5% */
-  color: inherit;
-}
-
+/* Dashboard Content */
 .dashboard-content {
-  height: 100%; /* Ensure chat container fills the content */
+  height: 100%; /* Important: Fill the grid cell */
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  padding: 20.52px; /* Reduced by 5% */
-  background-color: #f9f9f9; /* Light Neutral Background */
-  border-radius: 6.84px; /* Reduced by 5% */
-  overflow-y: auto; /* Enable scrolling */
-  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05); /* Subtle Inner Shadow */
-  margin: 0; /* Remove any default margin */
+  padding: 20.52px;
+  background-color: #f9f9f9;
+  border-radius: 6.84px;
+  overflow-y: auto;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05);
+  margin: 0;
 }
 
 .dashboard.dark-mode .dashboard-content {
-  background-color: #1e1e1e; /* Dark background */
-  box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.1); /* Light Inner Shadow */
+  background-color: #1e1e1e;
+  box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.1);
 }
 
-/* User Profile */
-.user-profile {
-  display: flex;
-  align-items: center;
-  gap: 7.6px; /* Reduced by 5% */
-  background-color: #ffffff;
-  padding: 7.6px; /* Reduced by 5% */
-  border-radius: 7.6px; /* Reduced by 5% */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.dashboard.dark-mode .user-profile {
-  background-color: #333333; /* Dark background */
-}
-
-.profile-pic {
-  width: 30.4px; /* Reduced by 5% */
-  height: 30.4px; /* Reduced by 5% */
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.profile-name {
-  font-size: 13.3px; /* Reduced by 5% */
-  font-weight: 500;
-  color: #404040;
-  font-family: "Poppins", sans-serif;
-}
-
-.dashboard.dark-mode .profile-name {
-  color: #ffffff; /* Light text */
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -275,21 +176,26 @@
     flex-direction: column;
     gap: 0;
   }
+  .dashboard-grid {
+    grid-template-columns: 100%; /* Sidebar takes full width */
+    grid-template-rows: auto 1fr; /* Sidebar then Main */
+    height: calc(100vh - 63.2px);
+  }
   .dashboard-sidebar {
     width: 100%;
     height: auto;
     border-radius: 0;
-    padding: 13.68px; /* Reduced by 5% */
+    padding: 13.68px;
+    border-right: none; /* Remove right border */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Add bottom border */
+
   }
   .dashboard-main {
     border-radius: 0;
     box-shadow: none;
   }
-  .dashboard-tabs {
-    flex-wrap: wrap;
-    gap: 6.84px; /* Reduced by 5% */
-  }
-  .dashboard-tab {
-    flex: 1 1 calc(42.75% - 6.84px); /* Reduced by 5% */
+  
+  .dashboard-content {
+    padding: 13.68px; /* Slightly reduced padding */
   }
 }

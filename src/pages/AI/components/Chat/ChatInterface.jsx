@@ -1,3 +1,6 @@
+
+
+// ChatInterface.js
 import React, { useState, useRef, useEffect } from "react";
 import ChatBubble from "./ChatBubble";
 import TypingIndicator from "./TypingIndicator";
@@ -7,7 +10,7 @@ import SendIcon from "@mui/icons-material/Send";
 import MicIcon from "@mui/icons-material/Mic";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-const ChatInterface = ({ selectedHistory, isDarkMode }) => {
+const ChatInterface = ({ sessionId, isDarkMode }) => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -17,23 +20,16 @@ const ChatInterface = ({ selectedHistory, isDarkMode }) => {
   const mediaRecorderRef = useRef(null);
   const audioChunks = useRef([]);
   const chatRef = useRef(null);
-  const sessionKey = "lejit_ai_session_id";
-  const MAX_MESSAGES = 50;
 
   useEffect(() => {
-    const existingSession = localStorage.getItem(sessionKey);
-    if (!existingSession) {
-      const newSessionId = `session_${Date.now()}`;
-      localStorage.setItem(sessionKey, newSessionId);
-    }
     fetchChatHistory();
-  }, []);
+  }, [sessionId]);
 
-  const getSessionId = () => localStorage.getItem(sessionKey);
   const fetchChatHistory = async () => {
+    if (!sessionId) return;
+
     try {
-      const sessionId = getSessionId();
-      const response = await axios.get(`api/api/chat/history/${sessionId}`);
+      const response = await axios.get(`/api/api/chat/history/${sessionId}`);
 
       if (response.status === 200) {
         const fetchedMessages = response.data.chat_history
@@ -46,9 +42,11 @@ const ChatInterface = ({ selectedHistory, isDarkMode }) => {
         setMessages(fetchedMessages.reverse());
       } else {
         console.error("Failed to fetch chat history:", response);
+        setMessages([{ role: "assistant", content: "Failed to load chat history." }]);
       }
     } catch (error) {
       console.error("Error fetching chat history:", error);
+      setMessages([{ role: "assistant", content: "Error loading chat history." }]);
     }
   };
 
@@ -57,9 +55,10 @@ const ChatInterface = ({ selectedHistory, isDarkMode }) => {
   };
 
   const handleSend = async () => {
-    if (!inputValue.trim()) return;
+    const messageContent = inputValue.trim();
+    if (!messageContent) return;
 
-    const userMessage = { role: "user", content: inputValue };
+    const userMessage = { role: "user", content: messageContent };
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
 
@@ -70,8 +69,8 @@ const ChatInterface = ({ selectedHistory, isDarkMode }) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          session_id: getSessionId(),
-          query: inputValue,
+          session_id: sessionId,
+          query: messageContent,
         }),
       });
 
@@ -137,7 +136,7 @@ const ChatInterface = ({ selectedHistory, isDarkMode }) => {
   const sendAudioToBackend = async (audioBlob) => {
     try {
       const formData = new FormData();
-      formData.append("audio", audioBlob, "audio/webm");
+      formData.append("audio", audioBlob, "audio.webm"); // Corrected file name
 
       const response = await fetch("/backend/api/speech-to-text", {
         method: "POST",
@@ -154,22 +153,20 @@ const ChatInterface = ({ selectedHistory, isDarkMode }) => {
 
       setMessages((prev) => [...prev, audioMessage]);
       setInputValue("");
+
       try {
         setIsLoading(true);
-
         const response = await fetch("/api/api/query/general", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            session_id: getSessionId(),
+            session_id: sessionId,
             query: transcription,
           }),
         });
-
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         const data = await response.json();
         const aiMessage = {
           role: "assistant",
@@ -208,9 +205,8 @@ const ChatInterface = ({ selectedHistory, isDarkMode }) => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const sessionId = getSessionId();
-      const documentType = "Contract";
-      const apiUrl = `api/api/documents/upload?session_id=${sessionId}&document_type=${documentType}`;
+      const documentType = "Contract"; // Or get from UI
+      const apiUrl = `/api/api/documents/upload?session_id=<span class="math-inline">\{sessionId\}&document\_type\=</span>{documentType}`;
 
       try {
         const response = await axios.post(apiUrl, formData, {
@@ -219,6 +215,13 @@ const ChatInterface = ({ selectedHistory, isDarkMode }) => {
 
         console.log("Upload successful:", response.data);
         setUploadMessage("Document uploaded successfully!");
+        // Optionally, trigger a chat message about the uploaded document.
+        const aiMessage = {
+          role: "assistant",
+          content: "Document uploaded successfully!",
+        };
+        setMessages((prev) => [...prev, aiMessage]);
+
       } catch (error) {
         console.error("Error uploading document:", error);
         setUploadMessage("Failed to upload the document. Please try again.");
@@ -235,7 +238,6 @@ const ChatInterface = ({ selectedHistory, isDarkMode }) => {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [messages, isLoading]);
-
   return (
     <div className={`chat-container ${isDarkMode ? 'dark-mode' : ''}`} style={{ height: 'calc(100vh - 48px)' }}>
       <div className="chat-messages" ref={chatRef}>
