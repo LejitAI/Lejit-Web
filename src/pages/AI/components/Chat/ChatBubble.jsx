@@ -22,7 +22,7 @@ const ChatBubble = ({ message }) => {
       setIsLoading(true); // Start loading animation
       try {
         const response = await axios.post(
-          "backend/api/tts",
+          "http://localhost:5000/api/tts",
           { text },
           { responseType: "blob" }
         );
